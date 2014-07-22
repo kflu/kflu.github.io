@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>hello world</title><link>github.io/</link><description></description><atom:link href="github.io/feeds%5Ckfl.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 03 Feb 2014 00:00:00 +0100</lastBuildDate><item><title>blah</title><link>github.io/blah.html</link><description>&lt;h1&gt;1&lt;/h1&gt;
-&lt;h2&gt;2&lt;/h2&gt;
-&lt;p&gt;hello world!!!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">kfl</dc:creator><pubDate>Mon, 03 Feb 2014 00:00:00 +0100</pubDate><guid>tag:,2014-02-03:github.io/blah.html</guid></item></channel></rss>

@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>hello world</title><link href="github.io/" rel="alternate"></link><link href="github.io/feeds/misc.atom.xml" rel="self"></link><id>github.io/</id><updated>2014-02-03T00:00:00+01:00</updated><entry><title>blah</title><link href="github.io/blah.html" rel="alternate"></link><updated>2014-02-03T00:00:00+01:00</updated><author><name>kfl</name></author><id>tag:,2014-02-03:github.io/blah.html</id><summary type="html">&lt;h1&gt;1&lt;/h1&gt;
-&lt;h2&gt;2&lt;/h2&gt;
-&lt;p&gt;hello world!!!&lt;/p&gt;</summary></entry></feed>
