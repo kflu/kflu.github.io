@@ -9,4 +9,13 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;p&gt;OK&lt;/p&gt;</summary></entry><entry><title>hihihi2</title><link href="/hihihi2.html" rel="alternate"></link><updated>2013-01-04T00:00:00+01:00</updated><author><name>kfl</name></author><id>tag:,2013-01-04:hihihi2.html</id><summary type="html">&lt;h1&gt;title&lt;/h1&gt;
+&lt;p&gt;here&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;Main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;Console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;WriteLine&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;OK&lt;/p&gt;</summary></entry></feed>
