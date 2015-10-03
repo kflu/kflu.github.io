@@ -9,7 +9,7 @@ twitter_username:
 github_username: kflu
 
 # Build settings
-markdown: kramdown
+markdown: redcarpet
 
 kramdown:
     input: GFM
