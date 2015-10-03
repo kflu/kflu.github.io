@@ -1,4 +1,5 @@
 ---
+layout: post
 title: Enumerable and Disposable
 ---
 
