@@ -9,6 +9,8 @@ twitter_username:
 github_username: kflu
 
 # Build settings
+# kramdown doesn't have c# syntax highlighting when using fenced code "```"
+# markdown: kramdown
 markdown: redcarpet
 
 kramdown:
