@@ -17,9 +17,7 @@ static void Main(string[] args)
     // 2
     // 3
     foreach (var item in Foo(source))
-    {
         Console.WriteLine(item);
-    }
 
     Console.WriteLine("Using Foo2...");
 
@@ -29,28 +27,20 @@ static void Main(string[] args)
     // 3
     // Disposed
     foreach (var item in Foo2(source))
-    {
         Console.WriteLine(item);
-    }
 }
 
 static IEnumerable<int> Foo(IEnumerable<int> source)
 {
     using (var disposable = new Disposable())
-    {
         return source;
-    }
 }
 
 static IEnumerable<int> Foo2(IEnumerable<int> source)
 {
     using (var disposable = new Disposable())
-    {
         foreach (var item in source)
-        {
             yield return item;
-        }
-    }
 }
 
 class Disposable : IDisposable
