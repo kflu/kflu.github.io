@@ -10,3 +10,6 @@ github_username: kflu
 
 # Build settings
 markdown: kramdown
+
+kramdown:
+    input: GFM
