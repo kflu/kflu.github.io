@@ -13,7 +13,7 @@ The official compiling document is [here][HowToCompile].  You'll need:
 
 SQLIte source comes in two flavors. The simpliest to compile is the
 "[amalgamation][Amalgamation]" source that's a preprocessed huge `sqlite3.c`.
-To compile this file, simple do:
+To compile this file, simply do:
 
     cl shell.c sqlite3.c
 
@@ -29,7 +29,8 @@ not properly mirrored, the source doesn't have `manifest.uuid`, which is
 critical to compilation. So make sure to use the official repository, or just
 download the source from the offical website.
 
-    nmake /f Makefile.msc sqlite3.c cl shell.c sqlite3.c
+    nmake /f Makefile.msc sqlite3.c
+    cl shell.c sqlite3.c
 
 Compiling the shell requires some generated headers like `parse.h`. If there is
 error during `nmake`, make sure `parse.h` is correctly generated and is
