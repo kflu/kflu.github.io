@@ -11,6 +11,11 @@ The official compiling document is [here][HowToCompile].  You'll need:
 - Some build utilities that're common on Linux, like `gawk`. On Windows use
   [Gow][Gow]. Add gow/bin to `PATH`.
 
+As a personal preference, I do not wish to install programs to pollute `PATH`.
+So before compiling I need to make sure the necessary tools are on the `PATH`:
+
+    set PATH=%PATH%;c:\gow\bin;c:\tcl\bin
+
 SQLIte source comes in two flavors. The simpliest to compile is the
 "[amalgamation][Amalgamation]" source that's a preprocessed huge `sqlite3.c`.
 To compile this file, simply do:
