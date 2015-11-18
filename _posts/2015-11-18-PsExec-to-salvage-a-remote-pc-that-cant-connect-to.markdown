@@ -1,6 +1,6 @@
 ---
 layout: post
-title: `PsExec` to salvage a remote PC that can't connect to
+title: PsExec to salvage a remote PC that can't connect to
 comments: true
 ---
 
