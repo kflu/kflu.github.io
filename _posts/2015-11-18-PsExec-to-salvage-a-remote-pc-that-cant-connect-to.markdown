@@ -27,4 +27,5 @@ I killed the [desktop window manager][dwm] with:
 
 The `PsExec` connection was lost (I guess `dwm.exe` is too important to be killed). And after a while, remote desktop worked again. I guess `dwm.exe` was restarted automatically.
 
+
 [dwm]: https://msdn.microsoft.com/en-us/library/windows/desktop/aa969540(v=vs.85).aspx
