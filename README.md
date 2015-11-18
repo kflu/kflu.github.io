@@ -8,7 +8,7 @@
 
 Post template:
 
-```
+```markdown
 ---
 layout: post
 title: YOUR_TITLE
