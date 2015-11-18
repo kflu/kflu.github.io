@@ -15,5 +15,6 @@ title: YOUR_TITLE
 comments: true
 ---
 
+[//]: # (Your post file name should be like yyyy-mm-dd-post-title.markdown)
 Post contents.
 ```
