@@ -1,30 +1,10 @@
 ---
 layout: post
-title: `PsExec` to salvage a remote PC that can't connect to
+title: Using Vagrant on Windows
 comments: true
 ---
 
-My work PC is a VM that is only accessible through remote desktop. Today after rebooting it, it can't be connected via remote desktop again. The remote desktop connection diaglog flashed with the usual "setting up connection" messages and quitted silently. I can't connect through hyper-V manager either. I guessed that some process is in a bad state and needed to be restarted. To do this, I'll need to log on remotely to kill the process. So I connected via `PsExec`:
+Vagrant is a virtualization technology for creating development environments. It is based on virtual machine technology and can be used with multiple VM "providers". The getting started guide is [here][start]. Use `vagrant init <boxname>` to initialize one. But note that not all "boxes" supports all providers (virtualbox, hyper-v, etc.). The default one in the getting started doc `hashicorp/precise32`, for example, does not support hyper-v (which comes with Windows since 8.1) as the provider. But the boxes can be explored [here][boxes]. And it doesn't take long to realize that `hashicorp/precise64` supports hyper-v.
 
-    PsExec -h -u <domain\user> \\<remote_machine> cmd.exe
-
-`-h` is for elevated access. Here's what it looked like once logged on:
-
-    PsExec v2.11 - Execute processes remotely
-    Copyright (C) 2001-2014 Mark Russinovich
-    Sysinternals - www.sysinternals.com
-    
-    Password:
-    
-    Microsoft Windows [Version 10.0.10240]
-    (c) 2015 Microsoft Corporation. All rights reserved.
-    
-    C:\WINDOWS\system32>
-
-I killed the [desktop window manager][dwm] with:
-
-    taskkill /im dwm.exe
-
-The `PsExec` connection was lost (I guess `dwm.exe` is too important to be killed). And after a while, remote desktop worked again. I guess `dwm.exe` was restarted automatically.
-
-[dwm]: https://msdn.microsoft.com/en-us/library/windows/desktop/aa969540(v=vs.85).aspx
+[start]: https://docs.vagrantup.com/v2/getting-started/index.html
+[boxes]: https://atlas.hashicorp.com/boxes/search
