@@ -1,4 +1,5 @@
 - Go to [kflu.github.io](http://kflu.github.io/)
+- The [Wiki](https://github.com/kflu/kflu.github.io/wiki) has many small tips
 - Edit [README](https://github.com/kflu/kflu.github.io/edit/master/README.md)
 - Edit [config](https://github.com/kflu/kflu.github.io/edit/master/_config.yml)
 - [Jeklly config](http://jekyllrb.com/docs/configuration/)
