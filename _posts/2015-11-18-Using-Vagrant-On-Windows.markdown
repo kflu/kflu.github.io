@@ -17,11 +17,11 @@ The __getting started guide__ is [here][start]. Use `vagrant init <boxname>` to 
 
 Once done, use `valgrant ssh` to log in to it. It uses `ssh` to log in. So make sure `ssh` is on `PATH`. If `git` is installed, it usually comes with a set of unix commands including `ssh`. So to bring `ssh` onto `PATH` in PowerShell:
 
-    PS> $env:path += ";C:\Program Files (x86)\Git\bin"
+    PS> $env:path += ";C:\Program Files\Git\bin"
 
 In `cmd.exe` use 
   
-    SET PATH=%PATH%;C:\Program Files (x86)\Git\bin
+    SET PATH=%PATH%;C:\Program Files\Git\bin
 
 With that done, you can log in and (finally!) be greeted with the Linux command line:
 
