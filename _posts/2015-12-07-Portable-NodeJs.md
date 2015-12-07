@@ -21,9 +21,9 @@ Now you can use node and npm from anywhere on the system:
 
 Armed with the portability of `Node.Js` runtime, deploying apps to systems without runtime is really straightforward:
 
-    1. Prepare a portable `Node.Js` runtime on the dev machine
-    2. Install all dependencies using `npm` locally
-    3. Develop the application in this portable runtime locally
-    4. Zip the portable runtime and deploy it
+1. Prepare a portable `Node.Js` runtime on the dev machine
+2. Install all dependencies using `npm` locally
+3. Develop the application in this portable runtime locally
+4. Zip the portable runtime and deploy it
 
 [portable-node]: https://github.com/nodejs/node-v0.x-archive/issues/3978
