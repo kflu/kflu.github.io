@@ -11,5 +11,5 @@ activities performed by a user, and I might want to know how that is correlated 
 There are many ways I can use that data. I might be interested in comparing the KPI by user gender first, then by the client types, or by the regions
 first, then by the genders, etc. This could all be done writing scripts. But Excel PivotTable can be handy in such scenarios.
 
-Suppose [this is my data source](https://github.com/kflu/kflu.github.io/blob/master/data/excel_pivot_table_data.csv). The following screencast illustrates the use of PivotTable to analyze it.
+Suppose [this is my data source](https://github.com/kflu/kflu.github.io/blob/master/data/excel-pivot-table.csv). The following screencast illustrates the use of PivotTable to analyze it.
 
