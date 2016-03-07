@@ -33,4 +33,12 @@ The following screencast illustrates the use of PivotTable to analyze it.
 
 ![using pivot table](https://cloud.githubusercontent.com/assets/1031978/13562034/6a3b0b1e-e3e8-11e5-8ff1-98a87e14db9b.gif)
 
+It is also important to note that, the "source data" that I used here is
+already a digest of raw data from the enormous amount of log files from our big
+data system. The log files have many columns than just the few "aspects" that I
+mentioned earlier. It is very important to understand and plan ahead the
+several aspects you will be interested in analyzing, so you can use big data
+systems like map-reduce to cook down them into the digest. In a summary, an
+end-to-end workflow of analyzing big data is usually like this:
 
+![data work flow](https://cloud.githubusercontent.com/assets/1031978/13562474/d50cb834-e3ed-11e5-8657-8ba115cf7290.png)
