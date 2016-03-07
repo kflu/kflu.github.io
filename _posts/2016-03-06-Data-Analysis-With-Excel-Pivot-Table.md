@@ -29,9 +29,7 @@ table options:
 
 ![pivot table options](https://cloud.githubusercontent.com/assets/1031978/13562171/29356eb4-e3ea-11e5-9d59-2f519279bb73.png)
 
-The following screencast illustrates the use of PivotTable to analyze it.
-
-![using pivot table](https://cloud.githubusercontent.com/assets/1031978/13562034/6a3b0b1e-e3e8-11e5-8ff1-98a87e14db9b.gif)
+[This screencast](https://cloud.githubusercontent.com/assets/1031978/13562034/6a3b0b1e-e3e8-11e5-8ff1-98a87e14db9b.gif) illustrates the use of PivotTable to analyze it.
 
 It is also important to note that, the "source data" that I used here is
 already a digest of raw data from the enormous amount of log files from our big
