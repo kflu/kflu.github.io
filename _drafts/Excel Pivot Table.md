@@ -13,3 +13,5 @@ first, then by the genders, etc. This could all be done writing scripts. But Exc
 
 Suppose [this is my data source](https://github.com/kflu/kflu.github.io/blob/master/data/excel-pivot-table.csv). The following screencast illustrates the use of PivotTable to analyze it.
 
+![using pivot table](https://github.com/kflu/kflu.github.io/blob/master/data/excel-pivot-table.gif)
+
