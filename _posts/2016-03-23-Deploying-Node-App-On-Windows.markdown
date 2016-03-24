@@ -5,6 +5,7 @@ comments: true
 ---
 
 Requirements:
+
 1. app can auto restart when crashed (via pm2)
 2. have clustering support (via pm2)
 3. can start on boot (via scheduled task)
