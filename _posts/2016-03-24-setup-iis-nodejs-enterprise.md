@@ -14,9 +14,9 @@ discussion, lets assume:
 # Approach 1 - Plain Vanilla Node.js
 Now, to achieve the above three goals, we can do it the plain vanilla way:
 
-1. host the app directly with Node.js http module, or anything built on top of that.
-2. in the app, authenticate with NTLM/Kerboros (maybe with [express-ntml](https://github.com/einfallstoll/express-ntlm) module)
-3. roll your own AD code to check if the authenticated user is a member of `DOMAIN\SecurityGRoup`. This step is extremely easy. Even doable in PowerShell. Proof in the last section. To use .NET in node, [edge.js](http://tjanczuk.github.io/edge/) can be used.
+1. Host the app directly with Node.js http module, or anything built on top of that.
+2. In the app, authenticate with NTLM/Kerboros (maybe with [express-ntml](https://github.com/einfallstoll/express-ntlm) module)
+3. Roll your own AD code to check if the authenticated user is a member of `DOMAIN\SecurityGRoup`. This step is extremely easy. Even doable in PowerShell. Proof in the last section. To use .NET in node, [edge.js](http://tjanczuk.github.io/edge/) can be used.
 
 Totally doable. But is it necessary? I think not.
 
