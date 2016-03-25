@@ -49,6 +49,8 @@ For this step I'm mainly following the guidance [here](https://github.com/tjancz
 
 # Check if a domain user is a member of a security group
 
+This [SO answer](http://stackoverflow.com/a/12029478/695964) helped.
+
 ```PowerShell
 Add-Type -AssemblyName System.DirectoryServices.AccountManagement
 $ctx = New-Object -TypeName System.DirectoryServices.AccountManagement.PrincipalContext -ArgumentList ([System.DirectoryServices.AccountManagement.ContextType]::Domain,"DOMAIN")
