@@ -27,7 +27,7 @@ orientation setting. Instead, use the below command:
     
 There is also a PDF utility command line tool called PDFtk, more specificaly [PDFtk server][PDFtkServer]. It's open source and seems to be of good quality and have a large user base. I might want to add it to my toolkit in the future, but for this scanning scenario, I don't need it yet.
 
-Rotating every page in a PDF 90 degrees counter-clockwise:
+Rotating every page in a PDF 90° counter-clockwise:
 
     pdftk old.pdf cat 1-endwest output new.pdf
 
