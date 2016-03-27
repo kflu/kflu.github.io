@@ -10,7 +10,11 @@ revert every other page. Installing the [MX920 series MP Drivers and software][d
 If the pages are scanned as JPEGs, they can be merged into PDF with ImageMagick:
 
     convert "*.jpg" output.pdf
-    
+
+In PowerShell, to convert a set of images whose paths are copied from Explorer ("copy as path", the copied paths are on separate lines), <CTRL-V> means pressing control-V to paste the copied paths. They are on separate lines but are in the PowerShell array and PowerShell knows to join them by space when invoking convert.exe.
+
+    PS> convert @(<CTRL-V>) output.pdf
+
 To avoid naming conflict with Windows builtin filesystem conversion tool (`convert.exe`), I renamed ImageMagick tool to `convertimg.exe`.
 
 Note the Canon scan utility is able to output PDF directly. But I like separte images files since I like to feed in several multi-page
