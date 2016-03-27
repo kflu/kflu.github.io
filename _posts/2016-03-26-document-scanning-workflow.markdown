@@ -25,8 +25,12 @@ orientation setting. Instead, use the below command:
 
     convert "*.jpg" -auto-orient output.pdf
     
-There is also a PDF utility command line tool called PDFtk, more specificaly [PDFtk server][PDFtkServer]. It's open source and seems to be of good quality
-and have a large user base. I might want to add it to my toolkit in the future, but for this scanning scenario, I don't need it yet.
+There is also a PDF utility command line tool called PDFtk, more specificaly [PDFtk server][PDFtkServer]. It's open source and seems to be of good quality and have a large user base. I might want to add it to my toolkit in the future, but for this scanning scenario, I don't need it yet.
+
+Rotating every page in a PDF 90 degrees counter-clockwise:
+
+    pdftk old.pdf cat 1-endwest output new.pdf
+
 
 [driver]: https://www.usa.canon.com/internet/portal/us/home/support/details/printers/inkjet-multifunction/mx-series-inkjet/mx922
 [PDFtkServer]: https://www.pdflabs.com/tools/pdftk-server/
