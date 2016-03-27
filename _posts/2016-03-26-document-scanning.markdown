@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Document Scanning Workflow with ImageMagick and Canon MX922 Scanner
+title: Scan Documents with ImageMagick and Canon MX922 Scanner
 comments: true
 ---
 
