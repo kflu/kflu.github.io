@@ -31,6 +31,11 @@ Rotating every page in a PDF 90° counter-clockwise:
 
     pdftk old.pdf cat 1-endwest output new.pdf
 
+Extracting page(s) from a PDF document:
+
+    pdftk original.pdf cat <start_page>-<end_page> output new.pdf
+
+Check out [other pdftk examples](https://www.pdflabs.com/docs/pdftk-cli-examples/).
 
 [driver]: https://www.usa.canon.com/internet/portal/us/home/support/details/printers/inkjet-multifunction/mx-series-inkjet/mx922
 [PDFtkServer]: https://www.pdflabs.com/tools/pdftk-server/
