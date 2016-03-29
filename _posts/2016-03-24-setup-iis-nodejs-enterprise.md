@@ -11,7 +11,7 @@ discussion, lets assume:
 * the users access the website at `http://machine`
 * the website should only be accessible by users within the ActiveDirectory security group `DOMAIN\SecurityGroup`
 
-# Approach 1 - Plain Vanilla Node.js
+## Approach 1 - Plain Vanilla Node.js
 Now, to achieve the above three goals, we can do it the plain vanilla way:
 
 1. Host the app directly with Node.js http module, or anything built on top of that.
@@ -21,11 +21,11 @@ Now, to achieve the above three goals, we can do it the plain vanilla way:
 Totally doable. But is it necessary? I think not.
 
 
-# Approach 2 - IIS + Node.js
+## Approach 2 - IIS + Node.js
 
 This approach delegates the entire authentication and authorization to the IIS. And uses [`iisnode`](https://github.com/tjanczuk/iisnode) to integrate the node.js app into IIS. I'm going to talk about the steps in detail. 
 
-## Setup IIS for Security Group Authorization
+### Setup IIS for Security Group Authorization
 
 For this step I'm mostly based on [this](http://serverfault.com/a/721855/309638) article. 
 
@@ -35,7 +35,7 @@ For this step I'm mostly based on [this](http://serverfault.com/a/721855/309638)
 4. Configure Authorization Rules to ONLY allow the security group. Specify it in the form of "DOMAIN\SecurityGroup"
 
 
-## Setup `iisnode`
+### Setup `iisnode`
 
 For this step I'm mainly following the guidance [here](https://github.com/tjanczuk/iisnode).
 
