@@ -8,6 +8,9 @@ Got disgusted by JS's dynamic typing nature (same thing I hated Python). So I
 gave typescript another try. The one thing I care most is the support for
 async/await syntax, which it already supported.
 
+Bare minimum TypeScript Setup
+====
+
 To setup a TypeScript project you need a `tsconfig.json`:
 
     {
@@ -24,10 +27,21 @@ To setup a TypeScript project you need a `tsconfig.json`:
         ]
     }
 
+Compilation is then done with a simple `tsc` command. This would compile your 
+scripts into `.js` files.
+
+Working with Type Definitions
+====
 
 To work with external libaries, you'll need to download a lot of `.d.ts` type
-definition files. That where `typings` comes into play. Install with `npm i -g
-typings`. Install type definitions with `typings install node --save --ambient`.
+definition files. That's where `typings` comes into play. Install with:
+
+    npm i -g typings
+
+Install type definitions with:
+
+    typings install node --save --ambient
+
 Installed defs are put under `typings` folder with the structure:
 
     typings
@@ -38,21 +52,16 @@ Installed defs are put under `typings` folder with the structure:
     │   └───ambient
     │       ├───bluebird
     │       │       index.d.ts
-    │       │
     │       ├───commander
     │       │       index.d.ts
-    │       │
     │       └───node
     │               index.d.ts
-    │
     └───main
         └───ambient
             ├───bluebird
             │       index.d.ts
-            │
             ├───commander
             │       index.d.ts
-            │
             └───node
                     index.d.ts
 
@@ -64,8 +73,9 @@ They contain the same content, simply referencing each installed `.d.ts` files:
     /// <reference path="main/ambient/node/index.d.ts" />
 
 
-Since they're duplicates to each other, in `tsconfig.json` you need to exclude
-the portion you don't intend to include when TypeScript compiles the project.
+Since they're duplicates to each other, and causes compilation warnings (a lot of them!)
+if not treated. Therefore in `tsconfig.json` you need to exclude
+the portion (either broser or server) you don't intend to include when TypeScript compiles the project.
 E.g., this project is a node project, so I excluded all browser ones by
 specifying in `tsconfig.json`:
 
