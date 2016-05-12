@@ -43,7 +43,7 @@ Some other tips (may also apply to general node.js developing):
 
 * Always test it out locally (`npm link`) before publishing
 * Always `npm pack` and examine the package before publishing
-* Always `git clean -x -n` before `npm pack` to eliminate unwanted files
+* Always `git clean -xd -n` before `npm pack` to eliminate unwanted files
 
 
 Another caveat that cost me an hour - in my generator template I have a
