@@ -28,9 +28,9 @@ So on any integer domain, negation should not cause overflow except for
     -int.MinValue == int.MinValue
 
 
-For two's complement representation, $b_31 b_30 ... b_0$, the most significant
-$b31$ represents the sign of the integer. That's the reason why negative
-numbers are more than positive numbers, as 0 takes a spot in the $0 b_30 ... b_0$
+For two's complement representation, $b_{31} b_{30} ... b_0$, the most significant
+$b_{31}$ represents the sign of the integer. That's the reason why negative
+numbers are more than positive numbers, as 0 takes a spot in the $0 b_{30} ... b_0$
 space.
 
 Negating a number $x$ can be done by computing $0 - x$, or more commonly, by
@@ -49,7 +49,7 @@ shift in 1 instead of 0 for the most significant bit, to maintain the sign.
 Note about integer shifting and two's complement - integer division are
 roundings towards 0. So $5/-1 = -5/2 = -2$, $-1/2 = 1/-2 = 0$. **This is different
 than right shifting**, rounding of negative numbers resulting from right shifts
-are towards **minus infinity** $-\inf$. **Divide by two and right shifts
+are towards **minus infinity** $-\infty$. **Divide by two and right shifts
 are only equivelent when the result to be rounded is positive**.
 
 Taking absolute values of negative numbers in two's complement can be achieve by
