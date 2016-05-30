@@ -63,5 +63,5 @@ integer works even for `int.MinValue`.
 
 
 # References
-[Cornell's two's complement course note](https://www.cs.cornell.edu/~tomf/notes/cps104/twoscomp.html)
-[Two's complement on Wikipedia](https://en.wikipedia.org/wiki/Two%27s_complement)
+* [Cornell's two's complement course note](https://www.cs.cornell.edu/~tomf/notes/cps104/twoscomp.html)
+* [Two's complement on Wikipedia](https://en.wikipedia.org/wiki/Two%27s_complement)
