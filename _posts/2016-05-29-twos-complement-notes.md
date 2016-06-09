@@ -47,7 +47,7 @@ depends on the sign of the number. For negative numbers, right shifting will
 shift in 1 instead of 0 for the most significant bit, to maintain the sign. 
 
 Note about integer shifting and two's complement - integer division are
-roundings towards 0. So $5/-1 = -5/2 = -2$, $-1/2 = 1/-2 = 0$. **This is different
+roundings towards 0. So $\frac{5}{-1} = \frac{-5}{2} = -2$, $\frac{-1}{2} = \frac{1}{-2} = 0$. **This is different
 than right shifting**, rounding of negative numbers resulting from right shifts
 are towards **minus infinity** $-\infty$. **Divide by two and right shifts
 are only equivelent when the result to be rounded is positive**.
