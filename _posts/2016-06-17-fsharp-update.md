@@ -4,12 +4,12 @@ title: Some F# Update
 comments: true
 ---
 
-I looked into [Ionide][Ionide] that enhances Atom/VSCode into an F# IDE. I'd
-say compared with other languages I've looked into recently, like Haskell and
-OCaml, the experience is pretty good. It has auto-complete, Paket and Fake
-integration. It is still not as good as VisualStudio though. One thing I miss
-a lot is "Go to definition" on a type in assemblies. With VisualStudio, it
-brings you to the "ILDASM" style metadata. This is greatly useful for
+I looked into [Ionide][Ionide] that enhances Atom/VSCode into an F# IDE. I'd say
+compared with the IDE toolings of other languages I've looked into recently, like
+Haskell and OCaml, the experience is pretty good. It has auto-complete, Paket
+and Fake integration. It is still not as good as VisualStudio though. One thing
+I miss a lot is "Go to definition" on a type in assemblies. With VisualStudio,
+it brings you to the "ILDASM" style metadata. This is greatly useful for
 exploration.
 
 But I still appreciate the cross-platform capability that the tool brings in -
