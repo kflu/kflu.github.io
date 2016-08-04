@@ -11748,7 +11748,7 @@ div#notebook {
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="nx">javascript</span>
@@ -11767,10 +11767,10 @@ div#notebook {
 
 
 
-<div id="086eda37-1321-4d27-8e25-13287b6083a9"></div>
+<div id="34fe9eb4-8f87-4859-9e75-5a0f8468771d"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#086eda37-1321-4d27-8e25-13287b6083a9');
+var element = $('#34fe9eb4-8f87-4859-9e75-5a0f8468771d');
 $.getScript('https://kmahelona.github.io/ipython_notebook_goodies/ipython_notebook_toc.js')
 </script>
 </div>
@@ -11821,7 +11821,7 @@ $.getScript('https://kmahelona.github.io/ipython_notebook_goodies/ipython_notebo
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
@@ -11845,6 +11845,7 @@ $.getScript('https://kmahelona.github.io/ipython_notebook_goodies/ipython_notebo
 <h1 id="Reading-CSV">Reading CSV<a class="anchor-link" href="#Reading-CSV">&#182;</a></h1><ul>
 <li><a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html">read_csv doc</a></li>
 <li><a href="http://pandas.pydata.org/pandas-docs/stable/io.html">IO doc</a></li>
+<li><a href="https://docs.python.org/2/library/csv.html#">Python CSV</a></li>
 </ul>
 
 </div>
@@ -11852,7 +11853,7 @@ $.getScript('https://kmahelona.github.io/ipython_notebook_goodies/ipython_notebo
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
@@ -11871,7 +11872,7 @@ $.getScript('https://kmahelona.github.io/ipython_notebook_goodies/ipython_notebo
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[11]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[34]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -11922,6 +11923,37 @@ $.getScript('https://kmahelona.github.io/ipython_notebook_goodies/ipython_notebo
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[50]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># supported CSV dialects:</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="n">csv</span><span class="o">.</span><span class="n">list_dialects</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[50]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;excel-tab&#39;, &#39;excel&#39;, &#39;unix&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -11933,7 +11965,7 @@ $.getScript('https://kmahelona.github.io/ipython_notebook_goodies/ipython_notebo
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># a columln is a Series:</span>
@@ -11962,7 +11994,7 @@ $.getScript('https://kmahelona.github.io/ipython_notebook_goodies/ipython_notebo
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">filter_vec</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Kind&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;10.20&quot;</span>  <span class="c1"># result: [True, True, False, ...]</span>
@@ -11977,7 +12009,7 @@ $.getScript('https://kmahelona.github.io/ipython_notebook_goodies/ipython_notebo
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[13]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[36]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12001,7 +12033,7 @@ Name: Kind, dtype: bool</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="n">filter_vec</span><span class="p">]</span>
@@ -12015,7 +12047,7 @@ Name: Kind, dtype: bool</pre>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[14]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[37]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12070,7 +12102,7 @@ Name: Kind, dtype: bool</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="p">[</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Kind&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="s1">&#39;10.27&#39;</span><span class="p">)</span> <span class="p">]</span>
@@ -12084,7 +12116,7 @@ Name: Kind, dtype: bool</pre>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[15]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[38]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12131,7 +12163,7 @@ Name: Kind, dtype: bool</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="p">[</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Kind&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;10.31&#39;</span><span class="p">)</span> <span class="o">|</span> \
@@ -12146,7 +12178,7 @@ Name: Kind, dtype: bool</pre>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[16]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[39]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12200,7 +12232,7 @@ Name: Kind, dtype: bool</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;NewCol&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Kind&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="s1">&#39;10.27&#39;</span>
@@ -12281,7 +12313,7 @@ Name: Kind, dtype: bool</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Kind&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
@@ -12325,7 +12357,7 @@ Name: Kind, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Kind&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
@@ -12339,7 +12371,7 @@ Name: Kind, dtype: int64</pre>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[19]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[42]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12374,7 +12406,7 @@ Name: Kind, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">aveCount</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;NormalCount&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;TotalCount&#39;</span><span class="p">]</span>
@@ -12390,7 +12422,7 @@ Name: Kind, dtype: int64</pre>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[20]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[43]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12445,7 +12477,7 @@ Name: Kind, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">grouped</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Kind&#39;</span><span class="p">)</span> <span class="c1"># or [&#39;Kind&#39;, &#39;NewCol&#39;]</span>
@@ -12523,7 +12555,7 @@ GROUP CONTENT:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># You must select a single column before agg():</span>
@@ -12540,7 +12572,7 @@ GROUP CONTENT:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[22]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[45]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12591,7 +12623,7 @@ GROUP CONTENT:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">group</span><span class="p">):</span>
@@ -12609,7 +12641,7 @@ GROUP CONTENT:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># alternatively, construct per-column aggregation then combine them into a DataFrame:</span>
@@ -12720,7 +12752,7 @@ Name: NormalCount, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># To order the columns:</span>
@@ -12810,7 +12842,7 @@ Name: NormalCount, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
@@ -12828,80 +12860,80 @@ Name: NormalCount, dtype: int64</pre>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[26]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[49]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
         <style  type="text/css" >
         
         
-            #T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow0_col0 {
+            #T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow0_col0 {
             
                 background-color:  #9dd79d;
             
             }
         
-            #T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow0_col1 {
+            #T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow0_col1 {
             
                 background-color:  #d3f5d3;
             
             }
         
-            #T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow0_col2 {
+            #T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow0_col2 {
             
                 background-color:  #e5ffe5;
             
             }
         
-            #T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow1_col0 {
+            #T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow1_col0 {
             
                 background-color:  #92d192;
             
             }
         
-            #T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow1_col1 {
+            #T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow1_col1 {
             
                 background-color:  #acdfac;
             
             }
         
-            #T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow1_col2 {
+            #T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow1_col2 {
             
                 background-color:  #a0d9a0;
             
             }
         
-            #T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow2_col0 {
+            #T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow2_col0 {
             
                 background-color:  #008000;
             
             }
         
-            #T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow2_col1 {
+            #T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow2_col1 {
             
                 background-color:  #008000;
             
             }
         
-            #T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow2_col2 {
+            #T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow2_col2 {
             
                 background-color:  #8acc8a;
             
             }
         
-            #T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow3_col0 {
+            #T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow3_col0 {
             
                 background-color:  #e5ffe5;
             
             }
         
-            #T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow3_col1 {
+            #T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow3_col1 {
             
                 background-color:  #e5ffe5;
             
             }
         
-            #T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow3_col2 {
+            #T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow3_col2 {
             
                 background-color:  #008000;
             
@@ -12909,7 +12941,7 @@ Name: NormalCount, dtype: int64</pre>
         
         </style>
 
-        <table id="T_3074d9fa_59da_11e6_be3a_9a5fd3327a3d" None>
+        <table id="T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3d" None>
         
 
         <thead>
@@ -12943,64 +12975,64 @@ Name: NormalCount, dtype: int64</pre>
             
             <tr>
                 
-                <th id="T_3074d9fa_59da_11e6_be3a_9a5fd3327a3d" class="row_heading level0 row0">
+                <th id="T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3d" class="row_heading level0 row0">
                     10.20
                 
-                <td id="T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow0_col0" class="data row0 col0">
+                <td id="T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow0_col0" class="data row0 col0">
                     27
                 
-                <td id="T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow0_col1" class="data row0 col1">
+                <td id="T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow0_col1" class="data row0 col1">
                     7
                 
-                <td id="T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow0_col2" class="data row0 col2">
+                <td id="T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow0_col2" class="data row0 col2">
                     0.259259
                 
             </tr>
             
             <tr>
                 
-                <th id="T_3074d9fa_59da_11e6_be3a_9a5fd3327a3d" class="row_heading level2 row1">
+                <th id="T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3d" class="row_heading level2 row1">
                     10.24
                 
-                <td id="T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow1_col0" class="data row1 col0">
+                <td id="T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow1_col0" class="data row1 col0">
                     29
                 
-                <td id="T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow1_col1" class="data row1 col1">
+                <td id="T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow1_col1" class="data row1 col1">
                     9
                 
-                <td id="T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow1_col2" class="data row1 col2">
+                <td id="T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow1_col2" class="data row1 col2">
                     0.310345
                 
             </tr>
             
             <tr>
                 
-                <th id="T_3074d9fa_59da_11e6_be3a_9a5fd3327a3d" class="row_heading level2 row2">
+                <th id="T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3d" class="row_heading level2 row2">
                     10.27
                 
-                <td id="T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow2_col0" class="data row2 col0">
+                <td id="T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow2_col0" class="data row2 col0">
                     55
                 
-                <td id="T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow2_col1" class="data row2 col1">
+                <td id="T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow2_col1" class="data row2 col1">
                     18
                 
-                <td id="T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow2_col2" class="data row2 col2">
+                <td id="T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow2_col2" class="data row2 col2">
                     0.327273
                 
             </tr>
             
             <tr>
                 
-                <th id="T_3074d9fa_59da_11e6_be3a_9a5fd3327a3d" class="row_heading level2 row3">
+                <th id="T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3d" class="row_heading level2 row3">
                     10.31
                 
-                <td id="T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow3_col0" class="data row3 col0">
+                <td id="T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow3_col0" class="data row3 col0">
                     14
                 
-                <td id="T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow3_col1" class="data row3 col1">
+                <td id="T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow3_col1" class="data row3 col1">
                     6
                 
-                <td id="T_3074d9fa_59da_11e6_be3a_9a5fd3327a3drow3_col2" class="data row3 col2">
+                <td id="T_5ef8e5f6_59dc_11e6_8483_9a5fd3327a3drow3_col2" class="data row3 col2">
                     0.428571
                 
             </tr>
