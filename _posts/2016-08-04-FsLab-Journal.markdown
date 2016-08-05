@@ -12,6 +12,12 @@ is that it's statically typed and IDE supports are awesome. In order to use it:
 2. Unzip and open the `.fsproj` file to start editing in Visual Studio
 3. The web page is automatically updated (there's a several seconds delay)
 
+
+A Few Notes
+----
+FSharp.Formatting lets you register custom object output by [`RegisterTransformation`](https://tpetricek.github.io/FSharp.Formatting/evaluation.html#Custom-formatting-functions). Here's [Deedle's implementation](https://github.com/BlueMountainCapital/Deedle/blob/5d347cf9329d427e3872c1197303f20554e37a32/docs/tools/formatters.fsx#L288) (e.g., frame as table, etc.). But currently it doesn't let you do table cells conditional formatting.
+
+
 References
 ----
 * [FsLab Journal](http://fslab.org/download/)
