@@ -16,3 +16,4 @@ References
 ----
 * [FsLab Journal](http://fslab.org/download/)
 * [FShapr.Formatting](http://tpetricek.github.io/FSharp.Formatting/)
+* [Deedle tutorial](http://bluemountaincapital.github.io/Deedle/tutorial.html)
