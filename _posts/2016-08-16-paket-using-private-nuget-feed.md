@@ -11,6 +11,8 @@ Paket can be set up (per project) to use private nuget feeds that require authen
 
 Now you can run `paket.exe install`.
 
+Note that nuget credential provider is a better way to manage credentials. But currently paket doesn't support that. 
+
 References
 ====
 
