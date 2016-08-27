@@ -107,8 +107,21 @@ let result =
 printfn "%A" result
 ```
 
-I have difficulty using it in a F# script file with paket. The problem is seems that all required dependent DLLs need to be explicitly referenced using `#r`. This is practically impossible as the large amount of dependecies Roslyn has. Errors are like:
+I have difficulty using it in a F# script file with paket. The problem is seems that the loaded Roslyn assemblies requires some dependencies to be referenced, for example, the below one: 
 
 `The type 'CancellationToken' is required here and is unavailable. You must add a reference to assembly 'System.Threading.Tasks, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.`
+
+But the `System.THreading.Tasks` package that paket pulled seems to be a stub without actual assemblies. According to [this issue](https://github.com/Microsoft/visualfsharp/issues/1311), Don mentioned the "fix" was to reference `#r "System.Threading.Tasks"`. That actually works! So the entire reference setup that makes this work is:
+
+```fsharp
+#r "System.Threading.Tasks"
+#r "System.Text.Encoding"
+#r "System.Collections.Immutable"
+
+#r @"..\packages\Microsoft.CodeAnalysis.CSharp\lib\net45\Microsoft.CodeAnalysis.CSharp.dll"
+#r @"..\packages\Microsoft.CodeAnalysis.Common\lib\net45\Microsoft.CodeAnalysis.dll"
+#r @"..\packages\Microsoft.CodeAnalysis.CSharp.Scripting\lib\dotnet\Microsoft.CodeAnalysis.CSharp.Scripting.dll"
+#r @"..\packages\Microsoft.CodeAnalysis.Scripting.Common\lib\dotnet\Microsoft.CodeAnalysis.Scripting.dll"
+```
 
 [1]: https://github.com/dotnet/roslyn/wiki/Scripting-API-Samples#prevstate
