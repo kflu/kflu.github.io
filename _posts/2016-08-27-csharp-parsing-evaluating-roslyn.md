@@ -82,4 +82,29 @@ References
 * [Roslyn AST to Linq expression tree? This may not be necessary anymore since Roslyn can be fully functional](https://social.msdn.microsoft.com/Forums/vstudio/en-US/e6364fec-29c5-4f1d-95ce-796feb25a8a9/is-it-possible-to-convert-a-roslyn-ast-expression-tree-to-a-linq-expression-tree-is-there-a-roslyn?forum=roslyn)
 * [Roslyn scripting scenarios][1]
 
+Using it in F#
+====
+Same thing can be used in F#. I have difficulty using it in a F# script file with paket (either one of them has problem). But I can successfully use it in a F# console application with nuget (via Visual Studio).
+
+```
+open Microsoft.CodeAnalysis
+open Microsoft.CodeAnalysis.CSharp
+open Microsoft.CodeAnalysis.CSharp.Scripting
+
+let ast = CSharpSyntaxTree.ParseText("""var x = new DateTime(2016,12,1);""")
+printfn "%s" (ast.ToString())
+
+let result = 
+    async {
+        let! s = CSharpScript.RunAsync("""using System;""") |> Async.AwaitTask
+        let! s = s.ContinueWithAsync("""var x = "my/" + string.Join("_", "a", "b", "c") + ".ss";""") |> Async.AwaitTask
+        let! s = s.ContinueWithAsync("""var y = "my/" + @x;""") |> Async.AwaitTask
+        let! s = s.ContinueWithAsync("""y""") |> Async.AwaitTask
+        return s.ReturnValue
+    }
+    |> Async.RunSynchronously
+
+printfn "%A" result
+```
+
 [1]: https://github.com/dotnet/roslyn/wiki/Scripting-API-Samples#prevstate
