@@ -84,7 +84,7 @@ References
 
 Using it in F#
 ====
-Same thing can be used in F#. I have difficulty using it in a F# script file with paket (either one of them has problem). But I can successfully use it in a F# console application with nuget (via Visual Studio).
+Same thing can be used in F#. I can successfully use it in a F# console application with nuget (via Visual Studio).
 
 ```fsharp
 open Microsoft.CodeAnalysis
@@ -106,5 +106,9 @@ let result =
 
 printfn "%A" result
 ```
+
+I have difficulty using it in a F# script file with paket. The problem is seems that all required dependent DLLs need to be explicitly referenced using `#r`. This is practically impossible as the large amount of dependecies Roslyn has. Errors are like:
+
+`The type 'CancellationToken' is required here and is unavailable. You must add a reference to assembly 'System.Threading.Tasks, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.`
 
 [1]: https://github.com/dotnet/roslyn/wiki/Scripting-API-Samples#prevstate
