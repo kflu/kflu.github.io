@@ -53,4 +53,3 @@ References
 * [Roslyn scripting](https://github.com/dotnet/roslyn/wiki/Scripting-API-Samples#expr)
 * [Roslyn syntax analysis aka parsing](https://github.com/dotnet/roslyn/wiki/Getting-Started-C%23-Syntax-Analysis)
 * [Roslyn AST to Linq expression tree? This may not be necessary anymore since Roslyn can be fully functional](https://social.msdn.microsoft.com/Forums/vstudio/en-US/e6364fec-29c5-4f1d-95ce-796feb25a8a9/is-it-possible-to-convert-a-roslyn-ast-expression-tree-to-a-linq-expression-tree-is-there-a-roslyn?forum=roslyn)
-* 
