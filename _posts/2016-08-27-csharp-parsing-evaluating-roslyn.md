@@ -65,6 +65,7 @@ namespace GettingStartedCS
 ```
 
 The above code give the output:
+
 ```
 var x = new DateTime(2016,12,1);
 inspecting defined variables:
