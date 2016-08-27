@@ -107,6 +107,8 @@ let result =
 printfn "%A" result
 ```
 
+### Problem with references in F# scripts
+
 I have difficulty using it in a F# script file with paket. The problem is seems that the loaded Roslyn assemblies requires some dependencies to be referenced, for example, the below one: 
 
 `The type 'CancellationToken' is required here and is unavailable. You must add a reference to assembly 'System.Threading.Tasks, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.`
