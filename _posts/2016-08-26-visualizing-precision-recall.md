@@ -41,7 +41,7 @@ When the data has **"skewed classes"**, precision is not a good performance metr
 
 We can have a cheating algorithm to predict everything as negative (imagine the horizontal threshold line to be moved way up), and the accuracy will be high (due to high TN). But as there are no positive classification, the recall is 0.
 
-That's way precision and recall is a more balanced measurement for performance. An ideal algorithm should have high precision and recall values. But for a given algorithm, the precision and recall is traded off by setting the classification threshold higher or lower. For example, for the same data shown as above, we could choose a threshold so the algorithm only classifies positive when it's very confident:
+That's why precision and recall is a more balanced measurement for performance. An ideal algorithm should have high precision and recall values. But for a given algorithm, the precision and recall is traded off by setting the classification threshold higher or lower. For example, for the same data shown as above, we could choose a threshold so the algorithm only classifies positive when it's very confident:
 
 ![confident][pic3]
 
