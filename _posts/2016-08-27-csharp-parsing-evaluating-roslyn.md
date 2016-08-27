@@ -21,7 +21,7 @@ throws an exception:
 
 Since the code snippet needs to be "self-contained", namespace needs to be properly used. Below is a fully working example of the parsing and evaluating.
 
-```
+```csharp
 using System;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
@@ -86,7 +86,7 @@ Using it in F#
 ====
 Same thing can be used in F#. I have difficulty using it in a F# script file with paket (either one of them has problem). But I can successfully use it in a F# console application with nuget (via Visual Studio).
 
-```
+```fsharp
 open Microsoft.CodeAnalysis
 open Microsoft.CodeAnalysis.CSharp
 open Microsoft.CodeAnalysis.CSharp.Scripting
