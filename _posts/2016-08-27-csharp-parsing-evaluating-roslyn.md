@@ -126,4 +126,6 @@ But the `System.THreading.Tasks` package that paket pulled seems to be a stub wi
 #r @"..\packages\Microsoft.CodeAnalysis.Scripting.Common\lib\dotnet\Microsoft.CodeAnalysis.Scripting.dll"
 ```
 
+**Still doesn't work. It seems `System.Reflection.Metadata` had a mismatching type `System.Collections.Immutable.ImmutableArray` in `System.Collections.Immutable.dll`**
+
 [1]: https://github.com/dotnet/roslyn/wiki/Scripting-API-Samples#prevstate
