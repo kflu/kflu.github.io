@@ -109,23 +109,33 @@ printfn "%A" result
 
 ### Problem with references in F# scripts
 
-I have difficulty using it in a F# script file with paket. The problem is seems that the loaded Roslyn assemblies requires some dependencies to be referenced, for example, the below one: 
+I have difficulty using it in a F# script file with paket. The problem is runtime error that it can't load `System.Collections.Immutable` or the loaded `System.Collections.Immutable` is missing a methd/class. It turns out paket pulls doesn stable release for the below **direct** dependencies that caused the issue. If I switch to use prerelease, the problem is gone.
 
-`The type 'CancellationToken' is required here and is unavailable. You must add a reference to assembly 'System.Threading.Tasks, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.`
+* Microsoft.CodeAnalysis.CSharp
+* Microsoft.CodeAnalysis.CSharp.Scripting
 
-But the `System.THreading.Tasks` package that paket pulled seems to be a stub without actual assemblies. According to [this issue](https://github.com/Microsoft/visualfsharp/issues/1311), Don mentioned the "fix" was to reference `#r "System.Threading.Tasks"`. That actually works! So the entire reference setup that makes this work is:
+Here're the necessary setting for the `fsx` to work:
 
 ```fsharp
+#I @"..\packages\Microsoft.CodeAnalysis.Common\lib\net45\"
+#I @"..\packages\Microsoft.CodeAnalysis.CSharp\lib\net45\"
+#I @"..\packages\Microsoft.CodeAnalysis.CSharp.Scripting\lib\dotnet\"
+#I @"..\packages\Microsoft.CodeAnalysis.Scripting.Common\lib\dotnet\"
+#I @"..\packages\System.Collections.Immutable\lib\netstandard1.0\"
+#I @"..\packages\System.Reflection.Metadata\lib\portable-net45+win8\"
+#I @"..\packages\FParsec\lib\net40-client\"
+
+// to make intellisense happy
+#r "System.Collections.Immutable"
 #r "System.Threading.Tasks"
 #r "System.Text.Encoding"
-#r "System.Collections.Immutable"
 
-#r @"..\packages\Microsoft.CodeAnalysis.CSharp\lib\net45\Microsoft.CodeAnalysis.CSharp.dll"
-#r @"..\packages\Microsoft.CodeAnalysis.Common\lib\net45\Microsoft.CodeAnalysis.dll"
-#r @"..\packages\Microsoft.CodeAnalysis.CSharp.Scripting\lib\dotnet\Microsoft.CodeAnalysis.CSharp.Scripting.dll"
-#r @"..\packages\Microsoft.CodeAnalysis.Scripting.Common\lib\dotnet\Microsoft.CodeAnalysis.Scripting.dll"
+#r "Microsoft.CodeAnalysis.dll"
+#r "Microsoft.CodeAnalysis.CSharp.dll"
+#r "Microsoft.CodeAnalysis.CSharp.Scripting.dll"
+#r "Microsoft.CodeAnalysis.Scripting.dll"
+#r "FParsec.dll"
 ```
 
-**Still doesn't work. It seems `System.Reflection.Metadata` had a mismatching type `System.Collections.Immutable.ImmutableArray` in `System.Collections.Immutable.dll`**
 
 [1]: https://github.com/dotnet/roslyn/wiki/Scripting-API-Samples#prevstate
