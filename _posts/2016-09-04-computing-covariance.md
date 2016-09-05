@@ -12,7 +12,7 @@ This can be easily understood - $\Sigma_{ij}$ is the covariance between i-th and
 
 To my suprise, the other way of estimating the covariance is:
 
-$$ \Sigma = \sum_{i=1}^{m}{ X^{(i)}^T \times X^{(i)} } $$
+$$ \Sigma = \sum_{i=1}^m { X^{(i)}^T \times X^{(i)} } $$
 
 
 
