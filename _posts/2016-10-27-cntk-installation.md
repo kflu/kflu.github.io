@@ -42,5 +42,3 @@ python
 ** to display conda environment information **
 
     conda info --all
-
-** to 
