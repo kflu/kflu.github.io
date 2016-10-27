@@ -39,6 +39,6 @@ python
 
 ## Notes on Anaconda environment
 
-** to display conda environment information **
+**to display conda environment information**
 
     conda info --all
