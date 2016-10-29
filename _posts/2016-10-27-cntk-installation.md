@@ -52,4 +52,9 @@ PyCharm use the Anaconda CNTK environment:
 2. in PyCharm -> settings -> project -> project interpreter -> "add local", put in the desired python executable path
 3. note that CNTK relies on a bunch of environment variables to work, e.g., `MSMPI_LIB32`, `MSMPI_LIB64`, so **always launch PyCharm from the anaconda console** to ensure necessary environment variables are inherited by the IDE. If this is not set up properly, interpreter throws when `import cntk`, complaining module cannot be loaded.
 
+## CNTK development workflow
 
+1. launch Anaconda console
+2. `activate cntk-py34`
+3. (optional) launch powershell
+4. launch IDE from anaconda environment
