@@ -1,6 +1,6 @@
 ---
 layout: post
-title: CNTK installation
+title: CNTK installation and IDE setup
 comments: true
 ---
 
@@ -42,3 +42,14 @@ python
 **to display conda environment information**
 
     conda info --all
+
+## IDE setup
+
+Best autocompletion support for Python that I've seen so far is PyCharm. Python Tools for Visual Studio (PTVS), for example, is not able to infer function signature on `cntk.ops.input_variable` and others. Install the free PyCharm community edition is sufficient. To let 
+PyCharm use the Anaconda CNTK environment:
+
+1. find the python executable python by using `conda info --all`. 
+2. in PyCharm -> settings -> project -> project interpreter -> "add local", put in the desired python executable path
+3. note that CNTK relies on a bunch of environment variables to work, e.g., `MSMPI_LIB32`, `MSMPI_LIB64`, so **always launch PyCharm from the anaconda console** to ensure necessary environment variables are inherited by the IDE.
+
+
