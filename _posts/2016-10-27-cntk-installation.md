@@ -10,7 +10,7 @@ Followed [this manual instruction](https://github.com/Microsoft/CNTK/wiki/CNTK-B
 * [Visual C++ Redistributable Package for Visual Studio 2012](https://www.microsoft.com/en-us/download/details.aspx?id=30679)
 * [MPI](https://www.microsoft.com/en-us/download/details.aspx?id=49926)
 
-I forgot to install MPI and later when `import cntk` it failed loading the `_cntk_py.pyd` module, costing me a lot of time.
+I forgot to install MPI and later when `import cntk` it failed loading the `_cntk_py.pyd` module, costing me a lot of time. This error can also happen if you installed a wrong target version of CNTK, e.g., you installed CNTK GPU on a host without GPU.
 
 Then create a conda environment for it:
 
