@@ -117,6 +117,19 @@ In hexo `_config.yml`:
 `__GITHUB_TOKEN__` is replaced with `sed` by travis script.
 
 
+## References
+- [Github pages][ghp]
+- [Github Access tokens](https://github.com/settings/tokens)
+- [Static site generators][gens]
+- Hexo
+    - [setup][hexosetup]
+    - [config][hexoconfig]
+    - [themes](https://hexo.io/themes/)
+- Travis
+    - [Configure the build](https://docs.travis-ci.com/user/customizing-the-build/)
+    - [Encrypting data in `travis.yml` (not used)](https://docs.travis-ci.com/user/encryption-keys/)
+
+
 [ghp]: https://pages.github.com/
 [gens]: http://www.staticgen.com/
 [hexosetup]: https://hexo.io/docs/setup.html
