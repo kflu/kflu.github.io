@@ -4,6 +4,20 @@ title: Auto Deploy Hexo.io to Github Pages With Travis CI
 comments: true
 ---
 
+## References
+- [Github pages][ghp]
+- [Github Access tokens](https://github.com/settings/tokens)
+- [Static site generators][gens]
+- Hexo
+    - [setup][hexosetup]
+    - [config][hexoconfig]
+    - [themes](https://hexo.io/themes/)
+- Travis
+    - [Configure the build](https://docs.travis-ci.com/user/customizing-the-build/)
+    - [Encrypting data in `travis.yml` (not used)](https://docs.travis-ci.com/user/encryption-keys/)
+
+_This article is inspired by [this](http://www.tuicool.com/articles/AZf2Yzb) and [this](https://xin053.github.io/2016/06/05/Travis%20CI%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2Hexo%E5%8D%9A%E5%AE%A2%E5%88%B0Github/)._
+
 With Travis CI, every time new change is made to the site repo, a build will kick off
 on Travis and deploy the updated site to Github pages. This is not a trivial process, so
 this article describes the idea behind each piece and documents details.
@@ -115,19 +129,6 @@ In hexo `_config.yml`:
 
 
 `__GITHUB_TOKEN__` is replaced with `sed` by travis script.
-
-
-## References
-- [Github pages][ghp]
-- [Github Access tokens](https://github.com/settings/tokens)
-- [Static site generators][gens]
-- Hexo
-    - [setup][hexosetup]
-    - [config][hexoconfig]
-    - [themes](https://hexo.io/themes/)
-- Travis
-    - [Configure the build](https://docs.travis-ci.com/user/customizing-the-build/)
-    - [Encrypting data in `travis.yml` (not used)](https://docs.travis-ci.com/user/encryption-keys/)
 
 
 [ghp]: https://pages.github.com/
