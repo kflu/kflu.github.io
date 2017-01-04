@@ -2,6 +2,7 @@
 layout: post
 title: Ubuntu on Gen 2 Hyper-V 
 comments: true
+date: 2016-12-19
 ---
 
 All setup should be straightforward except getting the network to work. After spending a lot of time, [this guide worked](http://help.yoyogames.com/hc/en-us/articles/216754468-Setup-An-Ubuntu-Virtual-Machine-Using-Hyper-V).

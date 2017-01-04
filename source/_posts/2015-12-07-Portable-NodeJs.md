@@ -2,6 +2,7 @@
 layout: post
 title: Portable Node.Js Installation
 comments: true
+date: 2015-12-07
 ---
 
 I've been looking for a way to deploy Node.Js apps onto machines that doesn't have the Node.Js runtime installed, more particularly, on Windows machines. I've been looked into various tools to "package" the app, the runtime, and all its dependencies into a single executable. None of those tools work properly. Luckily, it is much easier than I thought to setup a portable Node.Js environment, e.g. all through files copies and without registry change. [This is the original discussion inspired me][portable-node].

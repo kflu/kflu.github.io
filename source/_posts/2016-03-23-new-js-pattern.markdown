@@ -2,6 +2,7 @@
 layout: post
 title: New Javascript direction
 comments: true
+date: 2016-03-23
 ---
 
 This is to quickly summerize my recent thinking into using JS. There're many options, coffeescript, typescript, even livescript. Liked all of them. But I in general like something plain. So this suites me better:

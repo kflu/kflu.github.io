@@ -2,6 +2,7 @@
 layout: post
 title: Enumerable and Disposable
 comments: true
+date: 2015-10-02
 ---
 
 Enumerables are deferred executions. This can be problematic when used with Disposables as the latter are tend to be disposed prematurely. The below example shows the difference. `ildasm` shows that the compiler generates a class that implements `IEnumerable<int>` for `Foo2` behind the scene, and returns an instance of it for `Foo2`. Because of that, the `using` is embedded into that instance so the constructing and disposal of `Disposable` is carried on by the deferred executed implementation. On the contrary, `Foo` just returns the source enumerable as a pass through, at the time it's executed, the disposal already happened. This causes the problem that if the returned enumerable depends on the disposable, at the time the enumerable is extracted from, the disposable is in the disposed state.

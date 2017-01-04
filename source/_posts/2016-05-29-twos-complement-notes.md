@@ -2,6 +2,7 @@
 title: Two's complement notes
 layout: post
 comments: true
+date: 2016-05-29
 ---
 
 In the following discussion, I assume the cardinality of the number set is
@@ -9,7 +10,7 @@ In the following discussion, I assume the cardinality of the number set is
 
 A visualization of the integers on the number domain. 
 
-![visualization](https://raw.githubusercontent.com/kflu/kflu.github.io/master/data/twos-complement-visualization.png)
+![visualization](twos-complement-visualization.png)
 
 
 There's always one more negative numbers than the positive numbers. That's

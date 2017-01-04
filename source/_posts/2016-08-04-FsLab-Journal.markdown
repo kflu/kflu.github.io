@@ -2,6 +2,7 @@
 layout: post
 title: FsLab Journal
 comments: true
+date: 2016-08-04
 ---
 
 FsLab Journal is a literate programming tool based on FSharp.Formatting. It's sort of like Jupyter notebook. The advantage of it over IPython notebook

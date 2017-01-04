@@ -2,6 +2,7 @@
 layout: post
 title: Paket - using private nuget feed
 comments: true
+date: 2016-08-16
 ---
 
 Paket can be set up (per project) to use private nuget feeds that require authentication. Here's how:

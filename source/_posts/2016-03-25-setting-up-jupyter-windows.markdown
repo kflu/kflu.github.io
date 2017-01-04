@@ -2,6 +2,7 @@
 layout: post
 title: Setting up Jupyter on Windows
 comments: true
+date: 2016-03-25
 ---
 
 Installing any python module on Windows is an advanture. Fuck Python. It's no exception for Jupyter.

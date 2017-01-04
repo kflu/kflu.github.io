@@ -2,6 +2,7 @@
 layout: post
 title: Deploy Node.js web app with Enterprise Network Authentication
 comments: true
+date: 2016-03-24
 ---
 
 This article describes how to deploy node.js web app to be accessible in a Windows domain controlled (ActiveDirectory) network. For the ease of

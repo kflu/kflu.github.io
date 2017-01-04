@@ -2,6 +2,7 @@
 layout: post
 title: Using Vagrant on Windows
 comments: true
+date: 2015-11-18
 ---
 
 Vagrant is a virtualization technology for creating development environments. It is based on virtual machine technology and can be used with multiple VM providers. Not surprisingly, for a technology rised up from Linux ecosystem, even if it claims to be cross-platform, setting it up on Windows won't be easy. This article documents the steps to use Vagrant on Windows, the issues found, and the way to address them.

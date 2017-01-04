@@ -2,6 +2,7 @@
 layout: post
 title: C# parsing and evaluating using Roslyn
 comments: true
+date: 2016-08-27
 ---
 
 Using Roslyn you can parse c# code into AST and given a c# code snippet, it can be evaluated. You need the following binaries:

@@ -2,6 +2,7 @@
 layout: post
 title: Sending email with raw SMTP (sending emails without an account)
 comments: true
+date: 2016-05-10
 ---
 
 I often need to send notification emails to myself from applications. It's not really reliable to authenticate your existing email account

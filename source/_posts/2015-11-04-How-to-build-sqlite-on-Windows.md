@@ -2,6 +2,7 @@
 layout: post
 title: How to build SQLite on Windows
 comments: true
+date: 2015-11-04
 ---
 
 The official compiling document is [here][HowToCompile].  You'll need:

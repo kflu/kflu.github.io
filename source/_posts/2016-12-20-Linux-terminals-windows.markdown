@@ -2,6 +2,7 @@
 layout: post
 title: Linux, Terminals, Windows
 comments: true
+date: 2016-12-20
 ---
 
 ## Mintty

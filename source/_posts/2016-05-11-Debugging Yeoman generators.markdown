@@ -2,6 +2,7 @@
 layout: post
 title: Debugging Yeoman generators
 comments: true
+date: 2016-05-11
 ---
 
 I found myself sending much more time than I want to make one of my Yeoman

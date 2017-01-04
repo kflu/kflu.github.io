@@ -2,6 +2,7 @@
 layout: post
 title: Computing covariance
 comments: true
+date: 2016-09-04
 ---
 
 For a given m x n matrix $X = {X_{ij}}$, where each row is a sample, each column is a **zero-mean** feature, the normal way of computing covariance matrix is
@@ -18,7 +19,7 @@ where $X^{(i)}$ is a 1xn row vector representing the i-th observed sample in the
 
 The below graph demonstrates the squared estimation errors of these two methods compared with the `cov()` function.
 
-![comparison](https://github.com/kflu/kflu.github.io/raw/master/data/computing_covariance.png)
+![comparison](computing_covariance.png)
 
 The two lines overlaps perfectly implying they're fundamentally equivelent. And as the sample size gets large, the estimation error gets small. 
 

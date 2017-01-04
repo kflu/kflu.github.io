@@ -2,6 +2,7 @@
 layout: post
 title: Some F# Update
 comments: true
+date: 2016-06-17
 ---
 
 I looked into [Ionide][Ionide] that enhances Atom/VSCode into an F# IDE. I'd say

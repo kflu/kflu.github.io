@@ -2,6 +2,7 @@
 layout: post
 title: Visualizing Precision Recall
 comments: true
+date: 2016-08-26
 ---
 
 Andrew Ng's [lecture on error analysis of Machine Learning][ml_course] gave a good explanation on Precision and Recall. Here I have a visualization of the concept.
@@ -52,6 +53,6 @@ $$ F_1 score = 2 \frac{precision \times recall}{precision + recall} $$
 When either recall or precision is small, the score will be small. The perfect score is 1 when both precision and recall are 1.
 
 [ml_course]: https://www.coursera.org/learn/machine-learning/lecture/tKMWX/error-metrics-for-skewed-classes
-[pic1]: https://github.com/kflu/kflu.github.io/raw/master/data/2016-08-26-visualizing-precision-recall-1.png
-[pic2]: https://github.com/kflu/kflu.github.io/raw/master/data/2016-08-26-visualizing-precision-recall-2.png
-[pic3]: https://github.com/kflu/kflu.github.io/raw/master/data/2016-08-26-visualizing-precision-recall-3.png
+[pic1]: 2016-08-26-visualizing-precision-recall-1.png
+[pic2]: 2016-08-26-visualizing-precision-recall-2.png
+[pic3]: 2016-08-26-visualizing-precision-recall-3.png

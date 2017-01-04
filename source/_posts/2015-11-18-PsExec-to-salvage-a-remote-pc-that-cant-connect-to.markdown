@@ -2,6 +2,7 @@
 layout: post
 title: PsExec to salvage a remote PC that can't connect to
 comments: true
+date: 2015-11-18
 ---
 
 My work PC is a VM that is only accessible through remote desktop. Today after rebooting it, it can't be connected via remote desktop again. The remote desktop connection diaglog flashed with the usual "setting up connection" messages and quitted silently. I can't connect through hyper-V manager either. I guessed that some process is in a bad state and needed to be restarted. To do this, I'll need to log on remotely to kill the process. So I connected via `PsExec`:

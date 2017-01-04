@@ -2,6 +2,7 @@
 layout: post
 title: Scan Documents with ImageMagick and Canon MX922 Scanner
 comments: true
+date: 2016-03-26
 ---
 
 I have a WLAN scanner Canon MX922. It has a document feeder on the top that can take multiple pages. The default Windows scanner application 

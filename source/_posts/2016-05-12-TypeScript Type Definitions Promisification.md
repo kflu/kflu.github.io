@@ -2,6 +2,7 @@
 title: TypeScript, Type Definitions, and Promisification
 layout: post
 comments: true
+date: 2016-05-12
 ---
 
 Got disgusted by JS's dynamic typing nature (same thing I hated Python). So I

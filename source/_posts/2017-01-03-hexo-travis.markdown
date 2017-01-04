@@ -2,6 +2,7 @@
 layout: post
 title: Auto Deploy Hexo.io to Github Pages With Travis CI
 comments: true
+date: 2017-01-03
 ---
 
 ## References

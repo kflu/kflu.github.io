@@ -2,6 +2,7 @@
 layout: post
 title: CNTK installation and IDE setup
 comments: true
+date: 2016-10-27
 ---
 
 Followed [this manual instruction](https://github.com/Microsoft/CNTK/wiki/CNTK-Binary-Download-and-Manual-Installation) since I have Anaconda already installed. **Be very careful** to install all required binaries:
