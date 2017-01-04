@@ -2,9 +2,9 @@ nav:
   Home: /
   About: /about/
   Writing: /archives/
-  Projects: http://github.com/probberechts
+  Projects: http://github.com/kflu
 
-projects_url: http://github.com/probberechts
+projects_url: http://github.com/kflu
 
 customize:
     gravatar:
@@ -27,7 +27,7 @@ customize:
         url: /images/apple-touch-icon.png
         gravator: false
     social_links:
-        github: http://github.com/probberechts/cactus-dark
+        github: http://github.com/kflu
         twitter: /
         facebook: /
         linkedin: /
@@ -39,8 +39,8 @@ rss: false
 
 # Plugins
 plugins:
-    disqus_shortname: # Disqus Comments Shortname
-    google_analytics: UA-86660611-1 # enter the tracking ID for your Google Analytics
+    disqus_shortname: kflu
+    # google_analytics: UA-86660611-1 # enter the tracking ID for your Google Analytics
 
 # Miscellaneous
 miscellaneous:
