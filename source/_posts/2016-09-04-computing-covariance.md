@@ -3,6 +3,7 @@ layout: post
 title: Computing covariance
 comments: true
 date: 2016-09-04
+mathjax: true
 ---
 
 For a given m x n matrix $X = {X_{ij}}$, where each row is a sample, each column is a **zero-mean** feature, the normal way of computing covariance matrix is
