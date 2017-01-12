@@ -29,7 +29,11 @@ go\to\a path
 
 > cs.exe "go\to\a path\"
 go\to\a path"
+
+> cs.exe 'go\to\a path\'
+'go\to\a
+path\'
 ```
 
 That means if your path has a space so  you quote it, be very careful NOT to put a trailing `\` at the end, otherwise your program 
-might just not be able to handle it as it incorrectly contains a `"` at the end.
+might just not be able to handle it as it incorrectly contains a `"` at the end. Single quote is even weirder!
