@@ -34,6 +34,21 @@ Ensure `xauth` is installed. On Debian use `dpkg -l | grep xauth`. On
 FreeBSD use `pkg info | grep xauth`.
 
 
+### FreeBSD specific setup
+
+Install `xauth` with `pkg install xauth`. But this didn't properly setup everything. To complete the
+configuration:
+
+    touch ~/.Xauthority   # xauth complaints if it's absent
+
+Note down your `hostname` from `/etc/rc.conf`, add that to your `/etc/hosts`:
+
+    ::1                     <YOUR_HOST_HERE> localhost localhost.my.domain
+    127.0.0.1               <YOUR_HOST_HERE> localhost localhost.my.domain
+
+[This post][freebsd_hostname] inspired me.
+
+
 ## Client setup
 
 Install [xming x server][xming] on Windows. Make sure the server is `:0.0`. This can be told 
@@ -74,3 +89,4 @@ Now in vim remote session, select some text type `"+y`. Try to paste it in local
 [ubuntu_vim]: http://askubuntu.com/a/613173/259343
 [git]: https://git-scm.com/
 [xming]: https://sourceforge.net/projects/xming/files/latest/download
+[freebsd_hostname]: https://forums.freebsd.org/threads/8003/
