@@ -28,7 +28,7 @@ Ensure `/etc/ssh/sshd_config`:
     X11DisplayOffset 10
     X11UseLocalhost no
 
-Restart `sshd` with `service ssh restart`.
+Restart `sshd` with `service ssh restart` (Debian) or `service sshd restart` (FreeBSD)
 
 Ensure `xauth` is installed. On Debian use `dpkg -l | grep xauth`. On 
 FreeBSD use `pkg info | grep xauth`.
