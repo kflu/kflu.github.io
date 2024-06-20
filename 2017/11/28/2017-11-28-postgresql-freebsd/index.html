@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Setup PostgreSQL on FreeBSD Jail">
+
+
+
+
+  <meta name="keywords" content="unix,postgresql,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2017/11/28/2017-11-28-postgresql-freebsd/">
+
+
+<meta name="description" content="Installation
+Install postgres:
+pkg install postgresql10-server-10.1
+
+Enable service:
+sysrc postgresql_enable=&amp;quot;YES&amp;quot;
+
+If postgreSQL is installed within a jail, enable SysV IPC for that Jail
+(t">
+<meta name="keywords" content="unix,postgresql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Setup PostgreSQL on FreeBSD Jail">
+<meta property="og:url" content="http://kflu.github.io/2017/11/28/2017-11-28-postgresql-freebsd/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="Installation
+Install postgres:
+pkg install postgresql10-server-10.1
+
+Enable service:
+sysrc postgresql_enable=&amp;quot;YES&amp;quot;
+
+If postgreSQL is installed within a jail, enable SysV IPC for that Jail
+(t">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.671Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Setup PostgreSQL on FreeBSD Jail">
+<meta name="twitter:description" content="Installation
+Install postgres:
+pkg install postgresql10-server-10.1
+
+Enable service:
+sysrc postgresql_enable=&amp;quot;YES&amp;quot;
+
+If postgreSQL is installed within a jail, enable SysV IPC for that Jail
+(t">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> Setup PostgreSQL on FreeBSD Jail · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Setup PostgreSQL on FreeBSD Jail
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Nov 28, 2017
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Installation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Create users and databases</span></a></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <h2>Installation</h2>
+<p>Install postgres:</p>
+<pre><code>pkg install postgresql10-server-10.1
+</code></pre>
+<p>Enable service:</p>
+<pre><code>sysrc postgresql_enable=&quot;YES&quot;
+</code></pre>
+<p>If postgreSQL is installed within a jail, enable SysV IPC for that Jail
+(this <a href="http://www.clausconrad.com/blog/running-postgresql-9-3-in-an-ezjail" target="_blank" rel="noopener">here</a>):</p>
+<pre><code>echo 'security.jail.sysvipc_allowed=1' &gt;&gt; /etc/sysctl.conf
+echo 'jail_sysvipc_allow=&quot;YES&quot;' &gt;&gt; /etc/rc.conf 
+
+# in /usr/local/etc/ezjail/JAILNAME, update:
+# export jail_JAILNAME_parameters=”allow.sysvipc=1″
+
+# restart jail
+ezjail-admin restart JAILNAME
+</code></pre>
+<p>Initialize DB (I don't know what this is). This would <em>fail</em> if postgresQL
+is installed in a jail and SysV IPC is not allowed for the jail.</p>
+<pre><code>service postgresql initdb
+</code></pre>
+<p>Now start the service:</p>
+<pre><code>service postgresql start
+</code></pre>
+<p>There was a failure regarding SysV IPC during <code>initdb</code>, it looked like this:</p>
+<pre><code>~ service postgresql initdb
+The files belonging to this database system will be owned by user &quot;postgres&quot;.
+This user must also own the server process.
+
+The database cluster will be initialized with locale &quot;C&quot;.
+The default text search configuration will be set to &quot;english&quot;.
+
+Data page checksums are disabled.
+
+creating directory /var/db/postgres/data10 ... ok
+creating subdirectories ... ok
+selecting default max_connections ... 10
+selecting default shared_buffers ... 400kB
+selecting dynamic shared memory implementation ... posix
+creating configuration files ... ok
+running bootstrap script ... 2017-11-28 18:23:03.857 UTC [72052] FATAL:  could not create shared memory segment: Function not implemented
+2017-11-28 18:23:03.857 UTC [72052] DETAIL:  Failed system call was shmget(key=1, size=48, 03600).
+child process exited with exit code 1
+initdb: removing data directory &quot;/var/db/postgres/data10&quot;
+</code></pre>
+<h2>Create users and databases</h2>
+<p>You would need to create a PostgreSQL <em>user</em> or <em>role</em> that matches the name
+of the primary system account that will use the database. For example, I
+would use it in a jail, with the root account. So I need to create a PSQL
+role matching that account:</p>
+<pre><code>&gt; su postgres         # switch to account `postgres`
+&gt; createuser root
+&gt; createdb test_db
+&gt; exit                # quit being `postgres`
+
+# now as `root`:
+&gt; psql test_db
+psql (10.1)
+Type &quot;help&quot; for help.
+
+test_db=&gt;
+</code></pre>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/unix/">unix</a>
+          
+            <a href="/tags/postgresql/">postgresql</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/12/25/2017-12-25-video-editing-tips/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Video Editing Tips</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/10/20/2017-10-20-smartcard-remotedesktop/">
+        <span class="next-text nav-default">Use SmartCard over Remote Desktop Session</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2017/11/28/2017-11-28-postgresql-freebsd/';
+        this.page.identifier = '2017/11/28/2017-11-28-postgresql-freebsd/';
+        this.page.title = 'Setup PostgreSQL on FreeBSD Jail';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

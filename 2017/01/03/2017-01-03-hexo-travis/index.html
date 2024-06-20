@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Auto Deploy Hexo.io to Github Pages With Travis CI">
+
+
+
+
+  <meta name="keywords" content="hexo,ci,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2017/01/03/2017-01-03-hexo-travis/">
+
+
+<meta name="description" content="References
+
+Github pages
+Github Access tokens
+Static site generators
+Hexo
+
+setup
+config
+themes
+
+
+Travis
+
+Configure the build
+Encrypting data in travis.yml (not used)
+
+
+
+This article is inspired by thi">
+<meta name="keywords" content="hexo,ci">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Auto Deploy Hexo.io to Github Pages With Travis CI">
+<meta property="og:url" content="http://kflu.github.io/2017/01/03/2017-01-03-hexo-travis/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="References
+
+Github pages
+Github Access tokens
+Static site generators
+Hexo
+
+setup
+config
+themes
+
+
+Travis
+
+Configure the build
+Encrypting data in travis.yml (not used)
+
+
+
+This article is inspired by thi">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.626Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Auto Deploy Hexo.io to Github Pages With Travis CI">
+<meta name="twitter:description" content="References
+
+Github pages
+Github Access tokens
+Static site generators
+Hexo
+
+setup
+config
+themes
+
+
+Travis
+
+Configure the build
+Encrypting data in travis.yml (not used)
+
+
+
+This article is inspired by thi">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> Auto Deploy Hexo.io to Github Pages With Travis CI · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Auto Deploy Hexo.io to Github Pages With Travis CI
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Jan 3, 2017
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">References</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Github Pages</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Setup github repo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Hexo themes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Hexo configs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Hexo Workflow</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Setup Travis CI</span></a></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <h2>References</h2>
+<ul>
+<li><a href="https://pages.github.com/" target="_blank" rel="noopener">Github pages</a></li>
+<li><a href="https://github.com/settings/tokens" target="_blank" rel="noopener">Github Access tokens</a></li>
+<li><a href="http://www.staticgen.com/" target="_blank" rel="noopener">Static site generators</a></li>
+<li>Hexo
+<ul>
+<li><a href="https://hexo.io/docs/setup.html" target="_blank" rel="noopener">setup</a></li>
+<li><a href="https://hexo.io/docs/configuration.html" target="_blank" rel="noopener">config</a></li>
+<li><a href="https://hexo.io/themes/" target="_blank" rel="noopener">themes</a></li>
+</ul>
+</li>
+<li>Travis
+<ul>
+<li><a href="https://docs.travis-ci.com/user/customizing-the-build/" target="_blank" rel="noopener">Configure the build</a></li>
+<li><a href="https://docs.travis-ci.com/user/encryption-keys/" target="_blank" rel="noopener">Encrypting data in <code>travis.yml</code> (not used)</a></li>
+</ul>
+</li>
+</ul>
+<p><em>This article is inspired by <a href="http://www.tuicool.com/articles/AZf2Yzb" target="_blank" rel="noopener">this</a> and <a href="https://xin053.github.io/2016/06/05/Travis%20CI%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2Hexo%E5%8D%9A%E5%AE%A2%E5%88%B0Github/" target="_blank" rel="noopener">this</a>.</em></p>
+<p>With Travis CI, every time new change is made to the site repo, a build will kick off
+on Travis and deploy the updated site to Github pages. This is not a trivial process, so
+this article describes the idea behind each piece and documents details.</p>
+<h2>Github Pages</h2>
+<p><a href="https://pages.github.com/" target="_blank" rel="noopener">Github pages</a> is a github service to host static web sites. It works by rendering static
+files (HTML, etc.) that are checked in as a github repo at a special URL (e.g, https://<username>.github.io/project).</username></p>
+<p>Nowadays people don't write static HTMLs manually, but rather writing articles/posts
+in markdowns (or other markups) and relying on other tools to generate the HTMLs/stylesheets.</p>
+<p>There are many of those static site generators. <a href="http://www.staticgen.com/" target="_blank" rel="noopener">Here's a nice list of the most popular ones</a>.</p>
+<p>One problem using these tools with github pages is that you have to have a computer with the tool installed to generate
+the site and then publish it. If you're somewhere with no access to the tool then you can't publish posts.</p>
+<p>With the help of Travis CI, this scenario becomes possible:</p>
+<ol>
+<li>create a post directly via Github repo web UI.</li>
+<li>Travis automatically invokes build process</li>
+<li>Travis deploys the updated site to Github pages</li>
+</ol>
+<h2>Setup github repo</h2>
+<p>There're many ways to setup Github pages. I use the following setup:</p>
+<ol>
+<li>branch <code>master</code> contains the generated site, which will be rendered directly</li>
+<li>branch <code>source</code> contains the raw articles and files necessary to generate the site</li>
+</ol>
+<p>Follow <a href="https://hexo.io/docs/setup.html" target="_blank" rel="noopener">instruction for Hexo.io</a> to scaffold the <code>source</code> branch. Your <code>source</code> branch should look like this:</p>
+<pre><code>.
+|   .gitignore
+|   .travis.yml
+|   db.json
+|   package.json
+|   _config.yml
+|   
++---scaffolds
+|   \--- ...
+|       
++---source
+|   \---_posts
+|           hello-world.md
+|           
+\---themes
+    \--- ...
+</code></pre>
+<h3>Hexo themes</h3>
+<p>[Hexo themes][themes] can be downloaded. But do not git clone into the repo as you can't udpate and commit the theme's <code>_config.yml</code>
+as it will be treated as a git submodule. Instead, download it and unzip into your repo.</p>
+<h3>Hexo configs</h3>
+<p>Both the site-level and theme-level <code>_config.yml</code> needs to be updated. Refer to the <a href="https://hexo.io/docs/configuration.html" target="_blank" rel="noopener">Hexo doc</a> and the theme doc on how to update them.</p>
+<h3>Hexo Workflow</h3>
+<ol>
+<li><code>hexo clean</code></li>
+<li><code>hexo generate</code></li>
+<li><code>hexo deploy</code></li>
+</ol>
+<p>Once that worked, you can start working on enabling travis.</p>
+<h2>Setup Travis CI</h2>
+<p>Travis listens to your repo's commit event and invokes build process specified in the repo's <code>.travis.yml</code> file of the triggering branch.
+travis script is run in a Linux environment so you can use shell commands.</p>
+<p>I put the actual site generating commands in <code>package.json</code> so I can use npm to run them:</p>
+<pre><code>&quot;scripts&quot;: {
+  &quot;build&quot;: &quot;hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy&quot;
+},
+</code></pre>
+<p>Then in <code>.travis.yml</code>:</p>
+<pre><code>language: node_js
+node_js:
+- 6.0.0
+branches:
+  only:
+  - source
+
+install: npm install
+
+before_script:
+- git config --global user.name &quot;KL&quot;
+- git config --global user.email &quot;kfldev@outlook.com&quot;
+- sed -i &quot;s/__GITHUB_TOKEN__/${__GITHUB_TOKEN__}/&quot; _config.yml
+
+script: npm run build
+</code></pre>
+<p>Note that in order for Travis to deploy to github repo, it needs to have access. I got the github access token from <a href="https://github.com/settings/tokens" target="_blank" rel="noopener">here</a>.
+Then the repo can be accessed via URL <code>https://&lt;TOKEN&gt;@github.com/&lt;user&gt;/&lt;repo&gt;</code>. For security reason this token should NOT be checked in but should be
+specified in Travis repo settings as an environment variable. Then replace the URL in hexo config with this vairable at build time.</p>
+<p>In hexo <code>_config.yml</code>:</p>
+<pre><code>deploy:
+  type: git
+  repo: https://__GITHUB_TOKEN__@github.com/user/blog.git
+  branch: master
+</code></pre>
+<p><code>__GITHUB_TOKEN__</code> is replaced with <code>sed</code> by travis script.</p>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/hexo/">hexo</a>
+          
+            <a href="/tags/ci/">ci</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/01/05/2017-01-05-working-with-ldap/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Working with LDAP/AD in .NET</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/12/20/2016-12-20-Linux-terminals-windows/">
+        <span class="next-text nav-default">Linux, Terminals, Windows</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2017/01/03/2017-01-03-hexo-travis/';
+        this.page.identifier = '2017/01/03/2017-01-03-hexo-travis/';
+        this.page.title = 'Auto Deploy Hexo.io to Github Pages With Travis CI';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

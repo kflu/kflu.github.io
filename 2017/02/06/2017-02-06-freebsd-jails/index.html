@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="FreeBSD jails configuration">
+
+
+
+
+  <meta name="keywords" content="unix,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2017/02/06/2017-02-06-freebsd-jails/">
+
+
+<meta name="description" content="Set up ezjail
+Follow this doc:
+clone lo0 to lo1 in /etc/rc.conf:
+cloned_interfaces=&amp;quot;lo1&amp;quot;
+
+To create it without reboot: service netif cloneup.
+Install ezjail
+cd /usr/ports/sysutils/ezjail &amp;am">
+<meta name="keywords" content="unix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FreeBSD jails configuration">
+<meta property="og:url" content="http://kflu.github.io/2017/02/06/2017-02-06-freebsd-jails/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="Set up ezjail
+Follow this doc:
+clone lo0 to lo1 in /etc/rc.conf:
+cloned_interfaces=&amp;quot;lo1&amp;quot;
+
+To create it without reboot: service netif cloneup.
+Install ezjail
+cd /usr/ports/sysutils/ezjail &amp;am">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.627Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FreeBSD jails configuration">
+<meta name="twitter:description" content="Set up ezjail
+Follow this doc:
+clone lo0 to lo1 in /etc/rc.conf:
+cloned_interfaces=&amp;quot;lo1&amp;quot;
+
+To create it without reboot: service netif cloneup.
+Install ezjail
+cd /usr/ports/sysutils/ezjail &amp;am">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> FreeBSD jails configuration · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          FreeBSD jails configuration
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Feb 6, 2017
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Set up ezjail</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Networking</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Conventional way</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Networking through host&#39;s IP</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Jail accessing file system outside of jail</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Working with jails:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Accessing mounted file systems from inside jail</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">References</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Networking troubleshooting</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Routing rable</span></a></li></ol></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <h1>Set up <code>ezjail</code></h1>
+<p>Follow this <a href="https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/jails-ezjail.html" target="_blank" rel="noopener">doc</a>:</p>
+<p>clone <code>lo0</code> to <code>lo1</code> in <code>/etc/rc.conf</code>:</p>
+<pre><code>cloned_interfaces=&quot;lo1&quot;
+</code></pre>
+<p>To create it without reboot: <code>service netif cloneup</code>.</p>
+<p>Install <code>ezjail</code></p>
+<pre><code>cd /usr/ports/sysutils/ezjail &amp; make install clean
+</code></pre>
+<p>Enable <code>ezjail</code> in <code>rc.conf</code>: <code>ezjail_enable=&quot;YES&quot;</code></p>
+<p>Start <code>ezjail</code>: <code>service ezjail start</code>.</p>
+<p>To setup the base environment: <code>ezjail-admin install -p</code>.</p>
+<p>Copy host's <code>resolv.conf</code> to jail's template so each newly created jail
+is able to resolve domain names:</p>
+<pre><code>host&gt; cp /etc/resolv.conf /usr/jails/newjail/etc/
+</code></pre>
+<h1>Networking</h1>
+<h2>Conventional way</h2>
+<p>Each jail must be asigned an IP. Traditionally in <code>ezjail</code>, this is done
+as part of jail creation:</p>
+<pre><code>ezjail-admin create dnsjail 'lo1|127.0.1.1,em0|192.168.1.50'
+</code></pre>
+<p>This would assign <code>dnsjail</code> a private IP <code>127.0.1.1</code> on lo1, and an aliased IP
+<code>192.168.1.50</code>. The latter is an alias IP the <strong>host</strong> OS creates. You can see
+it with <code>ifconfig em0</code> in the host. Also the host is accessible via this IP
+in its LAN. For more information about IP aliasing, see <a href="https://www.freebsd.org/doc/handbook/configtuning-virtual-hosts.html" target="_blank" rel="noopener">virtual host</a>.</p>
+<p>Then in the jail, edit <code>hosts</code> to change <code>127.0.0.1</code> to <code>127.0.1.1</code> and add
+the jail's hostname to each entry. This is <strong>essential</strong> for it to access
+internet.</p>
+<p>But this is hard to manage, each network-talking jail needs an IP and you need to
+configure router for each of these IPs. Rather, it would be good if the jails
+can do networking through host's IP address. That's what the next section is about.</p>
+<h2>Networking through host's IP</h2>
+<p>Inspired by <a href="https://www.davd.eu/posts-freebsd-jails-with-a-single-public-ip-address/" target="_blank" rel="noopener">this post</a>. It's done through NAT. You still need a pool
+of IPs but they don't need to be aliases to host's IP.</p>
+<p>In <code>/etc/rc.conf</code>, add:</p>
+<pre><code>cloned_interfaces=&quot;lo1&quot;
+ipv4_addrs_lo1=&quot;192.168.60.1-9/29&quot;
+</code></pre>
+<p>Note the range <code>192.168.60.1 ~ 192.168.60.9</code>. I previously used <code>192.168.0.1-9</code> and I
+lost network connection to my host.</p>
+<p>Now restart <code>netif</code>: <code>host&gt; service netif restart</code>. And you should see the newly created
+IPs.</p>
+<pre><code>em0: flags=8843&lt;UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST&gt; metric 0 mtu 1500
+    options=4219b&lt;RXCSUM,TXCSUM,VLAN_MTU,VLAN_HWTAGGING,VLAN_HWCSUM,TSO4,WOL_MAGIC,VLAN_HWTSO&gt;
+    ether ...
+    inet 192.168.0.7 netmask 0xffffff00 broadcast 192.168.0.255 
+    nd6 options=29&lt;PERFORMNUD,IFDISABLED,AUTO_LINKLOCAL&gt;
+    media: Ethernet autoselect (100baseTX &lt;full-duplex&gt;)
+    status: active
+lo0: flags=8049&lt;UP,LOOPBACK,RUNNING,MULTICAST&gt; metric 0 mtu 16384
+    options=600003&lt;RXCSUM,TXCSUM,RXCSUM_IPV6,TXCSUM_IPV6&gt;
+    inet6 ::1 prefixlen 128 
+    inet6 fe80::1%lo0 prefixlen 64 scopeid 0x2 
+    inet 127.0.0.1 netmask 0xff000000 
+    nd6 options=21&lt;PERFORMNUD,AUTO_LINKLOCAL&gt;
+    groups: lo 
+lo1: flags=8049&lt;UP,LOOPBACK,RUNNING,MULTICAST&gt; metric 0 mtu 16384
+    options=600003&lt;RXCSUM,TXCSUM,RXCSUM_IPV6,TXCSUM_IPV6&gt;
+    inet 192.168.60.1 netmask 0xfffffff8 
+    inet 192.168.60.2 netmask 0xffffffff 
+    inet 192.168.60.3 netmask 0xffffffff 
+    inet 192.168.60.4 netmask 0xffffffff 
+    inet 192.168.60.5 netmask 0xffffffff 
+    inet 192.168.60.6 netmask 0xffffffff 
+    inet 192.168.60.7 netmask 0xffffffff 
+    inet 192.168.60.8 netmask 0xffffffff 
+    inet 192.168.60.9 netmask 0xffffffff 
+    nd6 options=29&lt;PERFORMNUD,IFDISABLED,AUTO_LINKLOCAL&gt;
+    groups: lo 
+</code></pre>
+<p>Now we use <code>pf</code> to map traffics to and from jails.</p>
+<p>Enable <code>pf</code> by adding to <code>rc.conf</code>: <code>pf_enable=&quot;YES&quot;</code>. Edit <code>/etc/pf.conf</code>:</p>
+<pre><code># Public IP address
+IP_PUB=&quot;&lt;host's public IP&gt;&quot;
+
+# Packet normalization
+scrub in all
+
+# Allow outbound connections from within the jails
+nat on em0 from lo1:network to any -&gt; (em0)
+
+# webserver jail at 192.168.60.2
+rdr on em0 proto tcp from any to $IP_PUB port 443 -&gt; 192.168.60.2
+rdr on em0 proto tcp from any to $IP_PUB port 80 -&gt; 192.168.60.2
+# .. or map jail's host's 80 to jail's 8080:
+# rdr on em0 proto tcp from any to $IP_PUB port 80 -&gt; 192.168.60.2 port 8080
+
+# mailserver jail at 192.168.60.3
+rdr on em0 proto tcp from any to $IP_PUB port 25 -&gt; 192.168.60.3  
+rdr on em0 proto tcp from any to $IP_PUB port 587 -&gt; 192.168.60.3  
+rdr on em0 proto tcp from any to $IP_PUB port 143 -&gt; 192.168.60.3  
+rdr on em0 proto tcp from any to $IP_PUB port 993 -&gt; 192.168.60.3  
+</code></pre>
+<p>Start <code>pf</code>: <code>host&gt; service pf start</code></p>
+<p>Now creating a jail is simply:</p>
+<pre><code>ezjail-admin create &lt;jail_name&gt; &lt;IP&gt;
+</code></pre>
+<p>where <code>IP</code> is one of those of <code>lo1</code>'s newly created, e.g., <code>192.168.60.2</code>.</p>
+<p>We can set up another interface <code>lo2</code> but without configuring NAT for its network, in that case
+the jail is restricted to LAN access only:</p>
+<pre><code>cloned_interfaces=&quot;lo1 lo2&quot;
+ipv4_addrs_lo1=&quot;192.168.60.1-9/29&quot;  # Set up NAT for them
+ipv4_addrs_lo2=&quot;192.168.70.1-9/29&quot;  # Don't set up NAT for them
+</code></pre>
+<p>I observed start of jail with LAN-only access is slower, maybe due to services
+requiring internet timed out during start.</p>
+<h1>Jail accessing file system outside of jail</h1>
+<p>This can be done by <code>nullfs_mount</code>. Basically by mounting a part of the host file system
+under the jail's root:</p>
+<pre><code>mkdir /usr/jails/&lt;jail_name&gt;/data
+mount -t nullfs -o ro /data /usr/jails/&lt;jail_name&gt;/data
+</code></pre>
+<p>Alternatively, add this to the jail-specific <code>fstab</code> at: <code>/etc/fstab.&lt;jail_name&gt;</code>:</p>
+<pre><code>/data /usr/jails/&lt;jail_name&gt;/data nullfs ro
+</code></pre>
+<p>However there's a [bug I'm currently investigating][nullfs_issue], where the
+mount yields inconsistent subfolders.</p>
+<h1>Working with jails:</h1>
+<ul>
+<li>List: <code>jls [-v]</code></li>
+<li>Start/stop: <code>ezjail-admin &lt;start|stop|restart&gt; &lt;jail_name&gt;</code></li>
+<li>delete: <code>ezjail-admin delete [-w] &lt;jail_name&gt;</code></li>
+<li><code>ezjail</code>'s per-jail configuration is in directory <code>/usr/local/etc/ezjail</code></li>
+<li><code>ezjail</code>'s per-jail root is in <code>/usr/jails/&lt;jail_name&gt;</code> directory. Here you
+can modify jail's settings that's created at creation, e.g., the IP.</li>
+<li>In jails you can't use <code>ping</code> to test network connection, instead, use
+<code>telnet google.com 80</code>.</li>
+<li>Root of a jail is at <code>/usr/jails/&lt;jail_name&gt;</code></li>
+<li>Jail-specific <code>fstab</code> are at <code>/etc/fstab.&lt;jail_name&gt;</code></li>
+</ul>
+<h1>Accessing mounted file systems from inside jail</h1>
+<p>Host file system can be mounted to jail by modifying <code>/etc/fstab.&lt;jail_name&gt;</code>.
+Inside the jail, the mounted file system has the same ACL as in the host. But
+the owner/group are shown as IDs. If a user inside jail (e.g., <code>www</code>) wants to
+access the file system, we must first create a user/group inside jail with the
+corresponding owner/group ID. And give the target jail user the corresponding
+ACL inside the jail. Example:</p>
+<pre><code># /tmp/foo/ has 333:8000
+jail&gt; pw groupadd foo_group -g 8000  # create foo_group with ID 8000 inside jail
+jail&gt; pw groupmod www -m foo_group   # add jail user `www` to foo_group
+</code></pre>
+<h1>References</h1>
+<ul>
+<li><a href="https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/jails-ezjail.html" target="_blank" rel="noopener">FreeBSD EZJail</a></li>
+<li><a href="https://www.davd.eu/posts-freebsd-jails-with-a-single-public-ip-address/" target="_blank" rel="noopener">Single IP jails</a></li>
+</ul>
+<h1>Networking troubleshooting</h1>
+<h2>Routing rable</h2>
+<pre><code>host&gt; netstat -r
+Routing tables
+
+Internet:
+Destination        Gateway            Flags     Netif Expire
+default            192.168.0.1        UGS         em0
+hostname-bsd       link#2             UH          lo0
+192.168.0.0/24     link#1             U           em0
+192.168.0.7        link#1             UHS         lo0
+192.168.60.1       link#3             UH          lo1
+192.168.60.2       link#3             UH          lo1
+192.168.60.3       link#3             UH          lo1
+192.168.60.4       link#3             UH          lo1
+192.168.60.5       link#3             UH          lo1
+192.168.60.6       link#3             UH          lo1
+192.168.60.7       link#3             UH          lo1
+192.168.60.8       link#3             UH          lo1
+192.168.60.9       link#3             UH          lo1
+
+Internet6:
+Destination        Gateway            Flags     Netif Expire
+::/96              hostname-bsd       UGRS        lo0
+hostname-bsd       link#2             UH          lo0
+::ffff:0.0.0.0/96  hostname-bsd       UGRS        lo0
+fe80::/10          hostname-bsd       UGRS        lo0
+fe80::%lo0/64      link#2             U           lo0
+fe80::1%lo0        link#2             UHS         lo0
+ff02::/16          hostname-bsd       UGRS        lo0
+</code></pre>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/unix/">unix</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/02/09/2017-02-09-freebsd-daemon/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">FreeBSD daemon</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/02/02/2017-02-02-ascii-table/">
+        <span class="next-text nav-default">ASCII table (re)explained</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2017/02/06/2017-02-06-freebsd-jails/';
+        this.page.identifier = '2017/02/06/2017-02-06-freebsd-jails/';
+        this.page.title = 'FreeBSD jails configuration';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

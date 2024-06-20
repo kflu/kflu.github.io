@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="irc, znc, and erc">
+
+
+
+
+  <meta name="keywords" content="irc,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2021/06/04/2021-06-04-irc--znc--and-erc/">
+
+
+<meta name="description" content="This article discusses ZNC setup and how to connect with Emacs ERC.
+ZNC admin interface
+ZNC&apos;s IRC service and web admin service can share the same port, magical, but confusing. I seperated them into t">
+<meta name="keywords" content="irc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="irc, znc, and erc">
+<meta property="og:url" content="http://kflu.github.io/2021/06/04/2021-06-04-irc--znc--and-erc/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="This article discusses ZNC setup and how to connect with Emacs ERC.
+ZNC admin interface
+ZNC&apos;s IRC service and web admin service can share the same port, magical, but confusing. I seperated them into t">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.675Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="irc, znc, and erc">
+<meta name="twitter:description" content="This article discusses ZNC setup and how to connect with Emacs ERC.
+ZNC admin interface
+ZNC&apos;s IRC service and web admin service can share the same port, magical, but confusing. I seperated them into t">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> irc, znc, and erc · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          irc, znc, and erc
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Jun 4, 2021
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">ZNC admin interface</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">ZNC Setup &amp; Connection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">ZNC management inside IRC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Multiple client and clientbuffer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">ZNC external module building</span></a></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <p>This article discusses ZNC setup and how to connect with Emacs ERC.</p>
+<h3>ZNC admin interface</h3>
+<p>ZNC's IRC service and web admin service can share the same port, magical, but confusing. I seperated them into two ports, and restricted the web port to be only accessible from LAN.</p>
+<h3>ZNC Setup &amp; Connection</h3>
+<p>ZNC user and password are different than IRC network's nick and password, which is usually managed by the network's NickServ.</p>
+<p>A ZNC user can define multiple (network, nick) pairs.</p>
+<p>To connect to ZNC, using any IRC client, use the following <strong>password</strong> format to authenticate:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">znc_user@client_id/znc_network_name:znc_user_pass</span><br></pre></td></tr></table></figure>
+<p>The <code>@client_id</code> part can be omitted, if not using <a href="https://wiki.znc.in/Clientbuffer" target="_blank" rel="noopener">clientbuffer</a> module.</p>
+<p>Note for ERC: <code>M-x erc-tls</code> prompts for nick, DO NOT leave it empty, but put in the network nick, so ERC is not confused and have the buffer window bug (TODO: link).</p>
+<h3>ZNC management inside IRC</h3>
+<p>The <code>*status</code> bot (prefixed by <code>*</code>, configurable) is ZNC specific. You can <code>/query *status</code> and <code>help</code> from there. It provides all the functionalities for managing ZNC.</p>
+<p>The modules all have corresponding bot: <code>*module_name</code>.</p>
+<h3>Multiple client and clientbuffer</h3>
+<p>This article: <a href="https://blog.jay2k1.com/2016/02/04/how-to-configure-znc-backlog-for-multiple-clients/" target="_blank" rel="noopener">How to configure multiple clients against single ZNC network nick</a> talks about the buffer playback problem and the solution by <strong>using clientbuffer</strong>.</p>
+<p>Note that clientbuffer is a network level module, so you'll have to enable it per network.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msg *status loadmod clientbuf autoadd</span><br></pre></td></tr></table></figure>
+<p>Also at ZNC user level, don't forget to <strong>disable</strong> clear chan/query buffers.</p>
+<h3>ZNC external module building</h3>
+<p>Take clientbuffer as example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># ----</span><br><span class="line"># DO ALL THESE AS USER znc:</span><br><span class="line"># ----</span><br><span class="line"></span><br><span class="line">git clone https://github.com/CyberShadow/znc-clientbuffer.git</span><br><span class="line"></span><br><span class="line"># requires znc-buildmod</span><br><span class="line"># produces clientbuffer.so</span><br><span class="line">make  </span><br><span class="line"></span><br><span class="line"># &quot;install&quot; it</span><br><span class="line">mv clientbuffer.so ~/.znc/modules</span><br><span class="line"></span><br><span class="line"># To load the module, use `loadmod` with *status bot</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/irc/">irc</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2021/06/29/2021-06-29-stereo-audio-recording/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Stereo audio recording setup</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2021/05/26/2021-05-26-You-don-t-need-IRC-clients-to-IRC/">
+        <span class="next-text nav-default">You don't need an IRC client to IRC</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2021/06/04/2021-06-04-irc--znc--and-erc/';
+        this.page.identifier = '2021/06/04/2021-06-04-irc--znc--and-erc/';
+        this.page.title = 'irc, znc, and erc';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

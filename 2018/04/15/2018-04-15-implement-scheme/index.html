@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="How to write a Scheme interpreter">
+
+
+
+
+  <meta name="keywords" content="csharp,language,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2018/04/15/2018-04-15-implement-scheme/">
+
+
+<meta name="description" content="This article describes the design and implementation of the Schemy interpreter.
+Note that the design and implementation of schemy is heavily inspired by Peter Norvig&apos;s
+article.
+tl;dr - here&apos;s a flowch">
+<meta name="keywords" content="csharp,language">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to write a Scheme interpreter">
+<meta property="og:url" content="http://kflu.github.io/2018/04/15/2018-04-15-implement-scheme/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="This article describes the design and implementation of the Schemy interpreter.
+Note that the design and implementation of schemy is heavily inspired by Peter Norvig&apos;s
+article.
+tl;dr - here&apos;s a flowch">
+<meta property="og:image" content="http://kflu.github.io/2018/04/15/2018-04-15-implement-scheme/flowchart.png">
+<meta property="og:image" content="http://kflu.github.io/2018/04/15/2018-04-15-implement-scheme/flowchart.png">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.673Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How to write a Scheme interpreter">
+<meta name="twitter:description" content="This article describes the design and implementation of the Schemy interpreter.
+Note that the design and implementation of schemy is heavily inspired by Peter Norvig&apos;s
+article.
+tl;dr - here&apos;s a flowch">
+<meta name="twitter:image" content="http://kflu.github.io/2018/04/15/2018-04-15-implement-scheme/flowchart.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> How to write a Scheme interpreter · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          How to write a Scheme interpreter
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Apr 15, 2018
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">S-Expression</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">S-Expression representation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Evaluation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Function</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Tail call optimization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Evaluating a Scheme program</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Parsing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Expanding</span></a></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <p>This article describes the design and implementation of the <a href="https://github.com/Microsoft/schemy" target="_blank" rel="noopener">Schemy</a> interpreter.
+Note that the design and implementation of schemy is heavily inspired by Peter Norvig's
+<a href="http://norvig.com/lispy2.html" target="_blank" rel="noopener">article</a>.</p>
+<p>tl;dr - here's a flowchart summarizing an implementation of a scheme interpreter:</p>
+<p><img src="flowchart.png" alt="flowchart"></p>
+<h2>S-Expression</h2>
+<p>S-expression is the central construct of a Scheme program. An S-expression can be in the
+form of any of the following:</p>
+<ul>
+<li>
+<p>a value, e.g., <code>3.14</code>, <code>&quot;some text&quot;</code>, or any other values that your runtime supports
+(in the case of schemy, this could be any .NET object we exposed).</p>
+</li>
+<li>
+<p>a symbol, e.g., <code>count</code> (a variable), <code>sum</code> (a function).</p>
+</li>
+<li>
+<p>a list of s-expressions, e.g., <code>(sum (+ 1 x) y (get-value &quot;total&quot;))</code></p>
+</li>
+</ul>
+<p>Formally:</p>
+<pre><code>Expression := Symbol | (Expression ...) | Value
+</code></pre>
+<h3>S-Expression representation</h3>
+<p>In Schemy, we simply represent an expression as an <code>object</code>, which could be either:</p>
+<ol>
+<li>an instance of a <code>Symbol</code></li>
+<li>a list of objects</li>
+<li>any .NET object</li>
+</ol>
+<p>In a language that supports discriminated union, it could be more elegantly modeled. But
+that's not in the scope of this discussion.</p>
+<p>One may also note that in above representation, #2 and #3 could overlap - a .NET object
+(#3) could be a list of objects that could be treated by the interpreter as an expression
+(#2). This is as expected, and a powerful feature - in Scheme, a program (s-expression) can be treated as data - and
+be processed, transformed! This is called <a href="https://en.wikipedia.org/wiki/Homoiconicity" target="_blank" rel="noopener">Homoiconicity</a>.</p>
+<h2>Evaluation</h2>
+<p>Now, S-expression alone is not very useful alone. For example, for a symbol
+s-expression <code>count</code>, it doesn't make much sense without knowing what information <code>count</code>
+holds. This leads to the concept of <strong>evaluating</strong> an s-expression.</p>
+<p>S-expression is evaluated in a context, or &quot;environment&quot;, which is nothing but a mapping
+from symbols to values. Therefore we could define a <code>EvaluateExpression</code> function:</p>
+<pre><code>eval(expr: Expression, env: Environment) -&gt; object
+</code></pre>
+<ul>
+<li>
+<p>If <code>expr</code> is already a value, simply return it</p>
+</li>
+<li>
+<p>If <code>expr</code> is a symbol, we just look up that symbol in <code>env</code> and return the value</p>
+</li>
+<li>
+<p>If <code>expr</code> is a list of s-expressions - this could be a syntax form evaluation or
+function invocation. In the simplest idea, we first evaluate each element expression
+of the list recursively, then depending on the meaning of the first value (a function,
+or a syntax form indicator, e.g, <code>if</code>), we handle them differently. Below gives some
+examples on how to handle them naively, just for illustration, we'll cover
+optimizations later.</p>
+<ul>
+<li>
+<p>for <code>(if test conseq alt)</code>, we evaluate <code>test</code>, if true, we evaluate and return
+<code>conseq</code>, otherwise, <code>alt</code>.</p>
+</li>
+<li>
+<p>for <code>(define id expr)</code>, we evaluate <code>expr</code>, and update the environment to
+associate symbol <code>id</code> to value of <code>expr</code>.</p>
+</li>
+<li>
+<p>for <code>(func expr1 expr2 expr3)</code>, this is function invocation. We drill into the
+detail in the following section.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2>Function</h2>
+<p>What is a function and how to invoke a function? A function is made of the following parts:</p>
+<ol>
+<li>a list of parameters - this is a list of symbols which should be bound to some value
+at invocation time.</li>
+<li>an environment under which the body expression should be evaluated</li>
+<li>an s-expression representing the body (or implementation) of the function. This
+s-expression usually references some symbols whose definitions reside either in the
+parameters (defined at invocation time) or in the environment (defined at definition
+time - lexical scoping (see below))</li>
+</ol>
+<p>Now for a function defined as:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name"><span class="builtin-name">define</span></span> f (<span class="name"><span class="builtin-name">lambda</span></span> (x y) (<span class="name"><span class="builtin-name">+</span></span> x y)))</span><br></pre></td></tr></table></figure>
+<p>And when we evaluate <code>(f 1 2)</code>, we first make an environment containing the mapping <code>x=1, y=2</code>, and evaluate the body <code>(+ x y)</code> by using the parameters environment.</p>
+<p>But that's not really what happens. What if the body of <code>f</code> references symbols which are
+not as the parameters, e.g.:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name"><span class="builtin-name">define</span></span> x <span class="number">2</span>)</span><br><span class="line">(<span class="name"><span class="builtin-name">define</span></span> f (<span class="name"><span class="builtin-name">lambda</span></span> (y) (<span class="name"><span class="builtin-name">+</span></span> x y)))</span><br></pre></td></tr></table></figure>
+<p>When invoking <code>(f 3)</code>, we would bind <code>y=3</code>. But where to get value for <code>x</code>? When we
+define <code>f</code>, its environment contains the definition for <code>x</code>. So when we construct the
+parameter environment for the invocation, we <strong>link</strong> it to an outer environment that contains
+<code>x=2</code>. And the lookup logic for a key in a environment is this:</p>
+<ol>
+<li>Try to look up the key in current environment's symbol table. If found, return it.</li>
+<li>If not found in current environment, go to the parent (outer) environment and attemp
+lookup there.</li>
+</ol>
+<p>There can be many layers of environemnts. If none of the environment contains the mapping
+for key, an error is thrown.</p>
+<p>This is a core concept and language feature called <strong>lexical scoping</strong>, or <strong>closure</strong>.
+Many more advanced language features can be implemented based up on this, including
+classes, but we'll not go into the detail.</p>
+<p>Wrapping up, we now know how to evaluate an s-expression or a function. An interesting
+observation we should make now is that:</p>
+<blockquote>
+<p>Evaluating an S-expression and a function is quite similar - both requires an expression
+and an environment. And we evaluate the expression using the symbol definition in the
+environment.</p>
+</blockquote>
+<h2>Tail call optimization</h2>
+<p>With the above description, the function evaluation looks like the following in the <code>eval</code>
+function:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">define eval(expr, env):</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> (is_invocation(expr)): <span class="comment"># function call (func x y z ...)</span></span><br><span class="line">        (func, args) = (expr[<span class="number">0</span>], expr[<span class="number">1</span>,:])</span><br><span class="line">        func_env = make_env(func.params, args).link(func.env)</span><br><span class="line">        func_body = func.body</span><br><span class="line">        <span class="keyword">return</span> eval(func_body, func_env)</span><br></pre></td></tr></table></figure>
+<p>However, this implementation involves a recursive call (more specifically, a tail call)
+into the <code>eval</code> function. And for implementation language like C# or Python which doesn't
+support tail call optimization, that means if we evaluate a recursive function, the
+evaluation itself is a recursion in the implementation language, and is subject to stack
+overflow:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name"><span class="builtin-name">define</span></span> (<span class="name">sum-to</span> n acc)</span><br><span class="line">    (<span class="name"><span class="builtin-name">if</span></span> (<span class="name"><span class="builtin-name">=</span></span> n <span class="number">0</span>) acc </span><br><span class="line">                (<span class="name">sum-to</span> (<span class="name"><span class="builtin-name">-</span></span> n <span class="number">1</span>) (<span class="name"><span class="builtin-name">+</span></span> acc n))))</span><br></pre></td></tr></table></figure>
+<p>This would cause <code>eval</code> to be called each time we encounter <code>(sum-to ...)</code> and the stack
+size is O(n).</p>
+<p>How can we optimize this case? If, when evaluating <code>eval(expr, env)</code>, we know <code>expr</code> is a
+function call: <code>(f x y ...)</code>, then instead of calling <code>eval</code> recursively, we could <strong>swap
+out</strong> <code>expr</code> with <code>f.body</code> (which is also an expression), and swap out <code>env</code> with
+<code>make_env(func.params, args).link(env)</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">define eval(expr, env):</span><br><span class="line">    <span class="keyword">while</span> (true):</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">if</span> (is_invocation(expr)):</span><br><span class="line">            (func, args) = expr</span><br><span class="line">            env = make_env(func.params, args).link(env)</span><br><span class="line">            expr = func.body</span><br><span class="line">            <span class="comment"># continue to the loop, which, upon next iteration may hit other </span></span><br><span class="line">            <span class="comment"># conditions and not end up as a function invocation.</span></span><br></pre></td></tr></table></figure>
+<p>Same optimization can be applied to other language constructs, like <code>if</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">define eval(expr, env):</span><br><span class="line">    <span class="keyword">while</span> (true):</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">if</span> (expr[<span class="number">0</span>] <span class="keyword">is</span> SYMBOL_IF): <span class="comment"># (if test conseq alt)</span></span><br><span class="line">            <span class="keyword">if</span> (eval(test, env)): expr = conseq</span><br><span class="line">            <span class="keyword">else</span>: expr = alt</span><br></pre></td></tr></table></figure>
+<p>Also for <code>begin</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">define eval(expr, env):</span><br><span class="line">    <span class="keyword">while</span> (true):</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">if</span> (expr[<span class="number">0</span>] <span class="keyword">is</span> SYMBOL_BEGIN): <span class="comment"># (begin expr1 expr2 ...)</span></span><br><span class="line">            <span class="keyword">for</span> (e <span class="keyword">in</span> expr[<span class="number">1</span>:<span class="number">-2</span>]): eval(e, env) <span class="comment"># don't eval the last one yet</span></span><br><span class="line">            expr = expr[<span class="number">-1</span>] <span class="comment"># tail call optimization</span></span><br></pre></td></tr></table></figure>
+<p>With these optimization, recursive calls are converted to loops and stack usage is
+elinminated. Note that this optimization only applies to the specific cases like above
+where we handled them specially. For example, the form:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name"><span class="builtin-name">define</span></span> (<span class="name">f</span> x) (<span class="name">f</span> ...))</span><br></pre></td></tr></table></figure>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name"><span class="builtin-name">define</span></span> (<span class="name">f</span> x) (<span class="name"><span class="builtin-name">if</span></span> test (<span class="name">f</span> ...) ...))</span><br></pre></td></tr></table></figure>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name"><span class="builtin-name">define</span></span> (<span class="name">f</span> x) (<span class="name"><span class="builtin-name">begin</span></span> ... ... (<span class="name">f</span> ...)))</span><br></pre></td></tr></table></figure>
+<p>Basically, tail call optimization applies to recursive call at the location of:</p>
+<ol>
+<li>the top level of the function body</li>
+<li>the last expression of the function body</li>
+</ol>
+<p>We can see that 1 is a special case of 2 above. So we can say in general,</p>
+<blockquote>
+<p>tail call optimization applies to cases when the recursive call is invoked as the last
+expression of the function body.</p>
+</blockquote>
+<p><strong>Note</strong> the definition of <em>last expression</em> is not rigid. Here last could be the last of
+<code>if</code>, <code>begin</code>, or any forms derived from them (e.g., <code>cond</code>, multi-expression function
+body, etc.).</p>
+<h2>Evaluating a Scheme program</h2>
+<p>We talked about how to evaluate a single Scheme expression above, but what about a scheme
+program? Well, first we could argue that a Scheme program <strong>is</strong> a single expression -
+using the form <code>(begin expr1 expr2 ...)</code>, which evaluates each expression, and returns the
+result of the last expression.</p>
+<p>Alternatively, we could treat or convert a multi-expression program as/into a <code>begin</code>
+form:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">expr1</span><br><span class="line">expr2</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>can be converted into:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name"><span class="builtin-name">begin</span></span> </span><br><span class="line">    expr1 </span><br><span class="line">    expr2 </span><br><span class="line">    ...)</span><br></pre></td></tr></table></figure>
+<p>This idea could be applied to multi-expression function definition/evaluation:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name"><span class="builtin-name">define</span></span> (<span class="name">f</span>)</span><br><span class="line">    expr1</span><br><span class="line">    expr2</span><br><span class="line">    ...)</span><br></pre></td></tr></table></figure>
+<p>Alternatively, for multi-expression program, at the interpreter level, we could simply evaluate expressions as we
+iterate them, until the interpreter finds the end of the program. This is what the Schemy
+interpreter does.</p>
+<h2>Parsing</h2>
+<p>In the above sections, we talked about how to evaluate expressions, given that they have
+been properly parsed from texts and constructed. But how exactly are they parsed from
+texts and constructed?</p>
+<p>Let's take a look at the modeling of expression again, but from the form of a text
+representation. An expression can be:</p>
+<ol>
+<li>a symbol (<code>foo</code>, <code>bar</code>)</li>
+<li>a literal value (<code>1.23</code>, <code>&quot;some string&quot;</code>)</li>
+<li>a list of the above (<code>(foo (bar &quot;some string&quot;) 1.23)</code>)</li>
+</ol>
+<p>Here we can see that, from the form of its text representation, an s-expression can be
+composed of:</p>
+<ul>
+<li>atoms, i.e., symbols or literal values, or</li>
+<li>list of atoms</li>
+</ul>
+<p>Therefore, from some text, we can implement a <strong>tokenizer</strong> that parses the text into a
+<strong>stream of tokens</strong>. The tokens could be:</p>
+<ol>
+<li>
+<p>atoms (<code>foo</code>, <code>&quot;string&quot;</code>, <code>1.23</code>)</p>
+</li>
+<li>
+<p>open/close parenthesis <code>(</code>, <code>)</code></p>
+</li>
+<li>
+<p><a href="https://www.scheme.com/tspl4/objects.html#./objects:h1" target="_blank" rel="noopener">quote and unquote</a>:</p>
+<pre><code>' ` , ,@
+</code></pre>
+</li>
+</ol>
+<p>Now from a stream of tokens, we can device a <code>read</code> function that reads expressions one-by-one
+from the stream of tokens.</p>
+<pre><code>read(stream of tokens) -&gt; expression
+</code></pre>
+<p>The <code>read</code> function works roughly like so:</p>
+<ol>
+<li>if the token is an atom, we parse the atom into a value (number, string, ...) and return it.</li>
+<li>if we encounter an open parenthesis, we construct a list, recursively call <code>read</code> and
+add the expressions to the list until we find the corresponding closing parenthesis.</li>
+</ol>
+<p>Now that we have <code>read</code>, we can call it repeatedly, for each expressions yielded from
+<code>read</code>, we feed it to <code>eval</code> for evaluation.</p>
+<h2>Expanding</h2>
+<p>For a flexible Scheme interpreter, one usually supports many syntax features and even
+custom syntax transformations (macros). Do we need to implement and handle all such
+feature in <code>eval</code>? No we don't need to.</p>
+<p>The beauty of Scheme is that its core language is rather small. Most of the features are
+a transformation from the small core.</p>
+<p>For example, <code>define</code> has a variation to define function:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name"><span class="builtin-name">define</span></span> (<span class="name">double</span> x) (<span class="name"><span class="builtin-name">*</span></span> x <span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+<p>This is merely a syntax sugar for:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name"><span class="builtin-name">define</span></span> double (<span class="name"><span class="builtin-name">lambda</span></span> (x) (<span class="name"><span class="builtin-name">*</span></span> x <span class="number">2</span>)))</span><br></pre></td></tr></table></figure>
+<p>We don't need to support this form of <code>define</code> in <code>eval</code>. Instead, we can add a stage
+after we call <code>read</code> and before we call <code>eval</code> to <strong>transform</strong> the expression:</p>
+<p>Whenever we see <code>(define (id rest...) expr)</code>, we transform it into:</p>
+<pre><code>(define id (lambda (rest...) expr))
+</code></pre>
+<p>This way, <code>eval</code> is kept simple and only need to handle <code>(define id expr)</code> and <code>(lambda (id...) expr)</code>.</p>
+<p>Similarly, multi-expression bodied function:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name"><span class="builtin-name">lambda</span></span> (id...) expr1 expr2 ...)</span><br></pre></td></tr></table></figure>
+<p>is converted to single-expression bodied function by using <code>begin</code> form:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name"><span class="builtin-name">lambda</span></span> (id...) (<span class="name"><span class="builtin-name">begin</span></span> expr1 expr2 ...))</span><br></pre></td></tr></table></figure>
+<p>The <strong>expansion stage</strong> is critical for supporting custom program transformation (aka
+macro). A macro is a function that the user defines that gets invoked to transform the
+program, <strong>before</strong> the program is evaluated.</p>
+<p>For example, if we have the <code>if</code> form: <code>(if test conseq alt)</code>. But we want to support
+<code>cond</code> form:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name"><span class="builtin-name">cond</span></span> </span><br><span class="line">    (<span class="name">test1</span> expr1)</span><br><span class="line">    (<span class="name">test2</span> expr2)</span><br><span class="line">    ...</span><br><span class="line">    (<span class="name"><span class="builtin-name">else</span></span> expr_default))</span><br></pre></td></tr></table></figure>
+<p>We could just write a macro function to convert an expression starting with <code>cond</code> into
+a functionally equivalent expression in the <code>if</code> form:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">define-macro</span> cond</span><br><span class="line">              (<span class="name"><span class="builtin-name">lambda</span></span> <span class="name">args</span></span><br><span class="line">                (if (= 0 (length args)) ''()</span><br><span class="line">                  (<span class="name"><span class="builtin-name">begin</span></span></span><br><span class="line">                    (<span class="name"><span class="builtin-name">define</span></span> first (<span class="name"><span class="builtin-name">car</span></span> args))</span><br><span class="line">                    (<span class="name"><span class="builtin-name">define</span></span> rest (<span class="name"><span class="builtin-name">cdr</span></span> args))</span><br><span class="line">                    (<span class="name"><span class="builtin-name">define</span></span> test1 (<span class="name"><span class="builtin-name">if</span></span> (<span class="name"><span class="builtin-name">equal?</span></span> (<span class="name"><span class="builtin-name">car</span></span> first) <span class="symbol">'else</span>) '<span class="literal">#t</span> (<span class="name"><span class="builtin-name">car</span></span> first)))</span><br><span class="line">                    (<span class="name"><span class="builtin-name">define</span></span> expr1 (<span class="name"><span class="builtin-name">car</span></span> (<span class="name"><span class="builtin-name">cdr</span></span> first)))</span><br><span class="line">                    `(if ,test1 ,expr1 (cond ,@rest))))))</span><br></pre></td></tr></table></figure>
+<p><code>define-macro</code> merely defines a function that will be invoked when an expression begins
+with <code>cond</code>. It will be invoked on the rest of the expression whose first element is
+<code>cond</code>. It returns the transformed expression.</p>
+<p>The definition of a macro is evaluated at <code>eval()</code> on an earlier expression. This macro
+gets registered to a macro table, just like the <code>Environment</code>s. Then when a later
+expression is expanded (not evaluated), if an expression matches the name of a macro, the
+macro is invoked on that expression to transform it. The transformed expression is then
+evaluated by <code>eval()</code>.</p>
+<p>The below flow chart illustrate the entire interpreter workflow:</p>
+<p><img src="flowchart.png" alt="flowchart"></p>
+<!-- vim: set tw=90: -->
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/csharp/">csharp</a>
+          
+            <a href="/tags/language/">language</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2019/06/10/2019-06-10-python-await-in-context-manager/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Python await inside context manager</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/02/11/2018-02-11-sshguard/">
+        <span class="next-text nav-default">Setup sshguard and pf to block brute-forcers</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2018/04/15/2018-04-15-implement-scheme/';
+        this.page.identifier = '2018/04/15/2018-04-15-implement-scheme/';
+        this.page.title = 'How to write a Scheme interpreter';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

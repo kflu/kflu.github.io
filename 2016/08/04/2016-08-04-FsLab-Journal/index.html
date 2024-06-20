@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="FsLab Journal">
+
+
+
+
+  <meta name="keywords" content="datascience,f#,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2016/08/04/2016-08-04-FsLab-Journal/">
+
+
+<meta name="description" content="FsLab Journal is a literate programming tool based on FSharp.Formatting. It&apos;s sort of like Jupyter notebook. The advantage of it over IPython notebook
+is that it&apos;s statically typed and IDE supports ar">
+<meta name="keywords" content="datascience,f#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FsLab Journal">
+<meta property="og:url" content="http://kflu.github.io/2016/08/04/2016-08-04-FsLab-Journal/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="FsLab Journal is a literate programming tool based on FSharp.Formatting. It&apos;s sort of like Jupyter notebook. The advantage of it over IPython notebook
+is that it&apos;s statically typed and IDE supports ar">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.624Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FsLab Journal">
+<meta name="twitter:description" content="FsLab Journal is a literate programming tool based on FSharp.Formatting. It&apos;s sort of like Jupyter notebook. The advantage of it over IPython notebook
+is that it&apos;s statically typed and IDE supports ar">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> FsLab Journal · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          FsLab Journal
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Aug 4, 2016
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">References</span></a></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <p>FsLab Journal is a literate programming tool based on FSharp.Formatting. It's sort of like Jupyter notebook. The advantage of it over IPython notebook
+is that it's statically typed and IDE supports are awesome. In order to use it:</p>
+<ol>
+<li>Download the template from <a href="https://github.com/fslaborg/FsLab.Templates/archive/journal.zip" target="_blank" rel="noopener">here</a></li>
+<li>Run <code>build run</code> to automatically restore packages and start a live server</li>
+<li>Unzip and open the <code>.fsproj</code> file to start editing in Visual Studio</li>
+<li>The web page is automatically updated (there's a several seconds delay)</li>
+</ol>
+<p>To add a reference, add a line in <code>paket.dependencies</code>, and reference the assembly in the <code>.fsx</code> script file by the following. Then intellisense will work!</p>
+<pre><code>#r &quot;packages/Argu/lib/net40/Argu.dll&quot;
+</code></pre>
+<p>FSharp.Formatting lets you register custom object output by <a href="https://tpetricek.github.io/FSharp.Formatting/evaluation.html#Custom-formatting-functions" target="_blank" rel="noopener"><code>RegisterTransformation</code></a>. Here's <a href="https://github.com/BlueMountainCapital/Deedle/blob/5d347cf9329d427e3872c1197303f20554e37a32/docs/tools/formatters.fsx#L288" target="_blank" rel="noopener">Deedle's implementation</a> (e.g., frame as table, etc.). But currently it doesn't let you do table cells conditional formatting.</p>
+<h2>References</h2>
+<ul>
+<li><a href="http://fslab.org/download/" target="_blank" rel="noopener">FsLab Journal</a></li>
+<li><a href="http://tpetricek.github.io/FSharp.Formatting/" target="_blank" rel="noopener">FShapr.Formatting</a></li>
+<li><a href="http://bluemountaincapital.github.io/Deedle/tutorial.html" target="_blank" rel="noopener">Deedle tutorial</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/datascience/">datascience</a>
+          
+            <a href="/tags/f/">f#</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/08/16/2016-08-16-paket-using-private-nuget-feed/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Paket - using private nuget feed</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/08/03/2016-08-03-pandas-reference/">
+        <span class="next-text nav-default">Pandas reference</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2016/08/04/2016-08-04-FsLab-Journal/';
+        this.page.identifier = '2016/08/04/2016-08-04-FsLab-Journal/';
+        this.page.title = 'FsLab Journal';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

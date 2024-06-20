@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Exposing GIT repository via SSH and HTTP">
+
+
+
+
+  <meta name="keywords" content="unix,git,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2022/04/25/2022-04-25-git-http/">
+
+
+<meta name="description" content="You don&apos;t need a git hosting service to manage and share your git repo. All you
+need is a server which is:
+
+accessible via SSH (to yourself, not others), for pushing changes, and
+has a public accessib">
+<meta name="keywords" content="unix,git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Exposing GIT repository via SSH and HTTP">
+<meta property="og:url" content="http://kflu.github.io/2022/04/25/2022-04-25-git-http/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="You don&apos;t need a git hosting service to manage and share your git repo. All you
+need is a server which is:
+
+accessible via SSH (to yourself, not others), for pushing changes, and
+has a public accessib">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.680Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Exposing GIT repository via SSH and HTTP">
+<meta name="twitter:description" content="You don&apos;t need a git hosting service to manage and share your git repo. All you
+need is a server which is:
+
+accessible via SSH (to yourself, not others), for pushing changes, and
+has a public accessib">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> Exposing GIT repository via SSH and HTTP · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Exposing GIT repository via SSH and HTTP
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Apr 25, 2022
+        </span>
+      </div>
+    </header>
+
+    
+
+    <div class="post-content">
+      
+        <p>You don't need a git hosting service to manage and share your git repo. All you
+need is a server which is:</p>
+<ul>
+<li>accessible via SSH (to yourself, not others), for pushing changes, and</li>
+<li>has a public accessible HTTP server (for others to clone)</li>
+</ul>
+<p>Firstly, on the remote server, let's prepare a <em>bare</em> repo:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir repo.git; <span class="built_in">cd</span> repo.git</span><br><span class="line">git init --bare</span><br></pre></td></tr></table></figure>
+<p>Also, move <code>repo.git</code> directory to a place under HTTP server directory. I put it under <code>~/html/git/</code> so there can host multiple git repos.</p>
+<p>Now, with SSH, you should be able to push changes via SSH already:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># In your git repo:</span></span><br><span class="line"><span class="comment"># ~USER is standard UNIX way to expand into USER's home directory</span></span><br><span class="line">URL=ssh://USER@SERVER/~USER/path/to/repo</span><br><span class="line">git remote <span class="built_in">set</span>-url origin <span class="string">"<span class="variable">$URL</span>"</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+<p>Now, exposing the repo to HTTP mostly following <a href="https://mirrors.edge.kernel.org/pub/software/scm/git/docs/user-manual.html#setting-up-a-public-repository" target="_blank" rel="noopener">this guide</a>:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># in the bare repo:</span></span><br><span class="line">git update-server-info</span><br><span class="line">mv hooks/post-update.sample hooks/post-update</span><br></pre></td></tr></table></figure>
+<p>Note:</p>
+<ol>
+<li>the hook calls update-server-info, so everytime there's a push, the server info is updated (needed to serve the repo via HTTP).</li>
+<li>the default hook script seems to have a bug in it:</li>
+</ol>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec git-update-server-info</span><br></pre></td></tr></table></figure>
+<p>On my system <code>git-update-server-info</code> does not exit. So I've to change it to</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec git update-server-info</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>I host the repo on a public unix system, so I have <code>umask 077</code>. So, in order for the updated git repo to be always exposed to public (HTTP), I need to <code>chmod</code> all subdir/files to <code>go+rX</code>. So I also do this in the post-update hook:</li>
+</ol>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># hooks/post-update</span><br><span class="line"></span><br><span class="line">(</span><br><span class="line">exec git update-server-info</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># Note that the hooks of a bare repo is always run with PWD set to the repo</span><br><span class="line"># root, but just to be safe, let&apos;s make sure it looks like a git repo:</span><br><span class="line">if test -f HEAD; then</span><br><span class="line">  echo &quot;updating repo permission...&quot;</span><br><span class="line">  chmod -R go+rX .</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<ol>
+<li>
+<p>exec must be in a sub-shell, otherwise commands following it won't run
+echo &quot;Updating server info...&quot;</p>
+</li>
+<li>
+<p>the hook is run in a bare repo's root dir (<a href="https://stackoverflow.com/a/9229463/695964" target="_blank" rel="noopener">link</a>)</p>
+</li>
+<li>
+<p>When you push remotely, the output of the hooks are shown in the <code>git push</code> output.</p>
+</li>
+</ol>
+<p>After these steps, you can pull it from HTTP:</p>
+<ol>
+<li>Pull it from HTTP</li>
+</ol>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull http://$SERVER_URL/path/to/repo_dir repo.http</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>Test that repo changes and file permissions are are indeed updated via the hooks:</li>
+</ol>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Make some change to the repo and push via SSH</span><br><span class="line">git push ssh://USER@SERVER/~USER/path/to/repo</span><br></pre></td></tr></table></figure>
+<p>Then pull via HTTP again</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># in repo.http/</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure>
+<p>Make sure you see the update</p>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/unix/">unix</a>
+          
+            <a href="/tags/git/">git</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2022/07/21/2022-07-21-scan-large-book-pages-crop-pdf/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">How to scan large size pages to PDf using GIMP</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2022/04/18/2022-04-18-pdb-exceptions-traceback/">
+        <span class="next-text nav-default">PDB, Exceptions, Tracebacks</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2022/04/25/2022-04-25-git-http/';
+        this.page.identifier = '2022/04/25/2022-04-25-git-http/';
+        this.page.title = 'Exposing GIT repository via SSH and HTTP';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

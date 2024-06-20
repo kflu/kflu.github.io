@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="FreeBSD ZFS">
+
+
+
+
+  <meta name="keywords" content="unix,zfs,nas,partition,filesystem,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2017/07/17/2017-07-17-freebsd-zfs/">
+
+
+<meta name="description" content="References
+
+FreeBSD Mastery: ZFS
+
+Chapter 3: Creating Pools and VDEVs
+Chapter 4: Mounting ZFS Filesystems
+Chapter 5: Replacing Mirror Providers
+Chapter 8: Custom ZFS Installation Partitioning
+
+
+FreeBS">
+<meta name="keywords" content="unix,zfs,nas,partition,filesystem">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FreeBSD ZFS">
+<meta property="og:url" content="http://kflu.github.io/2017/07/17/2017-07-17-freebsd-zfs/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="References
+
+FreeBSD Mastery: ZFS
+
+Chapter 3: Creating Pools and VDEVs
+Chapter 4: Mounting ZFS Filesystems
+Chapter 5: Replacing Mirror Providers
+Chapter 8: Custom ZFS Installation Partitioning
+
+
+FreeBS">
+<meta property="og:image" content="http://kflu.github.io/2017/07/17/2017-07-17-freebsd-zfs/arch.png">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.670Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FreeBSD ZFS">
+<meta name="twitter:description" content="References
+
+FreeBSD Mastery: ZFS
+
+Chapter 3: Creating Pools and VDEVs
+Chapter 4: Mounting ZFS Filesystems
+Chapter 5: Replacing Mirror Providers
+Chapter 8: Custom ZFS Installation Partitioning
+
+
+FreeBS">
+<meta name="twitter:image" content="http://kflu.github.io/2017/07/17/2017-07-17-freebsd-zfs/arch.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> FreeBSD ZFS · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          FreeBSD ZFS
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Jul 17, 2017
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">References</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Working with storage and file system</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Understanding and Working with ZFS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Replacing Disks in ZFS Pool</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">IMPORTANT NOTE ON ZPOOL REPLACE</span></a></li></ol></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">CREATING ZVOL, UFS PARTITION ON ZFS</span></a></li>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <h1>References</h1>
+<ul>
+<li><a href="https://www.michaelwlucas.com/os/fmzfs" target="_blank" rel="noopener">FreeBSD Mastery: ZFS</a>
+<ul>
+<li>Chapter 3: Creating Pools and VDEVs</li>
+<li>Chapter 4: Mounting ZFS Filesystems</li>
+<li>Chapter 5: Replacing Mirror Providers</li>
+<li>Chapter 8: Custom ZFS Installation Partitioning</li>
+</ul>
+</li>
+<li><a href="https://www.michaelwlucas.com/os/fmse" target="_blank" rel="noopener">FreeBSD Mastery: Storage Essential</a></li>
+<li>Relevant man pages
+<ul>
+<li><a href="https://www.freebsd.org/cgi/man.cgi?gpart(8)" target="_blank" rel="noopener">gpart</a>: this contains OS boot up logic</li>
+<li><a href="https://www.freebsd.org/cgi/man.cgi?zpool(8)" target="_blank" rel="noopener">zpool</a></li>
+<li><a href="https://www.freebsd.org/cgi/man.cgi?query=zfs&amp;sektion=8" target="_blank" rel="noopener">zfs</a></li>
+<li><a href="https://www.freebsd.org/cgi/man.cgi?query=geom&amp;sektion=8" target="_blank" rel="noopener">geom</a></li>
+</ul>
+</li>
+<li><a href="https://wiki.freebsd.org/RootOnZFS/GPTZFSBoot/Mirror" target="_blank" rel="noopener">Installing FreeBSD Root on ZFS (Mirror) using GPT (FreeBSD wiki)</a></li>
+</ul>
+<h1>Working with storage and file system</h1>
+<p><em>See BSD repository <code>README.md</code> for updated version.</em></p>
+<ul>
+<li>lists all disks recognized by the OS: <code>geom disk list</code></li>
+<li>working with partitions
+<ul>
+<li>lists all partitions: <code>gpart &lt;show|list</code></li>
+<li>create partition scheme for disk: <code>gpart create -s gpt &lt;device&gt;</code></li>
+<li>destroy partition for disk: <code>gpart destroy [-F] &lt;device&gt;</code></li>
+<li>add new partition to device: <code>gpart add -t &lt;fs_type&gt; -a 1m &lt;device&gt;</code></li>
+<li>write boot code to disk: <code>gpart bootcode -b boot/pmbr -p boot/gptzfsboot -i &lt;part#&gt; &lt;device&gt;</code></li>
+<li>devices and partitions are at <code>/dev/</code></li>
+<li>GPT labels are at <code>/dev/gpt</code></li>
+</ul>
+</li>
+</ul>
+<h1>Understanding and Working with ZFS</h1>
+<p>I've a very successful weekend learning and adopting ZFS on my home server.
+As an end result, I'm running a ZFS pool on a single mirrow VDEV composed
+of two disks.</p>
+<p>On a high level, an ZFS system looks like below.</p>
+<p><img src="arch.png" alt="zfs architecture"></p>
+<p>There can be multiple ZFS pools present on the system. Each pool consists
+of multiple VDEVs. Each VDEV consists of multiple disks. Then on top of
+each pool, a tree structure of &quot;datasets&quot; can be created to organize file
+systems. Datasets is there mainly for management purposes.</p>
+<p>A VDEV is a cluster of disks. VDEV implements software RAID. VDEV manages
+redundency - if a portion of the disks inside a VDEV fail, that might be
+OK. But if a VDEV fail inside of a pool, the entire pool is broken. The
+VDEV can take either an entire, raw disk, or take disk partitions. I opt
+for disk partitions because this way you can make sure all providers in the
+VDEV has the same sector size.</p>
+<p>There're multiple types of VDEVs:</p>
+<ul>
+<li>stripe (single disks composed together)</li>
+<li>mirror (N:1 mirroring)</li>
+<li>RAIDZ-1, RAIDZ-2, RAIDZ-3 (more advanced types of RAID)</li>
+</ul>
+<p>There's a quite general purpose way to prepare (e.g., partitioning) a disk
+for use in ZFS. The partition looks like:</p>
+<ol>
+<li>a freebsd-boot partitioin, 512k</li>
+<li>a freebsd-swap partition, 2GB</li>
+<li>a freebsd-zfs partiion, the rest of the entire disk</li>
+</ol>
+<p>For a disk <code>ada1</code>:</p>
+<pre><code># CREATE GPT PARTITION SCHEME:
+gpart create -s gpt ada1   
+
+gpart add -t freebsd-boot -a 1m -b 40 -s 512k ada1
+gpart add -t freebsd-swap -a 1m       -s 2G   ada1
+gpart add -t freebsd-zfs  -a 1m               ada1
+
+# WRITES BOOT CODE TO MBR AND TO BOOT PARTITION: 
+gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada1
+</code></pre>
+<p>Note:</p>
+<ol>
+<li>
+<p>Use <code>-a 1m</code> to make sure the sector size aligns regardless of disk
+differences. See <a href="https://www.michaelwlucas.com/os/fmzfs" target="_blank" rel="noopener">fmzfs</a>, section &quot;Pools Alignment and Disk Sector
+Size&quot;.</p>
+</li>
+<li>
+<p><code>-b 40</code> to begin the boot partition at 40B.</p>
+</li>
+<li>
+<p>I don't use GPT labels, as opposed to <a href="https://www.michaelwlucas.com/os/fmzfs" target="_blank" rel="noopener">fmzfs</a>. Later pool
+manipulations all use partition names directly (e.g., <code>ada1p3</code>).</p>
+</li>
+</ol>
+<p>Now to add the disk to a mirrow VDEV in <code>zroot</code> pool:</p>
+<pre><code>zpool attach zroot ada0p3 ada1p3
+</code></pre>
+<p>Here we attach <code>ada1p3</code> to poll <code>zroot</code>, and ask it to mirror the existing
+provider <code>ada0p3</code>. Now <code>zpool status</code> should show the newly added disk is
+&quot;resilvering&quot;.</p>
+<p>The result of the above command is:</p>
+<pre><code>Make sure to wait until resilver is done before rebooting.
+
+If you boot from pool 'zroot', you may need to update
+boot code on newly attached disk 'ada1p3'.
+
+Assuming you use GPT partitioning and 'da0' is your new boot disk
+you may use the following command:
+
+        gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 da0
+</code></pre>
+<h1>Replacing Disks in ZFS Pool</h1>
+<p>Today (2021-01-25) one of the mirrored disk is failing so I had to replace it.
+On high level, it involved:</p>
+<ol>
+<li>remove the old disk</li>
+<li>connect new disk</li>
+<li>format new disk</li>
+<li><code>zpool replace &lt;pool&gt; &lt;old&gt; &lt;new_partition&gt;</code></li>
+<li>write boot code to new disk</li>
+<li>wait for resilvering done</li>
+</ol>
+<p><a href="https://farrokhi.net/posts/2020/05/replacing-a-faulty-disk-in-zfs/" target="_blank" rel="noopener">This article</a> describes almost the exact steps I followed.</p>
+<p>For formating new disk, one can copy partition from old disk:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gpart backup ada0 &gt; ada0.parts</span><br><span class="line">cat ada0.parts | gpart restore -F ada1</span><br></pre></td></tr></table></figure>
+<p>If ada1 is larger and the zfs partition is at the end, one can resize (grow)
+the zfs partition with below. Note that leaving out <code>-s</code> would set size to all
+the rest of the disk space.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpart resize -i 3 -a 1m ada1</span><br></pre></td></tr></table></figure>
+<p>I had hard time booting into the zfs pool and had the system detect the new
+disk. Troubles are</p>
+<ul>
+<li>my failed disk is connected to the 1st boot SATA cable. If I connect it to
+the new disk, system insisted to boot from it, even though my 2nd (good old)
+disk is bootable.</li>
+<li>if I unplug 1st SATA then system booted successfully, but hot-plug new device
+won't get recognized - didn't show in <code>geom disk list</code>, <code>dmesg</code> or
+<code>/var/log/messages</code>; <code>camcontrol rescan</code> didn't help.</li>
+<li>what worked is I manually swapped the SATA cables so my good old disk is now
+the 1st SATA disk, and the new disk is the 2nd. This way, the system boots,
+and the new disk is recognized in <code>geom</code>.</li>
+</ul>
+<p>Writing boot code is as usual:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada1</span><br></pre></td></tr></table></figure>
+<h3>IMPORTANT NOTE ON ZPOOL REPLACE</h3>
+<p><strong>NOTE</strong> when issue:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># zpool replace &lt;pool&gt; &lt;old_id&gt; &lt;new_partition&gt;</span><br><span class="line">pool replace zroot 372837423423409823 ada1p3</span><br></pre></td></tr></table></figure>
+<p>That is the <strong>new partition</strong> (e.g. ada1p3), NOT new disk. If you put disk
+(<code>ada1</code>) it will still work (use the whole disk as raw for mirrowing) but you
+lost the partition schemes on the disk, so you won't be able to boot from it,
+in case your other disk in the mirrow fail.</p>
+<h1>CREATING ZVOL, UFS PARTITION ON ZFS</h1>
+<p><a href="https://docs.freebsd.org/en/books/handbook/zfs/#zfs-zfs-volume" target="_blank" rel="noopener">Main doc</a>. zvol is like zfs dataset, but exposed as raw block device. So
+it is useful, e.g, for creating filesystems on top.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">zfs create -V 2g -o compression=on zroot/ufs_part</span><br><span class="line">newfs -O2 /dev/zvol/zroot/ufs_part</span><br><span class="line">mount /dev/zvol/zroot/ufs_part /some/mount/point</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/unix/">unix</a>
+          
+            <a href="/tags/zfs/">zfs</a>
+          
+            <a href="/tags/nas/">nas</a>
+          
+            <a href="/tags/partition/">partition</a>
+          
+            <a href="/tags/filesystem/">filesystem</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/07/18/2017-07-18-msys2/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Msys2 - Cleanest Unix Subsystem on Windows</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/07/15/2017-07-15-SOCKS-proxy/">
+        <span class="next-text nav-default">SOCKS proxy via SSH</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2017/07/17/2017-07-17-freebsd-zfs/';
+        this.page.identifier = '2017/07/17/2017-07-17-freebsd-zfs/';
+        this.page.title = 'FreeBSD ZFS';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

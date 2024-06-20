@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="emailing with gnus - imap, smtp, gmail, etc">
+
+
+
+
+  <meta name="keywords" content="emacs,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2021/05/18/2021-05-18-gnus--imap--gmail--etc/">
+
+
+<meta name="description" content="You don&apos;t need any configuration to use Gnus. Just emacs -f gnus then type B, you&apos;ll be prompted to enter all the information ephemerally:
+
+use nnimap as &amp;quot;methd&amp;quot;
+imap.gmail.com as server (Gm">
+<meta name="keywords" content="emacs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="emailing with gnus - imap, smtp, gmail, etc">
+<meta property="og:url" content="http://kflu.github.io/2021/05/18/2021-05-18-gnus--imap--gmail--etc/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="You don&apos;t need any configuration to use Gnus. Just emacs -f gnus then type B, you&apos;ll be prompted to enter all the information ephemerally:
+
+use nnimap as &amp;quot;methd&amp;quot;
+imap.gmail.com as server (Gm">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.674Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="emailing with gnus - imap, smtp, gmail, etc">
+<meta name="twitter:description" content="You don&apos;t need any configuration to use Gnus. Just emacs -f gnus then type B, you&apos;ll be prompted to enter all the information ephemerally:
+
+use nnimap as &amp;quot;methd&amp;quot;
+imap.gmail.com as server (Gm">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> emailing with gnus - imap, smtp, gmail, etc · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          emailing with gnus - imap, smtp, gmail, etc
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          May 18, 2021
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Gnus Basic Concepts</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Groups Buffer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Summary Buffer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Draft Buffer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Composing Buffer</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Setting up Gmail IMAP with GNUS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Setting up SDF SMTP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">References</span></a></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <p>You don't need any configuration to use Gnus. Just <code>emacs -f gnus</code> then type <code>B</code>, you'll be prompted to enter all the information ephemerally:</p>
+<ul>
+<li>use <code>nnimap</code> as &quot;methd&quot;</li>
+<li><code>imap.gmail.com</code> as server (Gmail needs to be prepared to enable IMAP though)</li>
+<li>type username and password</li>
+</ul>
+<h2>Gnus Basic Concepts</h2>
+<p>Gnus support newsgroup (NNTP), email (IMAP/POP), sending mail (IMAP). These are called &quot;<strong>servers</strong>&quot;. Each server has many <strong>groups</strong>. For email servers, groups are just mail folders.</p>
+<h3>Groups Buffer</h3>
+<p>When Gnus starts up, you see the list of groups that you subscribed (which will be empty). This is called the <strong>group buffer</strong>. In group buffer, you can:</p>
+<ul>
+<li>Press <code>^</code> for the servers list, where you can enter each server and subscribe their groups (pressing <code>u</code>)
+<ul>
+<li>Subscribe means if there're new items then they'll show in group buffer</li>
+</ul>
+</li>
+<li>Press <code>g</code> to manually fetch</li>
+<li>Press <code>m</code> for composing new message
+<ul>
+<li>This is different from <code>c-x m</code> sending mail, which has nothing to do with Gnus. The difference is Gnus can &quot;gcc&quot; the sent item into a specified Sent (archive) folder.</li>
+</ul>
+</li>
+</ul>
+<h3>Summary Buffer</h3>
+<p>Entering each subscribed group, you'll see the articles, or posts, or messages. This is called the <strong>summary buffer</strong>. Here most commands are prefixed with <code>B</code>:</p>
+<ul>
+<li><code>B &lt;DEL&gt;</code> to purge</li>
+<li><code>d</code> to mark as read (Gnus has many type of read marks but they don't matter for beginners)</li>
+</ul>
+<h3>Draft Buffer</h3>
+<p>In the draft buffer,  press <code>e</code> to edit (entering composing buffer)</p>
+<h3>Composing Buffer</h3>
+<p>This is where new messages (<code>m</code>) or drafts (<code>e</code>) are edited. In this view:</p>
+<ul>
+<li><code>c-c c-c</code> to send
+<ul>
+<li>If not configured, <code>smtpmail</code> prompts you on how to send - this is not part of Gnus</li>
+</ul>
+</li>
+<li><code>c-x k</code> to drop message</li>
+<li><code>c-x c-s</code> to save message</li>
+<li><code>c-c y</code> to yank original message when replying</li>
+</ul>
+<h2>Setting up Gmail IMAP with GNUS</h2>
+<p>Gmail makes it really hard to use IMAP:</p>
+<ol>
+<li>Turn on IMAP access in gmail settings</li>
+<li>Turn on &quot;Less secure app access&quot; - (<em>NOTE</em> DO NOT do this by switching account if your gmail is multi-accounts and it's not your primary - it will turn on &quot;less secure&quot; for the main account. Do this in incognito mode.)</li>
+<li>Now in GNUS (or any other client), use <code>imap.gmail.com</code> as server, and <strong>full</strong> gmail address as user name, regular password as password.</li>
+</ol>
+<h2>Setting up SDF SMTP</h2>
+<p>SDF SMTP's CRAM-MD5 auth is broken, even though it advertises that it's supported, it always fail client authentication when this method is used. This breaks Emacs smtpmail - which although supports other auth methods (plain, login), are not attempted when cram-md5 fails (which seems to be a <a href="https://lists.gnu.org/archive/html/bug-gnu-emacs/2021-05/msg01669.html" target="_blank" rel="noopener">bug</a>). So to work around, I had to manually disable cram-md5 when SDF SMTP is used:</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">setq</span> smtpmail-smtp-server <span class="string">"mx.sdf.org"</span>)</span><br><span class="line">(<span class="name">setq</span> smtpmail-smtp-service <span class="number">587</span>)</span><br><span class="line">(<span class="name">setq</span> mtpmail-stream-type 'starttls)</span><br><span class="line"></span><br><span class="line"><span class="comment">; SDF cram-md5 fails and emacs doesn't know to try the rest,</span></span><br><span class="line"><span class="comment">; so, forcefully set the auth method:</span></span><br><span class="line">(<span class="name">setq</span> smtpmail-auth-supported '(plain))</span><br></pre></td></tr></table></figure>
+<h2>References</h2>
+<ul>
+<li><a href="https://www.gnu.org/software/emacs/manual/html_mono/smtpmail.html" target="_blank" rel="noopener">SMTPMail doc</a></li>
+<li><a href="https://gnus.org/manual/gnus_toc.html" target="_blank" rel="noopener">Gnus doc</a></li>
+<li><a href="https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/gnus-guide-en.org" target="_blank" rel="noopener">A practical guide to Gnus</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/emacs/">emacs</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2021/05/24/2021-05-24-tmux-tricks/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">tmux tricks</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2021/05/07/2021-05-07-pelican-notes/">
+        <span class="next-text nav-default">Pelican Site Generator Setup Notes</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2021/05/18/2021-05-18-gnus--imap--gmail--etc/';
+        this.page.identifier = '2021/05/18/2021-05-18-gnus--imap--gmail--etc/';
+        this.page.title = 'emailing with gnus - imap, smtp, gmail, etc';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

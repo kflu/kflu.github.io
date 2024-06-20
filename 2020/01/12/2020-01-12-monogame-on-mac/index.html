@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Setting up Monogame Development on Mac">
+
+
+
+
+  <meta name="keywords" content="csharp,game,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2020/01/12/2020-01-12-monogame-on-mac/">
+
+
+<meta name="description" content="It is not easy to set up monogame dev on Mac. It officially supports mono +
+visual studio for mac + monogame extension. However, there were several issues:
+
+monogame extension does not support the new">
+<meta name="keywords" content="csharp,game">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Setting up Monogame Development on Mac">
+<meta property="og:url" content="http://kflu.github.io/2020/01/12/2020-01-12-monogame-on-mac/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="It is not easy to set up monogame dev on Mac. It officially supports mono +
+visual studio for mac + monogame extension. However, there were several issues:
+
+monogame extension does not support the new">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.673Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Setting up Monogame Development on Mac">
+<meta name="twitter:description" content="It is not easy to set up monogame dev on Mac. It officially supports mono +
+visual studio for mac + monogame extension. However, there were several issues:
+
+monogame extension does not support the new">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> Setting up Monogame Development on Mac · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Setting up Monogame Development on Mac
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Jan 12, 2020
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Monogame on .Net core on Mac</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">2020-01-31 Some more learnings (quick note)</span></a></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <p>It is not easy to set up monogame dev on Mac. It officially supports mono +
+visual studio for mac + monogame extension. However, there were several issues:</p>
+<ul>
+<li>monogame extension does not support the new VS for Mac 2019, but only vs4mac
+2017 . However, the 2017 download isn't available from Microsoft anymore (I
+had to download it from <a href="https://dl.xamarin.com/VsMac/VisualStudioForMac-7.5.4.3.dmg" target="_blank" rel="noopener">here</a>)</li>
+<li>I cannot scaffold projects with &quot;Monogame Mac Application&quot; (error: &quot;Exception
+has been thrown by the target of an invocation.&quot;)</li>
+<li>I was able to scaffold &quot;Monogame Windows Application&quot; or &quot;iPad/iOs&quot;, but I
+couldn't build and run the projects.</li>
+</ul>
+<h2>Monogame on .Net core on Mac</h2>
+<p>I was able to scaffold and run using this setup:</p>
+<ul>
+<li>Install .Net Core</li>
+<li>Install vscode</li>
+<li>Install <a href="http://community.monogame.net/t/monogame-3-7-1-release/11173" target="_blank" rel="noopener">the standalone monogame pipeline application</a> (follow the official
+mac installation doc)</li>
+</ul>
+<p>Now following <a href="http://blog.dylanwilson.net/posts/monogame-on-dotnet-core/" target="_blank" rel="noopener">this blog</a>, firstly install the Monogame project template:</p>
+<pre><code>dotnet new -i &quot;MonoGame.Template.CSharp&quot;
+</code></pre>
+<p>In a working directory:</p>
+<pre><code>dotnet new mgdesktopgl
+</code></pre>
+<p>With the basic setup, you should be able to run the blank game with:</p>
+<pre><code>dotnet run
+</code></pre>
+<p>Now let's follow <a href="http://www.monogame.net/documentation/?page=adding_content" target="_blank" rel="noopener">official guide</a> to add a ball sprite to the canvas.</p>
+<p>Add a content by opening the Monogame Pipeline tool, add the <code>ball.png</code> to the
+<code>Content</code> project. Then make changes accordingly to the guide.</p>
+<hr>
+<p><strong>Fix monogame freeimage issue:</strong></p>
+<p>The pipeline tool modifies <code>Content.mgcb</code> to include some msbuild operations for
+<code>ball.png</code>. Specifically, the <code>TextureImporter</code>. Under the hood, it interopts
+with <code>libfreeimage.dylib</code>, which by some monogame bug, isn't shipped with the
+<code>monogame.content.builder</code> nuget package. To fix this issue:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">brew install freeimage</span><br><span class="line"></span><br><span class="line"># find the installed `libfreeimage.dylib`:</span><br><span class="line">brew ls freeimage | grep -e &apos;libfreeimage\..*\.dylib&apos;</span><br><span class="line"></span><br><span class="line"># link it into the MG builder build tool folder:</span><br><span class="line">ln -s \</span><br><span class="line">  /usr/local/Cellar/freeimage/3.18.0/lib/libfreeimage.3.18.0.dylib \</span><br><span class="line">  ~/.nuget/packages/monogame.content.builder/3.7.0.4/build/MGCB/build/libfreeimage.dylib</span><br></pre></td></tr></table></figure>
+<hr>
+<p>Now we are ready to build and run the game and see the ball image:</p>
+<pre><code>dotnet run
+</code></pre>
+<p>The complete working code is at https://github.com/kflu/monogame-setup</p>
+<h2>2020-01-31 Some more learnings (quick note)</h2>
+<p>Pipeline tool is just a GUI helping you to construct the <code>Content.mgcb</code> file.
+The content building actually happens at build time, the <code>Content.mgcb</code> file is
+actually the command line parameters for calling <code>MGCB</code> command. In this sense,
+the pipeline tool is not necessary - why I don't want to use it?</p>
+<p><strong>Problem 1: Pipeline tool crashed when adding reference</strong></p>
+<p>I try to add Tiled map to content - they require additonal reference assembly
+for <code>MGCB</code> to build. Pipeline can add reference. But it has a bug crashing
+when adding references.</p>
+<p><strong>Problem 2: Difficult to add dependencies of the reference manually in MGCB
+file</strong></p>
+<p>It's not easy to add reference to MGCB file. Because you not only add the
+reference, but also all its dependencies. Something like this:</p>
+<pre><code>/reference:PATH1/MonoGame.Extended.Content.Pipeline.dll
+/reference:PATH2/MonoGame.Extended.dll
+/reference:PATH3/MonoGame.Extended.Tiled.dll
+/reference:PATH4/Newtonsoft.Json.dll
+</code></pre>
+<p>I don't know if Pipeline tool help you add all dependencies, if you add a
+reference assembly via Pipeline tool. But since it's broken I don't have this
+help. And manually figuring out all dependencies and type their physical paths
+are infeasible.</p>
+<p>What I did was creating another .net core classlib (netstandard2.2). Adding the
+top level reference via <code>dotnet add package ...</code>. Then <code>dotnet publish</code>. I got
+the reference assembly and its dependencies all flattened in the <code>publish</code>
+folder. Then I was add all of them as reference in MGCB file:</p>
+<pre><code>/reference:../../pipeline_libs/bin/Debug/netstandard2.0/publish/MonoGame.Extended.Content.Pipeline.dll
+/reference:../../pipeline_libs/bin/Debug/netstandard2.0/publish/MonoGame.Extended.dll
+/reference:../../pipeline_libs/bin/Debug/netstandard2.0/publish/MonoGame.Extended.Tiled.dll
+/reference:../../pipeline_libs/bin/Debug/netstandard2.0/publish/Newtonsoft.Json.dll
+</code></pre>
+<p><strong>Problem 3: relative paths between content files</strong></p>
+<p>The relative paths between the tiled map (tmx), tilesets (tsx), the raw assets
+(png) are inconsistent when they are copied or imported to the game project
+directory. So often <code>dotnet build</code> (or just <code>mgcb</code>) complained the file could
+not be found.</p>
+<p>This is a process issue, I'd feel more comfortable once a pattern is found.</p>
+<p><strong>Problem 4: <code>/build</code> command with source &amp; destination doesn't work</strong></p>
+<p>Form <code>/build:&lt;src&gt;:&lt;dest&gt;</code> doesn't work. While according to MGCB document, it
+should work. It says file path <code>&lt;src&gt;:&lt;desst&gt;</code> not found, as if it doesn't
+understand this syntax.</p>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/csharp/">csharp</a>
+          
+            <a href="/tags/game/">game</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2020/04/04/2020-04-04-onvif-ip-cam/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Notes About ONVIF IP Camera</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2019/08/24/2019-08-24-writing-pycharm-plugin/">
+        <span class="next-text nav-default">Writing PyCharm Plugin</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2020/01/12/2020-01-12-monogame-on-mac/';
+        this.page.identifier = '2020/01/12/2020-01-12-monogame-on-mac/';
+        this.page.title = 'Setting up Monogame Development on Mac';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

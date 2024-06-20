@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Chicken Scheme Notes">
+
+
+
+
+  <meta name="keywords" content="lisp,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2017/02/22/2017-02-22-chicken-scheme-notes/">
+
+
+<meta name="description" content="There&apos;re many ways to install chicken scheme on Windows. I recommend compile it from source. It&apos;s because down the road you may need to compile an egg (like what I had to do with openssl egg), you nee">
+<meta name="keywords" content="lisp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chicken Scheme Notes">
+<meta property="og:url" content="http://kflu.github.io/2017/02/22/2017-02-22-chicken-scheme-notes/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="There&apos;re many ways to install chicken scheme on Windows. I recommend compile it from source. It&apos;s because down the road you may need to compile an egg (like what I had to do with openssl egg), you nee">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.627Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chicken Scheme Notes">
+<meta name="twitter:description" content="There&apos;re many ways to install chicken scheme on Windows. I recommend compile it from source. It&apos;s because down the road you may need to compile an egg (like what I had to do with openssl egg), you nee">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> Chicken Scheme Notes · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Chicken Scheme Notes
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Feb 22, 2017
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Compiling Chicken in Mingw</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Test it out</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Problem installing openssl egg</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Compiling OpenSSL in Mingw</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Pending Issues</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Relevant notes</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Problem: cannot find openssl/rand.h</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Problem: header naming clash**</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Problem: library incompatibility</span></a></li></ol></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <p>There're many ways to install chicken scheme on Windows. I recommend compile it from source. It's because down the road you may need to compile an egg (like what I had to do with <code>openssl</code> egg), you need a matching compiler that matches the one compiled chicken. This avoids a lot of the mystic problems down the road. And as of now, is the only way that worked for me. So here you go.</p>
+<h1>Compiling Chicken in Mingw</h1>
+<p>This guide shows how to compile chicken using msys. I recommend msys over vanilla mingw, since mostly the same msys will be needed in the future to compile egg dependencies.</p>
+<p>Download chicken source from <a href="http://code.call-cc.org/" target="_blank" rel="noopener">here</a>. In msys console, unzip to <code>~/work/chicken</code>. Now determine where on the <strong>host</strong> system you want to install chicken. I want to install it at <code>c:\chicken</code>, so in msys, do</p>
+<pre><code>mkdir /c/chicken
+make PLATFORM=mingw-msys PREFIX=/c/chicken
+make PLATFORM=mingw-msys PREFIX=/c/chicken install
+</code></pre>
+<p>Once installed, add <code>&lt;mingw&gt;/bin</code> to PATH so chicken executables knows where to find the gcc runtime (<code>libgcc_*</code>). Otherwise, you'll see <a href="http://stackoverflow.com/q/4702732/695964" target="_blank" rel="noopener">this error</a>. I tried to compile chicken with gcc option <code>-static-libgcc</code> but the compilation would fail.</p>
+<p>And you may need to add the installation path (c:\chicken) in this case to <code>CHICKEN_PREFIX</code>.</p>
+<p><strong>tip</strong> if you encounter problem with <code>csc</code>, always check <code>CHECK_PREFIX</code>.</p>
+<h2>Test it out</h2>
+<p>You can run post-install test according to the <a href="https://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=blob;f=README;h=97888053ca98704d761ac944ec555885391d7d9a;hb=6ea24b60e7ef93e2f7c668bdb0437c0189e47dcd" target="_blank" rel="noopener"><code>README</code></a>, with</p>
+<pre><code>make PLATFORM=mingw-msys PREFIX=/c/chicken check
+</code></pre>
+<p>Also:</p>
+<ul>
+<li>run <code>csi</code> to test the interpreter</li>
+<li>run <code>csc</code> to test the compiler</li>
+<li>try installing extensions with <code>chicken-install &lt;egg&gt;</code>.</li>
+</ul>
+<h1>Problem installing <code>openssl</code> egg</h1>
+<p><code>openssl</code> requires an installation of openssl libraries and the header files accessible by chicken compiler. The easiest way I found is to compile openssl (straightforward) and drop the header files (<code>include/openssl/*</code>) and lib files (<code>libssl.a</code>, <code>libcrypto.a</code>) to chicken directories.</p>
+<ul>
+<li>headers are at <code>&lt;chicken&gt;/include\chicken</code></li>
+<li>libs are at <code>&lt;chicken&gt;/lib</code></li>
+</ul>
+<h2>Compiling OpenSSL in Mingw</h2>
+<p>Download openssl source (v1.0.2k) from <a href="https://www.openssl.org/source/" target="_blank" rel="noopener">here</a>. Extract it to msys home directory. From msys console, follow instruction in <code>INSTALL</code> file:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./config</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+<p>This compiles <code>libssl.a</code> and <code>libcrypto.a</code> at source root. All header files are copied to <code>include/openssl</code>. They can then be copied to the corresponding chicken directories.</p>
+<h1>Pending Issues</h1>
+<p>Extensions cannot be statically linked, e.g., <code>http-client</code>. See this <a href="http://stackoverflow.com/q/38928186/695964" target="_blank" rel="noopener">SO question</a>. <a href="http://www.foldling.org/scheme.html#compiling-statically-linked-chicken-scheme-programs-with-extensions" target="_blank" rel="noopener">This blog post</a> offers a way to do this by manually compiling the dependencies with <code>csc</code>, might worth a try. <a href="https://lists.nongnu.org/archive/html/chicken-users/2014-04/msg00000.html" target="_blank" rel="noopener">This thread</a> reports a similar problem.</p>
+<h1>Relevant notes</h1>
+<p>The below are notes I took along fixing the issues, mostly building eggs. They were actions I took before fully compiling chicken from source. Might still offer some insights.</p>
+<p>The chicken binaries (especially <code>csc</code>) is tightly related to the location of the C compiler that compiled it. I got a working copy of chicken and <code>csc</code> by installing it and its depedency <code>mingw</code> from Chocolatey. Chicken is installed at <code>c:\chicken</code>, <code>mingw</code> is installed at <code>c:\tools\mingw</code>.</p>
+<p>However, I have problem installing <code>openssl</code> egg. Here documents the attempts to fix them.</p>
+<h2>Problem: cannot find openssl/rand.h</h2>
+<p>Initially solved with downloading openssl developer library and extracts headers from <a href="http://gnuwin32.sourceforge.net/packages/openssl.htm" target="_blank" rel="noopener">OpenSSL for Windows</a> into chicken installation path.</p>
+<p><strong>tip</strong> Chicken installation structure:</p>
+<ul>
+<li>headers are at <code>&lt;chicken&gt;/include\chicken</code></li>
+<li>libs are at <code>&lt;chicken&gt;/lib</code></li>
+</ul>
+<p>This leads to the next problem. A proper fix for this would be to build openssl from mingw.</p>
+<h2>Problem: header naming clash**</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:/chicken/include/chicken/openssl/ossl_typ.h:176:33: error: expected &apos;)&apos; before numeric constant</span><br><span class="line"> typedef struct ocsp_response_st OCSP_RESPONSE;</span><br></pre></td></tr></table></figure>
+<p>There's header macro name clash (<code>OCSP_RESPONSE</code>) in <code>wincrypto.h</code> and <code>ossl-typ.h</code>.  Inspired by this issue on SourceForge<a href="https://sourceforge.net/p/podofo/mailman/message/35158528/" target="_blank" rel="noopener">1</a> and its diff attachment, I came up with the following fix for <code>openssl.scm</code> in the egg:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">*** &quot;openssl\\openssl.orig.scm&quot;   Wed Feb 22 01:21:45 2017</span><br><span class="line">--- &quot;openssl\\openssl.scm&quot;        Wed Feb 22 01:21:12 2017</span><br><span class="line">***************</span><br><span class="line">*** 62,68 ****</span><br><span class="line">--- 62,79 ----</span><br><span class="line">    #ifdef _MSC_VER</span><br><span class="line">      #include &lt;winsock2.h&gt;</span><br><span class="line">    #else</span><br><span class="line">+</span><br><span class="line">+     #ifndef NOCRYPT</span><br><span class="line">+     #define PODOFO_NO_WINCRYPT</span><br><span class="line">+     #define NOCRYPT</span><br><span class="line">+     #endif</span><br><span class="line">+</span><br><span class="line">      #include &lt;ws2tcpip.h&gt;</span><br><span class="line">+</span><br><span class="line">+     #ifdef PODOFO_NO_WINCRYPT</span><br><span class="line">+     #undef NOCRYPT</span><br><span class="line">+     #endif</span><br><span class="line">+</span><br><span class="line">    #endif</span><br><span class="line"></span><br><span class="line">    #include &lt;openssl/rand.h&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>Tip</strong> to debug chicken installation problem, use</p>
+<pre><code>chicken-install -k -debug &lt;egg&gt;
+</code></pre>
+<p><code>-k</code> keeps the temporary working directory where the egg files are located. It is helpful for allowing subsequent installation from the locally fixed egg files.</p>
+<p><strong>Tip</strong> to install egg from local directory:</p>
+<pre><code>chicken-install -transport local -location C:\Users\username\AppData\Local\Temp\tempd5e8.3100\ openssl
+</code></pre>
+<p>See <a href="https://wiki.call-cc.org/man/4/Extensions#other-modes-of-installation" target="_blank" rel="noopener">&quot;other modes of installation&quot;</a>.</p>
+<p>This leads to the next problem.</p>
+<h2>Problem: library incompatibility</h2>
+<p>Now that compilation is successful, the linker couldn't locate <code>libssl</code> and <code>libcrypto</code>. Still solved this issue by dropping these two files from <a href="http://gnuwin32.sourceforge.net/packages/openssl.htm" target="_blank" rel="noopener">openssl developer library</a> into <code>&lt;chicken&gt;/lib</code>. Now I got library incompatibility at linker stage:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:/tools/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/5.3.0/../../../../x86_64-w64-mingw32/bin/ld.exe: skipping incompatible C:\chicken\lib\/libssl.a when searching for -lssl</span><br><span class="line">C:/tools/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/5.3.0/../../../../x86_64-w64-mingw32/bin/ld.exe: cannot find -lssl</span><br><span class="line">C:/tools/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/5.3.0/../../../../x86_64-w64-mingw32/bin/ld.exe: skipping incompatible C:\chicken\lib\/libcrypto.a when searching for -lcrypto</span><br><span class="line">C:/tools/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/5.3.0/../../../../x86_64-w64-mingw32/bin/ld.exe: cannot find -lcrypto</span><br></pre></td></tr></table></figure>
+<p>Since I don't know how <a href="http://gnuwin32.sourceforge.net/packages/openssl.htm" target="_blank" rel="noopener">openssl developer library</a> was compiled, I tried to fix this by compiling openssl from mingw x64 by myself. The compilation is quite straightforward (documented at the bottom). But after copying the libraries over, I still get the same error. Now I'm wondering if the mingw that comes with chicken is not compatible with the one that I use to compile openssl.</p>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/lisp/">lisp</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/03/02/2017-03-02-native-library-dependencies/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Native library dependencies - how to debug</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/02/15/2017-02-15-dotnet-locating-assemblies/">
+        <span class="next-text nav-default">How .NET runtime locates assemblies</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2017/02/22/2017-02-22-chicken-scheme-notes/';
+        this.page.identifier = '2017/02/22/2017-02-22-chicken-scheme-notes/';
+        this.page.title = 'Chicken Scheme Notes';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

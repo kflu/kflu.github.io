@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Notes About ONVIF IP Camera">
+
+
+
+
+  <meta name="keywords" content="onvif,ip-camera,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2020/04/04/2020-04-04-onvif-ip-cam/">
+
+
+<meta name="description" content="CONNECTING THE CAMERA TO NETWORK
+Getting the camera to connect to the network is still a device-dependent task.
+For my camera there&apos;s no ethernet port for configuration, so it relies on
+onboard microp">
+<meta name="keywords" content="onvif,ip-camera">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Notes About ONVIF IP Camera">
+<meta property="og:url" content="http://kflu.github.io/2020/04/04/2020-04-04-onvif-ip-cam/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="CONNECTING THE CAMERA TO NETWORK
+Getting the camera to connect to the network is still a device-dependent task.
+For my camera there&apos;s no ethernet port for configuration, so it relies on
+onboard microp">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.673Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Notes About ONVIF IP Camera">
+<meta name="twitter:description" content="CONNECTING THE CAMERA TO NETWORK
+Getting the camera to connect to the network is still a device-dependent task.
+For my camera there&apos;s no ethernet port for configuration, so it relies on
+onboard microp">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> Notes About ONVIF IP Camera · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Notes About ONVIF IP Camera
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Apr 4, 2020
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">CONNECTING THE CAMERA TO NETWORK</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">GETTING INFORMATION ABOUT THE CAMERA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Finding the device IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Finding servive endpoints</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Using WSDL clients</span></a></li></ol></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">References</span></a>
+        </li></div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <h2>CONNECTING THE CAMERA TO NETWORK</h2>
+<p>Getting the camera to connect to the network is still a device-dependent task.
+For my camera there's no ethernet port for configuration, so it relies on
+onboard microphone as I/O:</p>
+<ol>
+<li>connect to iOS app</li>
+<li>Specify WIFI connection info in the app</li>
+<li>The app modulates the info in audio wave and use phone's microphone to send
+the info to the camera</li>
+<li>Camera now connects to LAN</li>
+</ol>
+<h2>GETTING INFORMATION ABOUT THE CAMERA</h2>
+<p>Now this is where ONVIF shines. It defines a set of standard web services. The
+specs are <a href="https://www.onvif.org/profiles/specifications/" target="_blank" rel="noopener">here</a>. Those services are in WSDL, so using .NET core to
+generate client code is really each:</p>
+<h3>Finding the device IP</h3>
+<p>I found the device IP by going into my router and searching by MAC (MAC is printed on a label on the camera). Alternatively, device IP can be obtained from the app.</p>
+<h3>Finding servive endpoints</h3>
+<p>The ONVIF core spec states that the device management (<code>devicemgmt.wsdl</code>)
+endpoint is fixed to <code>http://onvif_host/onvif/device_service</code> (section 5.1.1).</p>
+<p>One useful tool is <a href="https://github.com/patrickmichalina/camera-probe" target="_blank" rel="noopener"><code>camera-probe</code></a>. It's a NPM CLI that discovers
+devices on LAN. It was able to detect my camera.</p>
+<h3>Using WSDL clients</h3>
+<p>.NET Core has tool to generate WSDL client given WSDL documents. The two web services that're particularly useful are <code>device.wsdl</code> (or confusingly <code>devicemgmt.wsdl</code>) and <code>media.wsdl</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dotnet tool install --global dotnet-svcutil</span><br><span class="line">mkdir onvif &amp;&amp; cd onvif</span><br><span class="line">dotnet new console</span><br><span class="line">dotnet-svcutil https://www.onvif.org/ver10/device/wsdl/devicemgmt.wsdl -n &apos;*,mgmt&apos;</span><br><span class="line">dotnet-svcutil https://www.onvif.org/ver10/media/wsdl/media.wsdl -n &apos;*,media&apos;</span><br></pre></td></tr></table></figure>
+<p>To use WSDL clients, the most important namespace is
+<code>System.ServiceModel.*</code>. Creating service clients requires specifying a binding
+(<code>BasicHttpBinding</code>), and the servicec endpoint:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var client = new DeviceClient(</span><br><span class="line">    new System.ServiceModel.BasicHttpBinding(),</span><br><span class="line">    new System.ServiceModel.EndpointAddress(&quot;http://192.168.0.19:80/onvif/device_service&quot;)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">var mediaClient = new MediaClient(</span><br><span class="line">    new System.ServiceModel.BasicHttpBinding(),</span><br><span class="line">    new System.ServiceModel.EndpointAddress(&quot;http://192.168.0.19:80/onvif/device_service&quot;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>I used below code to get various information about the device, the streams, and
+the detail for each stream:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">System.Console.WriteLine(js(</span><br><span class="line">    await client.GetCapabilitiesAsync(new CapabilityCategory[] &#123;CapabilityCategory.All&#125;)</span><br><span class="line">));</span><br><span class="line"></span><br><span class="line">System.Console.WriteLine(js(</span><br><span class="line">    await mediaClient.GetServiceCapabilitiesAsync()</span><br><span class="line">));</span><br><span class="line"></span><br><span class="line">System.Console.WriteLine(js(</span><br><span class="line">    await mediaClient.GetProfilesAsync()</span><br><span class="line">));</span><br><span class="line"></span><br><span class="line">System.Console.WriteLine(js( </span><br><span class="line">    await mediaClient.GetVideoSourceConfigurationAsync(&quot;stream0&quot;)</span><br><span class="line">));</span><br><span class="line"></span><br><span class="line">System.Console.WriteLine(js(</span><br><span class="line">    await mediaClient.GetStreamUriAsync(</span><br><span class="line">        new StreamSetup()</span><br><span class="line">        &#123;</span><br><span class="line">            Stream = StreamType.RTPUnicast,</span><br><span class="line">            Transport = new Transport</span><br><span class="line">            &#123;</span><br><span class="line">                Protocol = TransportProtocol.HTTP,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;profile_VideoSource_1&quot;</span><br><span class="line">    )</span><br><span class="line">));</span><br></pre></td></tr></table></figure>
+<p>The <code>GetStreamUriAsync</code> call gives the RTSP stream address for stream profile
+<code>profile_VideoSource_1</code>: <code>rtsp://192.168.0.xx:2600/stream0</code>.</p>
+<p>Note that this stream needs authentication. The user and password is,
+unfortunately, device-dependent. For my device, the instrucment is mentioned at
+Amiccom website under NVR section. It basically says the username is <code>admin</code>,
+the password must be obtained from the app. I do see a generated password in the
+app.</p>
+<p>So I was able to connect to the stream in VLC using the following URI:</p>
+<pre><code>rtsp://&lt;username&gt;:&lt;password&gt;@&lt;device_addr&gt;:2600/stream0`
+</code></pre>
+<h1>References</h1>
+<ul>
+<li><a href="https://www.onvif.org/profiles/specifications/" target="_blank" rel="noopener">specs</a></li>
+<li><a href="https://www.onvif.org/wp-content/uploads/2016/12/ONVIF_WG-APG-Application_Programmers_Guide-1.pdf" target="_blank" rel="noopener">programers_guide</a></li>
+<li><a href="https://www.onvif.org/resources/" target="_blank" rel="noopener">programming_resources</a></li>
+<li><a href="https://github.com/patrickmichalina/camera-probe" target="_blank" rel="noopener">camera_probe</a></li>
+<li><a href="https://amiccomcam.com/nvr-instructions/" target="_blank" rel="noopener">amiccom_nvr</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/onvif/">onvif</a>
+          
+            <a href="/tags/ip-camera/">ip-camera</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2020/04/08/2020-04-08-freebsd-bhyve/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">FreeBSD BHyve Setup Note</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2020/01/12/2020-01-12-monogame-on-mac/">
+        <span class="next-text nav-default">Setting up Monogame Development on Mac</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2020/04/04/2020-04-04-onvif-ip-cam/';
+        this.page.identifier = '2020/04/04/2020-04-04-onvif-ip-cam/';
+        this.page.title = 'Notes About ONVIF IP Camera';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

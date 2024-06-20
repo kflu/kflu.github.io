@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Zoneminder setup guide">
+
+
+
+
+  <meta name="keywords" content="unix,freebsd,docker,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2020/04/16/2020-04-16-zoneminder/">
+
+
+<meta name="description" content="Installing Zoneminder is not straightforward at all. You need to set up all the dependencies and configure them: e.g., PHP, Apache, MySQL.
+A easier way is to use the ZM docker image.
+However FreeBSD d">
+<meta name="keywords" content="unix,freebsd,docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zoneminder setup guide">
+<meta property="og:url" content="http://kflu.github.io/2020/04/16/2020-04-16-zoneminder/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="Installing Zoneminder is not straightforward at all. You need to set up all the dependencies and configure them: e.g., PHP, Apache, MySQL.
+A easier way is to use the ZM docker image.
+However FreeBSD d">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.674Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Zoneminder setup guide">
+<meta name="twitter:description" content="Installing Zoneminder is not straightforward at all. You need to set up all the dependencies and configure them: e.g., PHP, Apache, MySQL.
+A easier way is to use the ZM docker image.
+However FreeBSD d">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> Zoneminder setup guide · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Zoneminder setup guide
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Apr 16, 2020
+        </span>
+      </div>
+    </header>
+
+    
+
+    <div class="post-content">
+      
+        <p>Installing Zoneminder is not straightforward at all. You need to set up all the dependencies and configure them: e.g., PHP, Apache, MySQL.</p>
+<p>A easier way is to use <a href="https://github.com/dlandon/zoneminder" target="_blank" rel="noopener">the ZM docker image</a>.</p>
+<p>However FreeBSD doesn't support Docker. So I installed a Ubuntu Server guest on my FreeBSD, and install docker on the Ubuntu Server instead. I followed <a href="https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04" target="_blank" rel="noopener">this guide</a> to install Docker on Ubuntu. Basically just setup Docker's repository for <code>apt</code>. Then simply <code>apt install docker-ce</code>.</p>
+<p>Once docker is ready, use follow commands to install and start the ZM service. Note that first time it takes a while to start up. You can check the log with <code>docker container log Zoneminder</code>.</p>
+<p>Once ZM starts up, point your browser to <code>http://ip:8080/zm</code> you should see ZM the landing page.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">docker pull dlandon/zoneminder</span><br><span class="line"></span><br><span class="line">sudo docker run -d --name=&quot;Zoneminder&quot; \</span><br><span class="line">--restart=always \</span><br><span class="line">--net=&quot;bridge&quot; \</span><br><span class="line">--privileged=&quot;true&quot; \</span><br><span class="line">-p 8080:80/tcp \</span><br><span class="line">-p 9000:9000/tcp \</span><br><span class="line">-e TZ=&quot;America/Los_Angeles&quot; \</span><br><span class="line">-e SHMEM=&quot;50%&quot; \</span><br><span class="line">-e PUID=&quot;99&quot; \</span><br><span class="line">-e PGID=&quot;100&quot; \</span><br><span class="line">-e INSTALL_HOOK=&quot;0&quot; \</span><br><span class="line">-e INSTALL_FACE=&quot;0&quot; \</span><br><span class="line">-e INSTALL_TINY_YOLO=&quot;0&quot; \</span><br><span class="line">-e INSTALL_YOLO=&quot;0&quot; \</span><br><span class="line">-e MULTI_PORT_START=&quot;0&quot; \</span><br><span class="line">-e MULTI_PORT_END=&quot;0&quot; \</span><br><span class="line">-v &quot;/mnt/Zoneminder&quot;:&quot;/config&quot;:rw \</span><br><span class="line">-v &quot;/mnt/Zoneminder/data&quot;:&quot;/var/cache/zoneminder&quot;:rw \</span><br><span class="line">dlandon/zoneminder</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/unix/">unix</a>
+          
+            <a href="/tags/freebsd/">freebsd</a>
+          
+            <a href="/tags/docker/">docker</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2020/04/27/2020-04-27-react-typescript/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">React and Typescript notes</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2020/04/08/2020-04-08-freebsd-bhyve/">
+        <span class="next-text nav-default">FreeBSD BHyve Setup Note</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2020/04/16/2020-04-16-zoneminder/';
+        this.page.identifier = '2020/04/16/2020-04-16-zoneminder/';
+        this.page.title = 'Zoneminder setup guide';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

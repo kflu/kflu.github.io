@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="SOCKS proxy via SSH">
+
+
+
+
+  <meta name="keywords" content="unix,ssh,socks,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2017/07/15/2017-07-15-SOCKS-proxy/">
+
+
+<meta name="description" content="References
+
+How to tunnel Internet traffic over SSH in Windows (the guide that finally works for me)
+How To Route Web Traffic Securely Without a VPN Using a SOCKS Tunnel
+Tunneling protocols Wikipedia">
+<meta name="keywords" content="unix,ssh,socks">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SOCKS proxy via SSH">
+<meta property="og:url" content="http://kflu.github.io/2017/07/15/2017-07-15-SOCKS-proxy/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="References
+
+How to tunnel Internet traffic over SSH in Windows (the guide that finally works for me)
+How To Route Web Traffic Securely Without a VPN Using a SOCKS Tunnel
+Tunneling protocols Wikipedia">
+<meta property="og:image" content="http://kflu.github.io/2017/07/15/2017-07-15-SOCKS-proxy/putty.png">
+<meta property="og:image" content="http://kflu.github.io/2017/07/15/2017-07-15-SOCKS-proxy/socks_win.png">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.669Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SOCKS proxy via SSH">
+<meta name="twitter:description" content="References
+
+How to tunnel Internet traffic over SSH in Windows (the guide that finally works for me)
+How To Route Web Traffic Securely Without a VPN Using a SOCKS Tunnel
+Tunneling protocols Wikipedia">
+<meta name="twitter:image" content="http://kflu.github.io/2017/07/15/2017-07-15-SOCKS-proxy/putty.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> SOCKS proxy via SSH · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          SOCKS proxy via SSH
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Jul 15, 2017
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">References</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">SOCKS Server Side</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">SOCKS Client Side - Enabling SOCKS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">SOCKS Client Side - Configuring Applications</span></a></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <h2>References</h2>
+<ul>
+<li><a href="https://www.ocf.berkeley.edu/~xuanluo/sshproxywin.html" target="_blank" rel="noopener">How to tunnel Internet traffic over SSH in Windows (the guide that finally works for me)</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-route-web-traffic-securely-without-a-vpn-using-a-socks-tunnel" target="_blank" rel="noopener">How To Route Web Traffic Securely Without a VPN Using a SOCKS Tunnel</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Tunneling_protocol#Secure_Shell_tunneling" target="_blank" rel="noopener">Tunneling protocols Wikipedia</a></li>
+</ul>
+<h2>Overview</h2>
+<p>For proxy/tunneling, there're several options:</p>
+<ol>
+<li>
+<p>Per-application based, there's <a href="https://en.wikipedia.org/wiki/Tunneling_protocol#Secure_Shell_tunneling" target="_blank" rel="noopener">SSH port forwarding</a>.</p>
+<p>Server setup is easy. You only need the regular configured SSHD. This is
+the easiest to setup and use. Just fire the proper SSH command and point
+your application to the locally bind port.</p>
+</li>
+<li>
+<p>Next is the SOCKS proxy - this works at the web application level so any
+application (mostly browsers) that supports SOCKS can use it.</p>
+<p>Server setup is still easy. You only need the regularly configured SSHD.
+Client setup is also easy, fire up the command but compared to portforwarding
+you'll also setup proxy settings. This setting is usually in OS or app.</p>
+</li>
+<li>
+<p>VPN server</p>
+<p>Hardest to setup on the server side. There're two types - OpenVPN, SSH layer 3
+tunneling.</p>
+</li>
+</ol>
+<p>Here we are going to talk about #2.</p>
+<h2>SOCKS Server Side</h2>
+<p>Server side, you only need regularly configured SSHD. Whenver SSH can connect, SOCKS should work.</p>
+<h2>SOCKS Client Side - Enabling SOCKS</h2>
+<p>On client side, to enable SOCKS proxy, issue this command:</p>
+<pre><code>ssh -D &lt;socks_port&gt; &lt;user@remote_host&gt;
+</code></pre>
+<p>This gives you an SSH session to the remote host AND also enables SOCKS on local machine. If you don't want to access the SSH
+session interactively and would rather prefer it to stay in the background (i.e., hidden from UI), use the following command
+which has extra arguments:</p>
+<pre><code>ssh -D &lt;socks_port&gt; -f -C -q -N &lt;user@remote_host&gt;
+</code></pre>
+<p>where <code>socks_port</code> is the local port of the SOCKS proxy.</p>
+<p>You can also use putty:</p>
+<p><img src="putty.png" alt="putty"></p>
+<h2>SOCKS Client Side - Configuring Applications</h2>
+<p>Then to configure application to use SOCKS, in Windows, you can configure via
+&quot;internet options&quot; -&gt; &quot;connection&quot; tab -&gt; &quot;proxy server&quot; -&gt; &quot;advanced&quot;. Here's
+it:</p>
+<p><img src="socks_win.png" alt="options"></p>
+<p>Note that you need to <strong>uncheck &quot;use the same proxy server for all protocols&quot;</strong>, clear HTTP, Secure, FTP fields. And only fill Socks field.
+<a href="https://www.ocf.berkeley.edu/~xuanluo/sshproxywin.html" target="_blank" rel="noopener">This</a> is the guide that works for me. <a href="https://www.digitalocean.com/community/tutorials/how-to-route-web-traffic-securely-without-a-vpn-using-a-socks-tunnel" target="_blank" rel="noopener">This</a> is thorough, but didn't mention the above critical setting.</p>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/unix/">unix</a>
+          
+            <a href="/tags/ssh/">ssh</a>
+          
+            <a href="/tags/socks/">socks</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/07/17/2017-07-17-freebsd-zfs/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">FreeBSD ZFS</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/06/26/2017-06-26-strip-bom/">
+        <span class="next-text nav-default">strip BOM from files</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2017/07/15/2017-07-15-SOCKS-proxy/';
+        this.page.identifier = '2017/07/15/2017-07-15-SOCKS-proxy/';
+        this.page.title = 'SOCKS proxy via SSH';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

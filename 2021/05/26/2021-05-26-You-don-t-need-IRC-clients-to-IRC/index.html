@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="You don't need an IRC client to IRC">
+
+
+
+
+  <meta name="keywords" content="irc,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2021/05/26/2021-05-26-You-don-t-need-IRC-clients-to-IRC/">
+
+
+<meta name="description" content="The IRC spec is in RFC 1459. The IRC protocol is suprisingly elegant and simple. For basic operation, there is no need for a dedicated client (although a client makes chatting more enjoyable).
+In gene">
+<meta name="keywords" content="irc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="You don't need an IRC client to IRC">
+<meta property="og:url" content="http://kflu.github.io/2021/05/26/2021-05-26-You-don-t-need-IRC-clients-to-IRC/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="The IRC spec is in RFC 1459. The IRC protocol is suprisingly elegant and simple. For basic operation, there is no need for a dedicated client (although a client makes chatting more enjoyable).
+In gene">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.675Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="You don't need an IRC client to IRC">
+<meta name="twitter:description" content="The IRC spec is in RFC 1459. The IRC protocol is suprisingly elegant and simple. For basic operation, there is no need for a dedicated client (although a client makes chatting more enjoyable).
+In gene">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> You don't need an IRC client to IRC · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          You don't need an IRC client to IRC
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          May 26, 2021
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Basic Operations</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">An Example Log</span></a></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <p>The IRC spec is in <a href="https://datatracker.ietf.org/doc/html/rfc1459#section-4.6.4" target="_blank" rel="noopener">RFC 1459</a>. The IRC protocol is suprisingly elegant and simple. For basic operation, there is no need for a dedicated client (although a client makes chatting more enjoyable).</p>
+<p>In general, an IRC message looks like:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;command&gt; [arg] [arg] ... :[arg with spaces]</span><br></pre></td></tr></table></figure>
+<p>or</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[:prefix] &lt;command&gt; [arg] [arg] ... :[arg with spaces]</span><br></pre></td></tr></table></figure>
+<p>This format is the same for both client -&gt; server, and server's replies. The prefix is usually the an identity of the message's originator.</p>
+<h3>Basic Operations</h3>
+<p>To connect:</p>
+<ol>
+<li>Connect to the server using TLS: <code>openssl s_client -connect &lt;server&gt;:&lt;port&gt;</code></li>
+<li>Set the nick: <code>nick &lt;your_nick&gt;</code></li>
+<li>Set username: <code>user &lt;your_nick&gt; . .</code></li>
+</ol>
+<p>To chat:</p>
+<ol>
+<li>Join channel with <code>join &lt;channel_name&gt;</code></li>
+<li>Chat in channel with <code>privmsg &lt;channel_name&gt; :&lt;msg&gt;</code></li>
+<li>Chat with other user with <code>privmsg &lt;user&gt; :&lt;msg&gt;</code></li>
+<li>List channel users with <code>lusers &lt;channel&gt;</code></li>
+</ol>
+<p>To authenticate your nick with NickServ, you need to issue the following command to the <em>user</em> <code>NickServ</code>:</p>
+<pre><code>identify &lt;your nick's password&gt;
+</code></pre>
+<p>To do this, issue the following:</p>
+<pre><code>privmsg nickserv :identify &lt;nick's password&gt;
+</code></pre>
+<p>Note that <code>channel_name</code> starts with <code>#</code>, while user name doesn't.</p>
+<h3>An Example Log</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; openssl s_client -connect irc.libera.chat:6697</span><br><span class="line"></span><br><span class="line">:platinum.libera.chat NOTICE * :*** Checking Ident</span><br><span class="line">:platinum.libera.chat NOTICE * :*** Looking up your hostname...</span><br><span class="line">:platinum.libera.chat NOTICE * :*** Found your hostname: xxxx</span><br><span class="line">:platinum.libera.chat NOTICE * :*** No Ident response</span><br><span class="line">nick jsbach</span><br><span class="line">user jsbach . . .</span><br><span class="line">:platinum.libera.chat 001 jsbach :Welcome to the Libera.Chat Internet Relay Chat Network jsbach</span><br><span class="line">:platinum.libera.chat 002 jsbach :Your host is platinum.libera.chat[188.240.145.102/6697], running version solanum-1.0-dev</span><br><span class="line">:platinum.libera.chat 003 jsbach :This server was created Sat May 22 2021 at 19:04:12 UTC</span><br><span class="line">:platinum.libera.chat 004 jsbach platinum.libera.chat solanum-1.0-dev </span><br><span class="line">:platinum.libera.chat 005 jsbach SAFELIST ELIST=CTU FNC WHOX CALLERID=g KNOCK MONITOR=100 ETRACE CHANTYPES=# EXCEPTS INVEX CHANMODES=eIbq,k,flj,CFLMPQScgimnprstuz :are supported by this server</span><br><span class="line">:platinum.libera.chat 005 jsbach CHANLIMIT=#:250 PREFIX=(ov)@+ MAXLIST=bqeI:100 MODES=4 NETWORK=Libera.Chat STATUSMSG=@+ CASEMAPPING=rfc1459 NICKLEN=16 MAXNICKLEN=16 CHANNELLEN=50 TOPICLEN=390 DEAF=D :are supported by this server</span><br><span class="line">:platinum.libera.chat 005 jsbach TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIVMSG:4,NOTICE:4,ACCEPT:,MONITOR: EXTBAN=$,ajrxz CLIENTVER=3.0 :are supported by this server</span><br><span class="line">:platinum.libera.chat 251 jsbach :There are 42 users and 19058 invisible on 19 servers</span><br><span class="line">:platinum.libera.chat 252 jsbach 32 :IRC Operators online</span><br><span class="line">:platinum.libera.chat 253 jsbach 3 :unknown connection(s)</span><br><span class="line">:platinum.libera.chat 254 jsbach 15309 :channels formed</span><br><span class="line">:platinum.libera.chat 255 jsbach :I have 1914 clients and 1 servers</span><br><span class="line">:platinum.libera.chat 265 jsbach 1914 2025 :Current local users 1914, max 2025</span><br><span class="line">:platinum.libera.chat 266 jsbach 19100 19898 :Current global users 19100, max 19898</span><br><span class="line">:platinum.libera.chat 250 jsbach :Highest connection count: 2026 (2025 clients) (15019 connections received)</span><br><span class="line">:platinum.libera.chat 375 jsbach :- platinum.libera.chat Message of the Day -</span><br><span class="line">:platinum.libera.chat 372 jsbach :- This server provided by NORDUnet/SUNET</span><br><span class="line">:platinum.libera.chat 372 jsbach :- Welcome to libera.chat, the IRC network for free &amp; open-source software</span><br><span class="line">:platinum.libera.chat 372 jsbach :- and peer directed projects.</span><br><span class="line">:platinum.libera.chat 372 jsbach :-</span><br><span class="line">:platinum.libera.chat 372 jsbach :- Please visit us in #libera for questions and support.</span><br><span class="line">:platinum.libera.chat 376 jsbach :End of /MOTD command.</span><br><span class="line">:jsbach MODE jsbach :+RZi</span><br><span class="line">join #test</span><br><span class="line">:jsbach!~jsbach@xxxx JOIN #test</span><br><span class="line">:platinum.libera.chat 353 jsbach = #test :jsbach NightMonkey Daniel071_ python PowaBanga ExEsPi simong maximagui voliborfrey Koragg jstoker</span><br><span class="line">:platinum.libera.chat 366 jsbach #test :End of /NAMES list.</span><br><span class="line">privmsg #test hello!</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/irc/">irc</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2021/06/04/2021-06-04-irc--znc--and-erc/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">irc, znc, and erc</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2021/05/24/2021-05-24-tmux-tricks/">
+        <span class="next-text nav-default">tmux tricks</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2021/05/26/2021-05-26-You-don-t-need-IRC-clients-to-IRC/';
+        this.page.identifier = '2021/05/26/2021-05-26-You-don-t-need-IRC-clients-to-IRC/';
+        this.page.title = 'You don't need an IRC client to IRC';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

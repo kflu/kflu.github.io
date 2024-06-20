@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Mounting NTFS on FreeBSD">
+
+
+
+
+  <meta name="keywords" content="unix,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2018/02/03/2018-02-03-freebsd-ntfs/">
+
+
+<meta name="description" content="This post helped me figure all this out.
+I need to access a USB hard drive in NTFS on FreeBSD. In order to mount NTFS partitions, FreeBSD
+uses ntfs-3g FUSE module.
+First, make sure the fuse kernel mod">
+<meta name="keywords" content="unix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mounting NTFS on FreeBSD">
+<meta property="og:url" content="http://kflu.github.io/2018/02/03/2018-02-03-freebsd-ntfs/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="This post helped me figure all this out.
+I need to access a USB hard drive in NTFS on FreeBSD. In order to mount NTFS partitions, FreeBSD
+uses ntfs-3g FUSE module.
+First, make sure the fuse kernel mod">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.671Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mounting NTFS on FreeBSD">
+<meta name="twitter:description" content="This post helped me figure all this out.
+I need to access a USB hard drive in NTFS on FreeBSD. In order to mount NTFS partitions, FreeBSD
+uses ntfs-3g FUSE module.
+First, make sure the fuse kernel mod">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> Mounting NTFS on FreeBSD · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Mounting NTFS on FreeBSD
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Feb 3, 2018
+        </span>
+      </div>
+    </header>
+
+    
+
+    <div class="post-content">
+      
+        <p><a href="https://forums.freebsd.org/threads/62888/" target="_blank" rel="noopener">This post</a> helped me figure all this out.</p>
+<p>I need to access a USB hard drive in NTFS on FreeBSD. In order to mount NTFS partitions, FreeBSD
+uses <code>ntfs-3g</code> FUSE module.</p>
+<p>First, make sure the fuse kernel module is loaded. This can be done adhoc with
+<code>kldload fuse</code>. But to have it loaded at boot time, add the following line in
+<code>/boot/loader.conf</code>:</p>
+<pre><code>fuse_load=&quot;YES&quot;
+</code></pre>
+<p>Then, install <code>fusefs-ntfs</code> package:</p>
+<pre><code>pkg install fusefs-ntfs
+</code></pre>
+<p>Now the OS supports NTFS, you can plugin the device. Use <code>dmesg</code> to figure out the device ID (<code>d0</code>):</p>
+<pre><code>da0 at umass-sim0 bus 0 scbus4 target 0 lun 0
+da0: &lt;WD Ext HDD 1021 2021&gt; Fixed Direct Access SPC-2 SCSI device
+da0: Serial Number 574D415A4135333836313839
+da0: 40.000MB/s transfers
+da0: 1907727MB (3907024896 512 byte sectors)
+da0: quirks=0x2&lt;NO_6_BYTE&gt;
+</code></pre>
+<p>Use <code>gpart</code> to show its partitions:</p>
+<pre><code>&gt; ~ gpart show /dev/da0
+=&gt;        63  3907024833  da0  MBR  (1.8T)
+          63        1985       - free -  (993K)
+        2048  3907022848    1  ntfs  (1.8T)
+</code></pre>
+<p>You can also find the device node for the partition under <code>/dev</code>:</p>
+<pre><code>➜  ~ ls -l /dev/da0*
+crw-r-----  1 root  operator  0x72 Feb  3 12:07 /dev/da0
+crw-r-----  1 root  operator  0x73 Feb  3 12:07 /dev/da0s1
+</code></pre>
+<p>Now we are ready to mount it:</p>
+<pre><code>ntfs-3g /dev/da0s1 /mnt -o ro
+</code></pre>
+<p><code>-o ro</code> makes sure it's mounted read-only. You can remove it to mount it read-write.</p>
+<p>Note that I tried to use <code>mount</code> hoping there is a consolidated command for mounting
+different kinds of file systems. But it wasn't successful:</p>
+<pre><code>➜  ~ mount -t ntfs-3g /dev/da0s1 /mnt
+mount: /dev/da0s1: Operation not supported by device
+
+➜  ~ mount -t ntfs /dev/da0s1 /mnt
+mount: /dev/da0s1: Operation not supported by device
+</code></pre>
+<p>Also note that usually mounting a partition can only be done by <code>root</code>, or
+using <code>sudo</code>, which result in the mounted path is owned by <code>root:wheel</code>.
+However you can mount the partition as a specified user and group using
+<code>uid</code> and <code>gid</code> options.</p>
+<p>First, find out the user and group IDs of the preferred user:</p>
+<pre><code># id john
+uid=1001(john) gid=1001(john) groups=1001(john),0(wheel)
+</code></pre>
+<p>Now run following command to mount:</p>
+<pre><code>ntfs-3g /dev/da0s1 /mnt -o ro,uid=1001,gid=1001
+</code></pre>
+<p>Now <code>/mnt</code> is owned by <code>john:john</code>.</p>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/unix/">unix</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/02/04/2018-02-04-freebsd-minidlna/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Setting up miniDLNA on FreeBSD</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/01/17/2018-01-17-net-stacksize-recursion/">
+        <span class="next-text nav-default">.NET stack size & recursion</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2018/02/03/2018-02-03-freebsd-ntfs/';
+        this.page.identifier = '2018/02/03/2018-02-03-freebsd-ntfs/';
+        this.page.title = 'Mounting NTFS on FreeBSD';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

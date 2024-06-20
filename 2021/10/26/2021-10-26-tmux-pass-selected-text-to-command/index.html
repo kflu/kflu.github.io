@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Useful Tmux Settings">
+
+
+
+
+  <meta name="keywords" content="unix,tmux,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2021/10/26/2021-10-26-tmux-pass-selected-text-to-command/">
+
+
+<meta name="description" content="Pass selected text to system commands in Tmux
+What I want to achieve is similar to Vim&apos;s :&apos;&amp;lt;,&apos;&amp;gt;!some_command. In other words, in Tmux, once some text is selected, I want to press a key that trig">
+<meta name="keywords" content="unix,tmux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Useful Tmux Settings">
+<meta property="og:url" content="http://kflu.github.io/2021/10/26/2021-10-26-tmux-pass-selected-text-to-command/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="Pass selected text to system commands in Tmux
+What I want to achieve is similar to Vim&apos;s :&apos;&amp;lt;,&apos;&amp;gt;!some_command. In other words, in Tmux, once some text is selected, I want to press a key that trig">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.680Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Useful Tmux Settings">
+<meta name="twitter:description" content="Pass selected text to system commands in Tmux
+What I want to achieve is similar to Vim&apos;s :&apos;&amp;lt;,&apos;&amp;gt;!some_command. In other words, in Tmux, once some text is selected, I want to press a key that trig">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> Useful Tmux Settings · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Useful Tmux Settings
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Oct 26, 2021
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Pass selected text to system commands in Tmux</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">KEY BINDING FOR SWAPPING PANES</span></a></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <h1>Pass selected text to system commands in Tmux</h1>
+<p>What I want to achieve is similar to Vim's <code>:'&lt;,'&gt;!some_command</code>. In other words, in Tmux, once some text is selected, I want to press a key that triggers a prompt for me to enter a system command. Then the text will be piped to the command as stdin. The stdout of the command will be displayed in a temporary tmux buffer.</p>
+<p>I have answered it <a href="https://unix.stackexchange.com/a/674820/38968" target="_blank" rel="noopener">here</a> but it's kind of hard to find, so I'll document it here:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bind-key -T copy-mode   !  command-prompt -p &quot;cmd:&quot; &quot;send-keys -X copy-selection-no-clear \; run-shell \&quot;tmux show-buffer | %1\&quot; &quot;</span><br><span class="line">bind-key -T copy-mode-vi   !  command-prompt -p &quot;cmd:&quot; &quot;send-keys -X copy-selection-no-clear \; run-shell \&quot;tmux show-buffer | %1\&quot; &quot;</span><br></pre></td></tr></table></figure>
+<p>Several notes:</p>
+<ul>
+<li><code>-T copy-mode-vi</code> is essential if you use tmux's vi mode.</li>
+<li><code>command-prompt</code> prompts for some user input and run the template as tmux command - it is the core part that makes this run <strong>arbitrary</strong> user specified commands.</li>
+<li><code>tmux show-buffer</code> is for dumping previosly selected text to stdout</li>
+<li>I could have used <code>pipe-selection</code> which pipes selection to arbitrary command, however, this does not display the command stdout back to tmux. On the contrary, <code>run-shell</code> does this.</li>
+</ul>
+<h1>KEY BINDING FOR SWAPPING PANES</h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind-key -T prefix  C-s display-panes \; command-prompt -p &quot;&lt;pane1&gt;:,&lt;pane2&gt;:&quot; &quot;swap-pane -s %1 -t %2&quot;</span><br></pre></td></tr></table></figure>
+<p>Press <code>C-b C-s</code> (can hold ctrl) will:</p>
+<ol>
+<li>First, display the pane numbers as if you pressed <code>&lt;prefix&gt;q</code></li>
+<li>Prompt for 1st pane to swap</li>
+<li>Prompt for 2nd pane to swap</li>
+</ol>
+<p>Note:</p>
+<ul>
+<li><code>-p &quot;&lt;pane1&gt;:,&lt;pane2&gt;:&quot;</code> the comma seperates two prompts to the user <em>seperately</em></li>
+</ul>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/unix/">unix</a>
+          
+            <a href="/tags/tmux/">tmux</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2022/01/03/2022-01-03-macvim-as-system-vim/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">MacVim as System Vim</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2021/07/19/2021-07-19-pkgsrc-survival-guide/">
+        <span class="next-text nav-default">pkgsrc survival guide</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2021/10/26/2021-10-26-tmux-pass-selected-text-to-command/';
+        this.page.identifier = '2021/10/26/2021-10-26-tmux-pass-selected-text-to-command/';
+        this.page.title = 'Useful Tmux Settings';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

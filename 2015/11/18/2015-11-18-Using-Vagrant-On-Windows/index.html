@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Using Vagrant on Windows">
+
+
+
+
+  <meta name="keywords" content="unix,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2015/11/18/2015-11-18-Using-Vagrant-On-Windows/">
+
+
+<meta name="description" content="Vagrant is a virtualization technology for creating development environments. It is based on virtual machine technology and can be used with multiple VM providers. Not surprisingly, for a technology r">
+<meta name="keywords" content="unix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using Vagrant on Windows">
+<meta property="og:url" content="http://kflu.github.io/2015/11/18/2015-11-18-Using-Vagrant-On-Windows/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="Vagrant is a virtualization technology for creating development environments. It is based on virtual machine technology and can be used with multiple VM providers. Not surprisingly, for a technology r">
+<meta property="og:image" content="http://kflu.github.io/2015/11/18/2015-11-18-Using-Vagrant-On-Windows/f1cf17c2-8e12-11e5-8b8a-60d8a1061ccd.png">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.609Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Using Vagrant on Windows">
+<meta name="twitter:description" content="Vagrant is a virtualization technology for creating development environments. It is based on virtual machine technology and can be used with multiple VM providers. Not surprisingly, for a technology r">
+<meta name="twitter:image" content="http://kflu.github.io/2015/11/18/2015-11-18-Using-Vagrant-On-Windows/f1cf17c2-8e12-11e5-8b8a-60d8a1061ccd.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> Using Vagrant on Windows · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Using Vagrant on Windows
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Nov 18, 2015
+        </span>
+      </div>
+    </header>
+
+    
+
+    <div class="post-content">
+      
+        <p>Vagrant is a virtualization technology for creating development environments. It is based on virtual machine technology and can be used with multiple VM providers. Not surprisingly, for a technology rised up from Linux ecosystem, even if it claims to be cross-platform, setting it up on Windows won't be easy. This article documents the steps to use Vagrant on Windows, the issues found, and the way to address them.</p>
+<p>Before started, make sure Hyper-V is enabled on the machine. This can be done via &quot;Add/Remove features&quot; dialog in Control Panel. Don't forget to enable the Hyper-V PowerShell tools - Vagrant needs it to work against the Hyper-V provider. Why using Hyper-V rather than VirtualBox, etc.? Hyper-V comes standard with all Windows versions after 8.1. It might be the most feature rich and efficient Virtual Machine technology on Windows - it powers Windows Azure!</p>
+<p><img src="f1cf17c2-8e12-11e5-8b8a-60d8a1061ccd.png" alt="feature hyper-v"></p>
+<p>The <strong>getting started guide</strong> is <a href="https://docs.vagrantup.com/v2/getting-started/index.html" target="_blank" rel="noopener">here</a>. Use <code>vagrant init &lt;boxname&gt;</code> to initialize one. But not all &quot;boxes&quot; supports all providers. The default one in the getting started doc <code>hashicorp/precise32</code>, for example, does not support hyper-v. But all the boxes can be explored <a href="https://atlas.hashicorp.com/boxes/search" target="_blank" rel="noopener">here</a>. And it doesn't take long to realize that <a href="https://atlas.hashicorp.com/hashicorp/boxes/precise64" target="_blank" rel="noopener"><code>hashicorp/precise64</code></a> supports hyper-v. Once initialized, use <code>valgrant up</code> to download and set up the virtual machine.</p>
+<pre><code>valgrant init hashicorp/precise64
+valgrant up --provider hyperv
+</code></pre>
+<p>Once done, use <code>valgrant ssh</code> to log in to it. It uses <code>ssh</code> to log in. So make sure <code>ssh</code> is on <code>PATH</code>. If <code>git</code> is installed, it usually comes with a set of unix commands including <code>ssh</code>. So to bring <code>ssh</code> onto <code>PATH</code> in PowerShell:</p>
+<pre><code>PS&gt; $env:path += &quot;;C:\Program Files\Git\bin&quot;
+</code></pre>
+<p>In <code>cmd.exe</code> use</p>
+<pre><code>SET PATH=%PATH%;C:\Program Files\Git\bin
+</code></pre>
+<p>With that done, you can log in and (finally!) be greeted with the Linux command line:</p>
+<pre><code>PS&gt; vagrant ssh
+Welcome to Ubuntu 12.04.4 LTS (GNU/Linux 3.11.0-15-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com/
+Last login: Thu Mar  6 09:02:28 2014
+vagrant@precise64:~$
+vagrant@precise64:~$ uname -a
+Linux precise64 3.11.0-15-generic #25~precise1-Ubuntu SMP Thu Jan 30 17:39:31 UTC 2014 x86_64 x86_64 x86_64 GNU/Linux
+</code></pre>
+<p>#References</p>
+<ul>
+<li><a href="https://docs.vagrantup.com/v2/getting-started/index.html" target="_blank" rel="noopener">Vagrant getting started</a></li>
+<li><a href="https://atlas.hashicorp.com/boxes/search" target="_blank" rel="noopener">Explorer Valgrant boxes</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/unix/">unix</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2015/12/07/2015-12-07-Portable-NodeJs/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Portable Node.Js Installation</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2015/11/18/2015-11-18-PsExec-to-salvage-a-remote-pc-that-cant-connect-to/">
+        <span class="next-text nav-default">PsExec to salvage a remote PC that can't connect to</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2015/11/18/2015-11-18-Using-Vagrant-On-Windows/';
+        this.page.identifier = '2015/11/18/2015-11-18-Using-Vagrant-On-Windows/';
+        this.page.title = 'Using Vagrant on Windows';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

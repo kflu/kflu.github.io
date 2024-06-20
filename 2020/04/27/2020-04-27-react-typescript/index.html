@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="React and Typescript notes">
+
+
+
+
+  <meta name="keywords" content="typescript,react,frontend,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2020/04/27/2020-04-27-react-typescript/">
+
+
+<meta name="description" content="Create React App is React + Webpack. It scaffolds projects.
+1npx create-react-app myapp --template=typescript
+React components:
+123456789101112131415161718// functional component:function Foo(x: SomeT">
+<meta name="keywords" content="typescript,react,frontend">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React and Typescript notes">
+<meta property="og:url" content="http://kflu.github.io/2020/04/27/2020-04-27-react-typescript/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="Create React App is React + Webpack. It scaffolds projects.
+1npx create-react-app myapp --template=typescript
+React components:
+123456789101112131415161718// functional component:function Foo(x: SomeT">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.674Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React and Typescript notes">
+<meta name="twitter:description" content="Create React App is React + Webpack. It scaffolds projects.
+1npx create-react-app myapp --template=typescript
+React components:
+123456789101112131415161718// functional component:function Foo(x: SomeT">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> React and Typescript notes · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          React and Typescript notes
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Apr 27, 2020
+        </span>
+      </div>
+    </header>
+
+    
+
+    <div class="post-content">
+      
+        <p><a href="https://create-react-app.dev/" target="_blank" rel="noopener">Create React App</a> is React + Webpack. It scaffolds projects.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx create-react-app myapp --template=typescript</span><br></pre></td></tr></table></figure>
+<p>React components:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// functional component:</span><br><span class="line">function Foo(x: SomeType) &#123;</span><br><span class="line">    return (&lt;div&gt; ... &lt;/div&gt;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// class component:</span><br><span class="line">class Bar extends Component &#123;</span><br><span class="line"></span><br><span class="line">    render() &#123; return (&lt;div&gt;...&lt;/div&gt;); &#125;</span><br><span class="line"></span><br><span class="line">    async componentDidMount() &#123;</span><br><span class="line">        let data = await fetch(&quot;http://...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Use in JSX:</span><br><span class="line">(&lt;Foo &#123;...x&#125; /&gt;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://create-react-app.dev/" target="_blank" rel="noopener">Create React App</a></li>
+<li><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" rel="noopener">Typescript handbook</a> is simple and clear</li>
+<li><a href="https://medium.com/better-programming/building-basic-react-authentication-e20a574d5e71" target="_blank" rel="noopener">React Authentication</a> - token based</li>
+</ul>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/typescript/">typescript</a>
+          
+            <a href="/tags/react/">react</a>
+          
+            <a href="/tags/frontend/">frontend</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2020/05/09/2020-05-09-nginx-notes/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Nginx notes</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2020/04/16/2020-04-16-zoneminder/">
+        <span class="next-text nav-default">Zoneminder setup guide</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2020/04/27/2020-04-27-react-typescript/';
+        this.page.identifier = '2020/04/27/2020-04-27-react-typescript/';
+        this.page.title = 'React and Typescript notes';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

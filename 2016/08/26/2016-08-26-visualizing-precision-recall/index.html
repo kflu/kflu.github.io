@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Visualizing Precision Recall">
+
+
+
+
+  <meta name="keywords" content="machinelearning,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2016/08/26/2016-08-26-visualizing-precision-recall/">
+
+
+<meta name="description" content="Andrew Ng&apos;s lecture on error analysis of Machine Learning gave a good explanation on Precision and Recall. Here I have a visualization of the concept.
+Given the classification results on a test set, c">
+<meta name="keywords" content="machinelearning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Visualizing Precision Recall">
+<meta property="og:url" content="http://kflu.github.io/2016/08/26/2016-08-26-visualizing-precision-recall/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="Andrew Ng&apos;s lecture on error analysis of Machine Learning gave a good explanation on Precision and Recall. Here I have a visualization of the concept.
+Given the classification results on a test set, c">
+<meta property="og:image" content="http://kflu.github.io/2016/08/26/2016-08-26-visualizing-precision-recall/2016-08-26-visualizing-precision-recall-1.png">
+<meta property="og:image" content="http://kflu.github.io/2016/08/26/2016-08-26-visualizing-precision-recall/2016-08-26-visualizing-precision-recall-2.png">
+<meta property="og:image" content="http://kflu.github.io/2016/08/26/2016-08-26-visualizing-precision-recall/2016-08-26-visualizing-precision-recall-3.png">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.624Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Visualizing Precision Recall">
+<meta name="twitter:description" content="Andrew Ng&apos;s lecture on error analysis of Machine Learning gave a good explanation on Precision and Recall. Here I have a visualization of the concept.
+Given the classification results on a test set, c">
+<meta name="twitter:image" content="http://kflu.github.io/2016/08/26/2016-08-26-visualizing-precision-recall/2016-08-26-visualizing-precision-recall-1.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> Visualizing Precision Recall · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Visualizing Precision Recall
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Aug 26, 2016
+        </span>
+      </div>
+    </header>
+
+    
+
+    <div class="post-content">
+      
+        <p>Andrew Ng's <a href="https://www.coursera.org/learn/machine-learning/lecture/tKMWX/error-metrics-for-skewed-classes" target="_blank" rel="noopener">lecture on error analysis of Machine Learning</a> gave a good explanation on Precision and Recall. Here I have a visualization of the concept.</p>
+<p>Given the classification results on a test set, comparing the prediction result (P) and the actual label (L), each comparison can be categorized into four buckets:</p>
+<ol>
+<li>True positive (TP): P = L = 1</li>
+<li>False positive (FP): P = 1, L = 0</li>
+<li>False negative (FN): P = 0, L = 1</li>
+<li>True negative (TN): P = L = 0</li>
+</ol>
+<p><img src="2016-08-26-visualizing-precision-recall-1.png" alt="PR"></p>
+<p>Three metrics are often used:</p>
+<p><strong>Accuracy</strong></p>
+<p>Accuracy measures, among all test data, how many samples does the algorithm get correctly. This is defined as the number of correct classifications divided by the total test samples:</p>
+<p>$$ Accuracy = \frac{TP + TN}{total} $$</p>
+<p><strong>Precision</strong></p>
+<p>Precision measures, among all samples that the algorithm claims to be positive ($TP + FP$), how many are correct:</p>
+<p>$$ Precision = \frac{TP}{TP + FP} $$</p>
+<p><strong>Recall</strong></p>
+<p>Recall measures, among all sample that are actually positive ($TP + FN$), how many the algorithm classified as positive:</p>
+<p>$$ Recall = \frac{TP}{TP + FN}</p>
+<p>When the data has <strong>&quot;skewed classes&quot;</strong>, precision is not a good performance metric. For example, this shows a skewed classes data:</p>
+<p><img src="2016-08-26-visualizing-precision-recall-2.png" alt="skewed"></p>
+<p>We can have a cheating algorithm to predict everything as negative (imagine the horizontal threshold line to be moved way up), and the accuracy will be high (due to high TN). But as there are no positive classification, the recall is 0.</p>
+<p>That's why precision and recall is a more balanced measurement for performance. An ideal algorithm should have high precision and recall values. But for a given algorithm, the precision and recall is traded off by setting the classification threshold higher or lower. For example, for the same data shown as above, we could choose a threshold so the algorithm only classifies positive when it's very confident:</p>
+<p><img src="2016-08-26-visualizing-precision-recall-3.png" alt="confident"></p>
+<p>This yields higher precision, but lower recall. If a single metric is desired out of precision and recall, there is F1 score defined as below:</p>
+<p>$$ F_1 score = 2 \frac{precision \times recall}{precision + recall} $$</p>
+<p>When either recall or precision is small, the score will be small. The perfect score is 1 when both precision and recall are 1.</p>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/machinelearning/">machinelearning</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/08/27/2016-08-27-csharp-parsing-evaluating-roslyn/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">C# parsing and evaluating using Roslyn</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/08/16/2016-08-16-paket-using-private-nuget-feed/">
+        <span class="next-text nav-default">Paket - using private nuget feed</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2016/08/26/2016-08-26-visualizing-precision-recall/';
+        this.page.identifier = '2016/08/26/2016-08-26-visualizing-precision-recall/';
+        this.page.title = 'Visualizing Precision Recall';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

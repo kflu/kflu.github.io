@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="How to scan large size pages to PDf using GIMP">
+
+
+
+
+  <meta name="keywords" content="media,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2022/07/21/2022-07-21-scan-large-book-pages-crop-pdf/">
+
+
+<meta name="description" content="Step 1: How to scan larger-than-letter/A4 sized pages from a book?
+For scanning, don&apos;t need to perfectly align to a page size using the scanner.
+Use the scanbed, put the page in the middle - we&apos;ll cro">
+<meta name="keywords" content="media">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to scan large size pages to PDf using GIMP">
+<meta property="og:url" content="http://kflu.github.io/2022/07/21/2022-07-21-scan-large-book-pages-crop-pdf/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="Step 1: How to scan larger-than-letter/A4 sized pages from a book?
+For scanning, don&apos;t need to perfectly align to a page size using the scanner.
+Use the scanbed, put the page in the middle - we&apos;ll cro">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.680Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How to scan large size pages to PDf using GIMP">
+<meta name="twitter:description" content="Step 1: How to scan larger-than-letter/A4 sized pages from a book?
+For scanning, don&apos;t need to perfectly align to a page size using the scanner.
+Use the scanbed, put the page in the middle - we&apos;ll cro">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> How to scan large size pages to PDf using GIMP · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          How to scan large size pages to PDf using GIMP
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Jul 21, 2022
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Step 1: How to scan larger-than-letter/A4 sized pages from a book?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Step 2: How to crop them efficiently?</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-text">&gt;&gt;&gt; NEW WORKFLOW: Rotate and Crop Layers Using Guidelines &lt;&lt;&lt;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Step 3: How to compile them into PDF?</span></a></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <h3>Step 1: How to scan larger-than-letter/A4 sized pages from a book?</h3>
+<p>For scanning, don't need to perfectly align to a page size using the scanner.
+Use the scanbed, put the page in the <strong>middle</strong> - we'll crop later. Scan all
+the pages using this method. Scan to JPG files.</p>
+<h3>Step 2: How to crop them efficiently?</h3>
+<p>NOTE:</p>
+<ul>
+<li>if you need to rotate each page, I found it easier to rotate each page first before cropping all at once. See &quot;How to rotate&quot;</li>
+<li>before doing any transformation, scale the image if they're too big in pixels (e.g., from 7000 -&gt; 3000). And adjust the ppi to 72 ~ 200. This will bring down the exported PDF file size, and make later rotation faster.</li>
+</ul>
+<p>In GIMP, drag the first page in, manually select the desired page region, then <strong>right click -&gt; image -&gt; crop to selection</strong>. This will crop the canvas to the desired page size.</p>
+<p>Drap the 2nd page in. Note that it's on the 2nd layer. Notice that only a &quot;window&quot; (of selection size) of the 2nd image is shown. Use the <strong>drag tool</strong> to move the desired portion of this image into the &quot;window&quot;.</p>
+<p>Repeat the above process for the rest of the pages. Now you should have each page in their own layers.</p>
+<h4>&gt;&gt;&gt; NEW WORKFLOW: Rotate and Crop Layers Using Guidelines &lt;&lt;&lt;</h4>
+<p>Creating guide lines helps rotation:</p>
+<ol>
+<li>use select tool, from top-left to bottom-right corners.</li>
+<li>Image -&gt; New Guidelines from selection. NOTE - cancel selection now by clicking anywhere on the canvas (1). Otherwise later rotation only applies to the selection region.</li>
+<li>Now use the guidelines to</li>
+<li>rotate each page: Shift-R (or &quot;Tools -&gt; Rotate&quot;) for layer rotation (not whole image). Drag to rotate. Shift-Drag to rotate at certain degrees.</li>
+<li>move each page to the guideline</li>
+<li>Finally, selection on the guide line region, then image -&gt; crop to selection. This will crop all layers all at once.</li>
+</ol>
+<h3>Step 3: How to compile them into PDF?</h3>
+<p>GIMP 2.10 supports exporting layers as pages to a single PDF file. Export -&gt; set file name to some_thing.pdf -&gt; press export. A dialog pops up about PDF exporting, choose &quot;layers as pages&quot; (it lets you specify the order).</p>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/media/">media</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2022/04/25/2022-04-25-git-http/">
+        <span class="next-text nav-default">Exposing GIT repository via SSH and HTTP</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2022/07/21/2022-07-21-scan-large-book-pages-crop-pdf/';
+        this.page.identifier = '2022/07/21/2022-07-21-scan-large-book-pages-crop-pdf/';
+        this.page.title = 'How to scan large size pages to PDf using GIMP';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

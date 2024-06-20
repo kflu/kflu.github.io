@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content=".NET stack size & recursion">
+
+
+
+
+  <meta name="keywords" content="c#,programming,.net,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2018/01/17/2018-01-17-net-stacksize-recursion/">
+
+
+<meta name="description" content="According to here, the Windows x64 program should have default stack size
+4MB. So I wrote a program to see how many levels of recursion can a typical
+function support before getting stack overflow.
+He">
+<meta name="keywords" content="c#,programming,.net">
+<meta property="og:type" content="article">
+<meta property="og:title" content=".NET stack size & recursion">
+<meta property="og:url" content="http://kflu.github.io/2018/01/17/2018-01-17-net-stacksize-recursion/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="According to here, the Windows x64 program should have default stack size
+4MB. So I wrote a program to see how many levels of recursion can a typical
+function support before getting stack overflow.
+He">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.671Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content=".NET stack size & recursion">
+<meta name="twitter:description" content="According to here, the Windows x64 program should have default stack size
+4MB. So I wrote a program to see how many levels of recursion can a typical
+function support before getting stack overflow.
+He">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> .NET stack size & recursion · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          .NET stack size & recursion
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Jan 17, 2018
+        </span>
+      </div>
+    </header>
+
+    
+
+    <div class="post-content">
+      
+        <p>According to <a href="https://stackoverflow.com/a/28658130/695964" target="_blank" rel="noopener">here</a>, the Windows x64 program should have default stack size
+4MB. So I wrote a program to see how many levels of recursion can a typical
+function support before getting stack overflow.</p>
+<p>Here's the program:</p>
+<pre><code>class Program
+{
+    static void Main(string[] args)
+    {
+        Rec(0);
+    }
+
+    static void Rec(int x)
+    {
+        int y0 = x;
+        int y1 = y0 + x;
+        int y2 = y1 + x;
+        int y3 = y2 + x;
+        int y4 = y3 + x;
+        int y5 = y4 + x;
+        int y6 = y5 + x;
+        int y7 = y6 + x;
+        int y8 = y7 + x;
+        int y9 = y8 + x;
+        int y10 = y9 + x;
+        int y11 = y10 + x;
+        int y12 = y11 + x;
+        int y13 = y12 + x;
+        int y14 = y13 + x;
+        int y15 = y14 + x;
+        int y16 = y15 + x;
+        int y17 = y16 + x;
+        int y18 = y17 + x;
+        int y19 = y18 + x;
+        int y20 = y19 + x;
+
+        Console.WriteLine($&quot;depth: {x}, local size: {22} &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; {y20}&quot;);
+        Rec(x + 1);
+        Console.WriteLine($&quot;depth: {x}, local size: {22} &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; {y20}&quot;);
+    }
+}
+</code></pre>
+<p>I configured it to build in <code>release</code> and <code>x64</code>. The output is:</p>
+<pre><code>depth: 17170, local size: 2 &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; 17170
+depth: 16125, local size: 10 &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; 145125
+depth: 16101, local size: 22 &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; 338121
+</code></pre>
+<p>That looks like the stack size is roughly 600KB. I took a <code>dumpbin</code>, which
+gives me below output. <code>stack reverse</code> is 100000. 100KB? WTF? But basically,
+<strong>a function with ~20 local variables + arguments can recurse 16,000 times.</strong>
+Not a lot.</p>
+<pre><code>PE signature found
+
+File Type: EXECUTABLE IMAGE
+
+FILE HEADER VALUES
+             14C machine (x86)
+               3 number of sections
+        5A5F9A97 time date stamp Wed Jan 17 10:48:55 2018
+               0 file pointer to symbol table
+               0 number of symbols
+              E0 size of optional header
+              22 characteristics
+                   Executable
+                   Application can handle large (&gt;2GB) addresses
+
+OPTIONAL HEADER VALUES
+             10B magic # (PE32)
+           48.00 linker version
+             A00 size of code
+             800 size of initialized data
+               0 size of uninitialized data
+            293E entry point (0040293E)
+            2000 base of code
+            4000 base of data
+          400000 image base (00400000 to 00407FFF)
+            2000 section alignment
+             200 file alignment
+            4.00 operating system version
+            0.00 image version
+            6.00 subsystem version
+               0 Win32 version
+            8000 size of image
+             200 size of headers
+               0 checksum
+               3 subsystem (Windows CUI)
+            8560 DLL characteristics
+                   High Entropy Virtual Addresses
+                   Dynamic base
+                   NX compatible
+                   No structured exception handler
+                   Terminal Server Aware
+          100000 size of stack reserve
+            1000 size of stack commit
+          100000 size of heap reserve
+            1000 size of heap commit
+               0 loader flags
+              10 number of directories
+               0 [       0] RVA [size] of Export Directory
+            28EC [      4F] RVA [size] of Import Directory
+            4000 [     5BC] RVA [size] of Resource Directory
+               0 [       0] RVA [size] of Exception Directory
+               0 [       0] RVA [size] of Certificates Directory
+            6000 [       C] RVA [size] of Base Relocation Directory
+            27B4 [      1C] RVA [size] of Debug Directory
+               0 [       0] RVA [size] of Architecture Directory
+               0 [       0] RVA [size] of Global Pointer Directory
+               0 [       0] RVA [size] of Thread Storage Directory
+               0 [       0] RVA [size] of Load Configuration Directory
+               0 [       0] RVA [size] of Bound Import Directory
+            2000 [       8] RVA [size] of Import Address Table Directory
+               0 [       0] RVA [size] of Delay Import Directory
+            2008 [      48] RVA [size] of COM Descriptor Directory
+               0 [       0] RVA [size] of Reserved Directory
+
+
+SECTION HEADER #1
+   .text name
+     944 virtual size
+    2000 virtual address (00402000 to 00402943)
+     A00 size of raw data
+     200 file pointer to raw data (00000200 to 00000BFF)
+       0 file pointer to relocation table
+       0 file pointer to line numbers
+       0 number of relocations
+       0 number of line numbers
+60000020 flags
+         Code
+         Execute Read
+
+RAW DATA #1
+
+  Debug Directories
+
+        Time Type        Size      RVA  Pointer
+    -------- ------- -------- -------- --------
+    5A5F9A97 cv           11C 000027D0      9D0    Format: RSDS, {8C1B2824-CBBA-483B-B4E1-18BBA4A2FEAC}, 1, c:\users\ConsoleApp2\ConsoleApp2\obj\Release\ConsoleApp2.pdb
+
+  clr Header:
+
+              48 cb
+            2.05 runtime version
+            20E4 [     6D0] RVA [size] of MetaData Directory
+           20003 flags
+                   IL Only
+                   32-Bit Required
+                   32-Bit Preferred
+         6000001 entry point token
+               0 [       0] RVA [size] of Resources Directory
+               0 [       0] RVA [size] of StrongNameSignature Directory
+               0 [       0] RVA [size] of CodeManagerTable Directory
+               0 [       0] RVA [size] of VTableFixups Directory
+               0 [       0] RVA [size] of ExportAddressTableJumps Directory
+               0 [       0] RVA [size] of ManagedNativeHeader Directory
+
+
+  Section contains the following imports:
+
+    mscoree.dll
+                402000 Import Address Table
+                402914 Import Name Table
+                     0 time date stamp
+                     0 Index of first forwarder reference
+
+                    0 _CorExeMain
+
+SECTION HEADER #2
+   .rsrc name
+     5BC virtual size
+    4000 virtual address (00404000 to 004045BB)
+     600 size of raw data
+     C00 file pointer to raw data (00000C00 to 000011FF)
+       0 file pointer to relocation table
+       0 file pointer to line numbers
+       0 number of relocations
+       0 number of line numbers
+40000040 flags
+         Initialized Data
+         Read Only
+
+RAW DATA #2
+
+SECTION HEADER #3
+  .reloc name
+       C virtual size
+    6000 virtual address (00406000 to 0040600B)
+     200 size of raw data
+    1200 file pointer to raw data (00001200 to 000013FF)
+       0 file pointer to relocation table
+       0 file pointer to line numbers
+       0 number of relocations
+       0 number of line numbers
+42000040 flags
+         Initialized Data
+         Discardable
+         Read Only
+
+RAW DATA #3
+
+BASE RELOCATIONS #3
+    2000 RVA,        C SizeOfBlock
+     940  HIGHLOW            00402000
+       0  ABS                        
+
+  Summary
+
+        2000 .reloc
+        2000 .rsrc
+        2000 .text
+</code></pre>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/c/">c#</a>
+          
+            <a href="/tags/programming/">programming</a>
+          
+            <a href="/tags/net/">.net</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/02/03/2018-02-03-freebsd-ntfs/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Mounting NTFS on FreeBSD</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/12/25/2017-12-25-video-editing-tips/">
+        <span class="next-text nav-default">Video Editing Tips</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2018/01/17/2018-01-17-net-stacksize-recursion/';
+        this.page.identifier = '2018/01/17/2018-01-17-net-stacksize-recursion/';
+        this.page.title = '.NET stack size & recursion';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

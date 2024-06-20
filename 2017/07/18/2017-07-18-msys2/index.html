@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Msys2 - Cleanest Unix Subsystem on Windows">
+
+
+
+
+  <meta name="keywords" content="unix,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2017/07/18/2017-07-18-msys2/">
+
+
+<meta name="description" content="msys2 is the easiest and cleanest unix sub-system on Windows. It&apos;s based on
+Cygwin. It&apos;s tools are built on Mingw64. It provides build toolchain for
+Mingw64. It provides a nice package manager the pac">
+<meta name="keywords" content="unix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Msys2 - Cleanest Unix Subsystem on Windows">
+<meta property="og:url" content="http://kflu.github.io/2017/07/18/2017-07-18-msys2/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="msys2 is the easiest and cleanest unix sub-system on Windows. It&apos;s based on
+Cygwin. It&apos;s tools are built on Mingw64. It provides build toolchain for
+Mingw64. It provides a nice package manager the pac">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.670Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Msys2 - Cleanest Unix Subsystem on Windows">
+<meta name="twitter:description" content="msys2 is the easiest and cleanest unix sub-system on Windows. It&apos;s based on
+Cygwin. It&apos;s tools are built on Mingw64. It provides build toolchain for
+Mingw64. It provides a nice package manager the pac">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> Msys2 - Cleanest Unix Subsystem on Windows · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Msys2 - Cleanest Unix Subsystem on Windows
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Jul 18, 2017
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Setting Home Directory to USERPROFILE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Making portable applications</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Shell Initialization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Figuring Executable Dependencies</span></a></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">References</span></a>
+        </li></div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <p>msys2 is the easiest and cleanest unix sub-system on Windows. It's based on
+Cygwin. It's tools are built on Mingw64. It provides build toolchain for
+Mingw64. It provides a nice package manager the <code>pacman</code> from ArchLinux.</p>
+<ul>
+<li><a href="https://github.com/msys2/msys2/wiki/MSYS2-installation" target="_blank" rel="noopener">Installation</a></li>
+<li><a href="https://github.com/msys2/msys2/wiki/Using-packages" target="_blank" rel="noopener">Using packages</a>
+<ul>
+<li>search package <code>pacman -Ss &lt;partial_name&gt;</code></li>
+<li>install package <code>pacman -S &lt;pkg_name&gt;</code></li>
+</ul>
+</li>
+</ul>
+<p>With my experience so far, it makes an ideal Window utility toolbox for
+administration tasks. It's worth to be a default installation for every
+Windows machine.</p>
+<h3>Setting Home Directory to <code>USERPROFILE</code></h3>
+<p><em>2018-8-30 note: it seems using msys2.exe with the original nsswitch.conf
+is enough, which has <code>db_home windows cygwin desc</code>. I guess the problem was
+it didn't work with domain joined computer. If you're not domain joined, this
+section isn't needed.</em></p>
+<p>Do this through <code>etc/nsswitch.conf</code>. Set:</p>
+<pre><code>db_home: windows /c/Users/%U
+</code></pre>
+<p>The <code>/c/Users/%U</code> is to <a href="https://github.com/Alexpux/MSYS2-packages/issues/1167#issuecomment-366485916" target="_blank" rel="noopener">workaround an issue</a> that <code>db_home: windows</code> has no effect on my domain joined machine. For detail, refer to
+<a href="https://cygwin.com/cygwin-ug-net/ntsec.html" target="_blank" rel="noopener">Cygwin nsswitch.conf doc</a>.</p>
+<h3>Making portable applications</h3>
+<p>Note that <code>nsswitch.conf</code> is read relative to the executable path. So to
+make a portable executable be aware of <code>nsswitch.conf</code> settings, have a
+structure like below. If you invoke <code>ssh.exe</code> from <em>anywhere</em>, the
+<code>nsswitch.conf</code> is respected.</p>
+<pre><code>ssh.bat   # wraps ssh.exe
+msys/
+    usr/
+        bin/
+            ssh.exe
+            &lt;dependency DLLs&gt;
+    etc/
+        nsswitch.conf
+</code></pre>
+<h3>Shell Initialization</h3>
+<p><em>2018-8-30 note: it seems using msys2.exe is enough - but don't use the <code>.bat</code> shortcuts
+from the start menu - for some reason they don't respect user <code>rc</code> scripts</em></p>
+<p>Depending on the &quot;launcher&quot; you use. Nowadays, it has <code>msys2.exe</code> which takes <code>msys2.ini</code>
+containing env vars. But that's not user specific. I build a <code>msys2.ps1</code> that sets
+env vars and launches <code>msys2.exe</code>. Use this and leave the <code>ini</code> unchanged.</p>
+<p>For example you can set the default shell by <code>SHELL=/usr/bin/zsh</code>.</p>
+<h3>Figuring Executable Dependencies</h3>
+<p>To make a portable executable distribution, you need to copy not only
+the executable, but all its dependencies. You can do so with <code>ldd</code>:</p>
+<pre><code>$ ldd /usr/bin/rsync.exe
+        ntdll.dll =&gt; /c/WINDOWS/SYSTEM32/ntdll.dll (0x778c0000)
+        KERNEL32.DLL =&gt; /c/WINDOWS/System32/KERNEL32.DLL (0x769b0000)
+        KERNEL32.DLL =&gt; /c/WINDOWS/System32/KERNEL32.DLL (0x769b0000)
+        KERNELBASE.dll =&gt; /c/WINDOWS/System32/KERNELBASE.dll (0x77620000)
+        msys-gcc_s-1.dll =&gt; /usr/bin/msys-gcc_s-1.dll (0x6ac00000)
+        msys-iconv-2.dll =&gt; /usr/bin/msys-iconv-2.dll (0x6ee80000)
+        msys-2.0.dll =&gt; /usr/bin/msys-2.0.dll (0x61000000)
+        msys-z.dll =&gt; /usr/bin/msys-z.dll (0x644c0000)
+</code></pre>
+<p>Note that all the DLLs located inside the msys root <code>/usr/bin</code> are the
+dependencies that need to be packed alongside the executable.</p>
+<h1>References</h1>
+<ul>
+<li><a href="https://github.com/msys2/msys2/wiki" target="_blank" rel="noopener">Msys2 Wiki</a></li>
+<li><a href="https://github.com/msys2/msys2/wiki/MSYS2-installation" target="_blank" rel="noopener">Installation</a></li>
+<li><a href="https://github.com/msys2/msys2/wiki/Using-packages" target="_blank" rel="noopener">Using package</a></li>
+<li><a href="https://cygwin.com/cygwin-ug-net/ntsec.html" target="_blank" rel="noopener">Cygwin <code>nsswitch.conf</code></a></li>
+</ul>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/unix/">unix</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/07/30/2017-07-30-tunnel-only-ssh-user/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">SSH Reverse Port Forwarding With Untrusted Remote Host</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/07/17/2017-07-17-freebsd-zfs/">
+        <span class="next-text nav-default">FreeBSD ZFS</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2017/07/18/2017-07-18-msys2/';
+        this.page.identifier = '2017/07/18/2017-07-18-msys2/';
+        this.page.title = 'Msys2 - Cleanest Unix Subsystem on Windows';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

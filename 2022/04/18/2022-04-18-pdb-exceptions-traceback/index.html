@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="PDB, Exceptions, Tracebacks">
+
+
+
+
+  <meta name="keywords" content="python,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2022/04/18/2022-04-18-pdb-exceptions-traceback/">
+
+
+<meta name="description" content="sys.exc_info() - the exception info that&apos;s been currently handled. Note that the exception could contain inner exceptions via __context__, or __cause__. And this could be nested for multiple levels.
+p">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PDB, Exceptions, Tracebacks">
+<meta property="og:url" content="http://kflu.github.io/2022/04/18/2022-04-18-pdb-exceptions-traceback/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="sys.exc_info() - the exception info that&apos;s been currently handled. Note that the exception could contain inner exceptions via __context__, or __cause__. And this could be nested for multiple levels.
+p">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.680Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PDB, Exceptions, Tracebacks">
+<meta name="twitter:description" content="sys.exc_info() - the exception info that&apos;s been currently handled. Note that the exception could contain inner exceptions via __context__, or __cause__. And this could be nested for multiple levels.
+p">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> PDB, Exceptions, Tracebacks · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          PDB, Exceptions, Tracebacks
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Apr 18, 2022
+        </span>
+      </div>
+    </header>
+
+    
+
+    <div class="post-content">
+      
+        <p><code>sys.exc_info()</code> - the exception info that's been currently handled. Note that the exception could contain inner exceptions via <code>__context__</code>, or <code>__cause__</code>. And this could be nested for multiple levels.</p>
+<p><code>pdb.post_mortem(traceback)</code> - once found the exception you want to post-mortem debug, use:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pdb.post_mortem(exception.__traceback__)</span><br></pre></td></tr></table></figure>
+<p>About exception chaining (both implicit and explicit), see <a href="https://peps.python.org/pep-3134/" target="_blank" rel="noopener">PEP-3134</a>.</p>
+<p>Explicit chaining is via:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    ...</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    <span class="keyword">raise</span> SomeErr(...) <span class="keyword">from</span> e</span><br><span class="line">    <span class="comment">#                  ~~~~~~ this!</span></span><br></pre></td></tr></table></figure>
+<p>In above case, the <code>SomeErr</code> instance contains <code>__cause__</code> which is <code>e</code>.</p>
+<p>Implicit chaining:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    ...</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    <span class="keyword">raise</span> SomeErr(...)</span><br><span class="line">    <span class="comment"># ~~~~~~~~ implicit chaining (by interpreter)</span></span><br></pre></td></tr></table></figure>
+<p>In implicit chaining, interpreter <em>automatically</em> sets <code>__context__</code> on the new exception instance <code>SomeErr</code>. TBH, I feel the differentiation of implicit and explicit chaining via <code>__cause__</code> and <code>__context__</code> is unnecessary. And it causes extra complexity to handle them.</p>
+<p>PDB's handling of inner exceptions</p>
+<p>...there is none. PDB's post mortem <code>pdb.pm()</code> doesn't debug the inner-most exception of <code>sys.last_value</code>. In fact, <code>sys.last_value</code> isn't always present. So <code>pm()</code> is not a reliable way of post-mortem debugging.</p>
+<p>To debug the inner-most exception:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys, pdb</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">debug_inner</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">'''Debug the inner-most exception's traceback'''</span></span><br><span class="line">    exc = sys.exc_info()[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">while</span> getattr(exc, <span class="string">'__context__'</span>, <span class="literal">None</span>):</span><br><span class="line">        exc = exc.__context__</span><br><span class="line">    pdb.post_mortem(exc.__traceback__)</span><br></pre></td></tr></table></figure>
+<p>I created a <code>.pdbrc</code> alias for this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">_LOCAL = dict()</span><br><span class="line">_DEF = &quot;&quot;</span><br><span class="line">_DEF += &quot;\ndef debug_inner():&quot;</span><br><span class="line">_DEF += &quot;\n    &apos;&apos;&apos;Debug the inner-most exception&apos;s traceback&apos;&apos;&apos;&quot; </span><br><span class="line">_DEF += &quot;\n    exc = __import__(&apos;sys&apos;).exc_info()[1]&quot;</span><br><span class="line">_DEF += &quot;\n    while getattr(exc, &apos;__context__&apos;, None):&quot;</span><br><span class="line">_DEF += &quot;\n        exc = exc.__context__&quot;</span><br><span class="line">_DEF += &quot;\n    __import__(&apos;pdb&apos;).post_mortem(exc.__traceback__)&quot;</span><br><span class="line">exec(_DEF, dict(), _LOCAL)</span><br><span class="line">alias di _LOCAL[&apos;debug_inner&apos;]()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/python/">python</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2022/04/25/2022-04-25-git-http/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Exposing GIT repository via SSH and HTTP</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2022/01/06/2022-01-06-osc-52-hack/">
+        <span class="next-text nav-default">OSC52 hack</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2022/04/18/2022-04-18-pdb-exceptions-traceback/';
+        this.page.identifier = '2022/04/18/2022-04-18-pdb-exceptions-traceback/';
+        this.page.title = 'PDB, Exceptions, Tracebacks';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

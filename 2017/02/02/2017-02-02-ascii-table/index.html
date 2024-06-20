@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="ASCII table (re)explained">
+
+
+
+
+  <meta name="keywords" content="programming,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2017/02/02/2017-02-02-ascii-table/">
+
+
+<meta name="description" content="This totally blew my mind. Look at the ASCII table, organized in 4 columns:
+        00    01    10    11
+00000   NUL  Spc     @     `
+00001   SOH    !     A     a
+00010   STX    &amp;quot;     B     b
+000">
+<meta name="keywords" content="programming">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ASCII table (re)explained">
+<meta property="og:url" content="http://kflu.github.io/2017/02/02/2017-02-02-ascii-table/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="This totally blew my mind. Look at the ASCII table, organized in 4 columns:
+        00    01    10    11
+00000   NUL  Spc     @     `
+00001   SOH    !     A     a
+00010   STX    &amp;quot;     B     b
+000">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.627Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ASCII table (re)explained">
+<meta name="twitter:description" content="This totally blew my mind. Look at the ASCII table, organized in 4 columns:
+        00    01    10    11
+00000   NUL  Spc     @     `
+00001   SOH    !     A     a
+00010   STX    &amp;quot;     B     b
+000">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> ASCII table (re)explained · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          ASCII table (re)explained
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Feb 2, 2017
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Observations</span></a></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <p>This totally blew my mind. Look at the ASCII table, organized in 4 columns:</p>
+<pre><code>        00    01    10    11
+00000   NUL  Spc     @     `
+00001   SOH    !     A     a
+00010   STX    &quot;     B     b
+00011   ETX    #     C     c
+00100   EOT    $     D     d
+00101   ENQ    %     E     e
+00110   ACK    &amp;     F     f
+00111   BEL    '     G     g
+01000   BS     (     H     h
+01001   TAB    )     I     i
+01010   LF     *     J     j
+01011   VT     +     K     k
+01100   FF     ,     L     l
+01101   CR     -     M     m
+01110   SO     .     N     n
+01111   SI     /     O     o
+10000   DLE    0     P     p
+10001   DC1    1     Q     q
+10010   DC2    2     R     r
+10011   DC3    3     S     s
+10100   DC4    4     T     t
+10101   NAK    5     U     u
+10110   SYN    6     V     v
+10111   ETB    7     W     w
+11000   CAN    8     X     x
+11001   EM     9     Y     y
+11010   SUB    :     Z     z
+11011   ESC    ;     [     {
+11100   FS     &lt;     \     |
+11101   GS     =     ]     }
+11110   RS     &gt;     ^     ~
+11111   US     ?     _   DEL
+</code></pre>
+<h1>Observations</h1>
+<p><a href="http://worldpowersystems.com/archives/codes/X3.4-1963/index.html" target="_blank" rel="noopener">This original paper</a> lists the design considerations (gets
+interesting at page 7). <a href="https://en.wikipedia.org/wiki/ASCII#Internal_organization" target="_blank" rel="noopener">Wikipedia</a> lists some interesting designs too.
+Some are explained <a href="https://en.wikipedia.org/wiki/ASCII#Internal_organization" target="_blank" rel="noopener">here</a>. Some are explained in the HN comments
+<a href="https://news.ycombinator.com/item?id=13539552" target="_blank" rel="noopener">here</a> and <a href="https://news.ycombinator.com/item?id=13499386" target="_blank" rel="noopener">here</a>. And this <a href="http://trafficways.org/ascii/ascii.pdf" target="_blank" rel="noopener">pdf paper</a>.</p>
+<p>But here are my observations:</p>
+<p>Grouped in 4 columns, each with 32 chars, from 00000 (0) - 11111 (31). Each col
+has a different 2 bits prefix (00, 01, 10, 11).</p>
+<p>All control chars are in first column, except <code>DEL</code>, which is 0111_1111.</p>
+<p>a-z and A-Z all begins with 00001 (1), ends at 11010 (26). The difference is the column
+they are in. Lower cases in column 10, upper cases in column 11. That means:</p>
+<p><strong>Converting to upper case means setting 6th bit to 1 (<code>OR 0b00100000</code>).
+Converting to lower case means setting 6th bit to 0 (<code>AND 0b11011111</code>).</strong></p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> toLower (c:char) = byte c ||| byte <span class="number">0</span>b00100000 |&gt; char</span><br><span class="line"><span class="keyword">let</span> toUpper (c:char) = byte c &amp;&amp;&amp; byte <span class="number">0</span>b11011111 |&gt; char</span><br></pre></td></tr></table></figure>
+<p><strong>Characters</strong> 0-9 are their represented numberic values (0b0000 - 0b1001) prefixed
+with 0b0011 (<code>OR 0b0011_0000</code>).</p>
+<p>Converting char digit to number can be efficiently done with masking out the higher 4 bits:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> char_to_num (digit: char) = byte digit &amp;&amp;&amp; byte <span class="number">0</span>b00001111 |&gt; int</span><br></pre></td></tr></table></figure>
+<p>Note how these characters aligned:</p>
+<pre><code>        10    11
+11011    [    {
+11100    \    |
+11101    ]    }
+</code></pre>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/programming/">programming</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/02/06/2017-02-06-freebsd-jails/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">FreeBSD jails configuration</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/01/24/2017-01-24-win-x11-forward/">
+        <span class="next-text nav-default">X11 forwarding on Windows</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2017/02/02/2017-02-02-ascii-table/';
+        this.page.identifier = '2017/02/02/2017-02-02-ascii-table/';
+        this.page.title = 'ASCII table (re)explained';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

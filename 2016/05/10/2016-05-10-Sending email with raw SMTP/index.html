@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Sending email with raw SMTP (sending emails without an account)">
+
+
+
+
+  <meta name="keywords" content="programming,smtp,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2016/05/10/2016-05-10-Sending email with raw SMTP/">
+
+
+<meta name="description" content="I often need to send notification emails to myself from applications. It&apos;s not really reliable to authenticate your existing email account
+and send emails, as authentication can randomly be audited by">
+<meta name="keywords" content="programming,smtp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sending email with raw SMTP (sending emails without an account)">
+<meta property="og:url" content="http://kflu.github.io/2016/05/10/2016-05-10-Sending email with raw SMTP/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="I often need to send notification emails to myself from applications. It&apos;s not really reliable to authenticate your existing email account
+and send emails, as authentication can randomly be audited by">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.622Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sending email with raw SMTP (sending emails without an account)">
+<meta name="twitter:description" content="I often need to send notification emails to myself from applications. It&apos;s not really reliable to authenticate your existing email account
+and send emails, as authentication can randomly be audited by">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> Sending email with raw SMTP (sending emails without an account) · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Sending email with raw SMTP (sending emails without an account)
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          May 10, 2016
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Assumptions &amp; Requirements</span></a></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <p>I often need to send notification emails to myself from applications. It's not really reliable to authenticate your existing email account
+and send emails, as authentication can randomly be audited by robot checks and
+fail. Recently, I found how to send email with raw SMTP protocol
+without needing an account.</p>
+<h3>Assumptions &amp; Requirements</h3>
+<ol>
+<li>
+<p>There's no firewall blocking you from contacting the recipient's mail
+exchange (MX) server port 25</p>
+<ul>
+<li>For instance, at home I can't seem to contacting gmail MX server port 25.</li>
+</ul>
+</li>
+<li>
+<p>For Gmail at least, you can force your program to use IPv4 when
+communicating with the MX server, or you have a consistent PTR record if
+IPv6 must be used</p>
+</li>
+<li>
+<p>The emails would usually be delivered right into the spam folder. So you
+must be OK with it. You might create a rule to override it.</p>
+</li>
+</ol>
+<p>The workflow is that (inspired by <a href="http://stackoverflow.com/a/12747310/695964" target="_blank" rel="noopener">this SO answer</a>):</p>
+<ol>
+<li>Look up the MX server for the recipient email address by using <code>nslookup mx</code>. I find <a href="http://mxtoolbox.com/" target="_blank" rel="noopener">this</a> online mx lookup service is invaluable.</li>
+<li>Talk with the MX server in SMTP to send the mail.</li>
+</ol>
+<p>Here's an example SMTP session I had with gmail server. Lines marked with <code>S&gt;</code>
+is server response, those marked with <code>C&gt;</code> is from the client:</p>
+<pre><code>S&gt; 220 mx.google.com ESMTP hj1si1000592pac.235 - gsmtp
+C&gt; HELO kfl.com
+S&gt; 250 mx.google.com at your service
+C&gt; MAIL FROM:&lt;k@kfl.com&gt;
+S&gt; 250 2.1.0 OK hj1si1000592pac.235 - gsmtp
+C&gt; RCPT TO:&lt;kfl@gmail.com&gt;
+S&gt; 250 2.1.5 OK hj1si1000592pac.235 - gsmtp
+C&gt; DATA
+S&gt; 354  Go ahead hj1si1000592pac.235 - gsmtp
+C&gt; From: &quot;KL&quot; &lt;kfl@gmail.com&gt;
+C&gt; To: &quot;You&quot; &lt;kfl@gmail.com&gt;
+C&gt; Subject: This is from me
+C&gt;
+C&gt; Hello there:)
+C&gt;
+C&gt; .
+S&gt; 250 2.0.0 OK 1462862782 hj1si1000592pac.235 - gsmtp
+</code></pre>
+<p>Note that if you're accessing internet through a regular consumer ISP, e.g.,
+I'm using the crappy Comcast, firstly, you most likely is blocked from
+accessing port 25 of the MX server, I haven't tried SSL, maybe it will work.
+But from my work environment, I can access port 25 just fine.</p>
+<p>Secondly, if you have IPv6 address and don't have a consistent PTR record (some
+sort of DNS reverse lookup strategy), you'll be blocked by Gmail at the end of
+the session, like this one. The workaround is to force the client to use IPv4.
+Linux telnet client has <code>-4</code> command line option. Windows telnet client doesn't
+have that, but putty does have this option.</p>
+<pre><code>telnet.exe gmail-smtp-in.l.google.com 25
+
+220 mx.google.com ESMTP m90si995173pfj.201 - gsmtp
+HELO kfl.com
+250 mx.google.com at your service
+MAIL FROM:&lt;k@kfl.com&gt;
+250 2.1.0 OK m90si995173pfj.201 - gsmtp
+RCPT TO:&lt;kfl@gmail.com&gt;
+250 2.1.5 OK m90si995173pfj.201 - gsmtp
+DATA
+354  Go ahead m90si995173pfj.201 - gsmtp
+From: &quot;KL&quot; &lt;kfl@gmail.com&gt;
+To: &quot;You&quot; &lt;kfl@gmail.com&gt;
+Subject: This is from me
+
+Hello there:)
+
+.
+550-5.7.1 [2001:4898:80e8::436] Our system has detected that this message does
+550-5.7.1 not meet IPv6 sending guidelines regarding PTR records and
+550-5.7.1 authentication. Please review
+550-5.7.1  https://support.google.com/mail/?p=ipv6_authentication_error for more
+550 5.7.1 information. m90si995173pfj.201 - gsmtp
+</code></pre>
+<p>Finally, don't forget to check the spam folder for the mail!</p>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/programming/">programming</a>
+          
+            <a href="/tags/smtp/">smtp</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/05/11/2016-05-11-Debugging Yeoman generators/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Debugging Yeoman generators</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/03/26/2016-03-26-document-scanning/">
+        <span class="next-text nav-default">Scan Documents with ImageMagick and Canon MX922 Scanner</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2016/05/10/2016-05-10-Sending email with raw SMTP/';
+        this.page.identifier = '2016/05/10/2016-05-10-Sending email with raw SMTP/';
+        this.page.title = 'Sending email with raw SMTP (sending emails without an account)';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

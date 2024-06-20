@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="How .NET runtime locates assemblies">
+
+
+
+
+  <meta name="keywords" content=".net,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2017/02/15/2017-02-15-dotnet-locating-assemblies/">
+
+
+<meta name="description" content="This article talks about this topic in detail.
+Usually the assemblies are found in the same directory of the running process. But it can be extended by using the application config file or web.config">
+<meta name="keywords" content=".net">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How .NET runtime locates assemblies">
+<meta property="og:url" content="http://kflu.github.io/2017/02/15/2017-02-15-dotnet-locating-assemblies/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="This article talks about this topic in detail.
+Usually the assemblies are found in the same directory of the running process. But it can be extended by using the application config file or web.config">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.627Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How .NET runtime locates assemblies">
+<meta name="twitter:description" content="This article talks about this topic in detail.
+Usually the assemblies are found in the same directory of the running process. But it can be extended by using the application config file or web.config">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> How .NET runtime locates assemblies · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          How .NET runtime locates assemblies
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Feb 15, 2017
+        </span>
+      </div>
+    </header>
+
+    
+
+    <div class="post-content">
+      
+        <p><a href="https://msdn.microsoft.com/en-us/library/yx7xezcf(v=vs.110).aspx" target="_blank" rel="noopener">This article</a> talks about this topic in detail.</p>
+<p>Usually the assemblies are found in the same directory of the running process. But it can be extended by using the application config file or <code>web.config</code> (same schema). The main configuration point is <a href="https://msdn.microsoft.com/en-us/library/twy1dw1e(v=vs.110).aspx" target="_blank" rel="noopener"><code>&lt;assemblyBinding&gt;</code></a> tag. There're two ways to it:</p>
+<p>In the first approach, you can specify each individual assembly with <code>&lt;dependentAssembly&gt;</code> tag. It even allows you to specify version redirection:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependentAssembly&gt;</span><br><span class="line">  &lt;assemblyIdentity name=&quot;Newtonsoft.Json&quot; publicKeyToken=&quot;...&quot; culture=&quot;neutral&quot; /&gt;</span><br><span class="line">  &lt;codeBase version=&quot;6.0.0.0&quot; href=&quot;file:///C:\Program Files\foo\bar\Newtonsoft.Json.dll&quot; /&gt;</span><br><span class="line">  &lt;bindingRedirect oldVersion=&quot;0.0.0.0-6.0.0.0&quot; newVersion=&quot;6.0.0.0&quot; /&gt;</span><br><span class="line">&lt;/dependentAssembly&gt;</span><br></pre></td></tr></table></figure>
+<p>In the second approach, you can specify a &quot;probing&quot; sub-directory with <code>&lt;probing&gt;</code> tag. The limitation is that the probing location has to be a sub-directory of the process directory.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;  </span><br><span class="line">   &lt;runtime&gt;  </span><br><span class="line">      &lt;assemblyBinding xmlns=&quot;urn:schemas-microsoft-com:asm.v1&quot;&gt;  </span><br><span class="line">         &lt;probing privatePath=&quot;bin;bin2\subbin;bin3&quot;/&gt;  </span><br><span class="line">      &lt;/assemblyBinding&gt;  </span><br><span class="line">   &lt;/runtime&gt;  </span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/net/">.net</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/02/22/2017-02-22-chicken-scheme-notes/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Chicken Scheme Notes</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/02/14/2017-02-14-owin-katana-aspnet/">
+        <span class="next-text nav-default">OWIN, Katana, ASP.NET Web API / MVC</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2017/02/15/2017-02-15-dotnet-locating-assemblies/';
+        this.page.identifier = '2017/02/15/2017-02-15-dotnet-locating-assemblies/';
+        this.page.title = 'How .NET runtime locates assemblies';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

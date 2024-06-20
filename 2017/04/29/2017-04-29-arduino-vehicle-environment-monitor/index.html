@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Making pets safer with Arduino">
+
+
+
+
+  <meta name="keywords" content="arduino,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2017/04/29/2017-04-29-arduino-vehicle-environment-monitor/">
+
+
+<meta name="description" content="All source code and related information can be found on the
+project&apos;s github repo.
+This is Max, a 6 year old Golden Retriever that I adopted when he was
+a little puppy. He and I both love outdoors and">
+<meta name="keywords" content="arduino">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Making pets safer with Arduino">
+<meta property="og:url" content="http://kflu.github.io/2017/04/29/2017-04-29-arduino-vehicle-environment-monitor/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="All source code and related information can be found on the
+project&apos;s github repo.
+This is Max, a 6 year old Golden Retriever that I adopted when he was
+a little puppy. He and I both love outdoors and">
+<meta property="og:image" content="http://kflu.github.io/2017/04/29/2017-04-29-arduino-vehicle-environment-monitor/pup.jpg">
+<meta property="og:image" content="http://kflu.github.io/2017/04/29/2017-04-29-arduino-vehicle-environment-monitor/IMG_2523.JPG.small.jpg">
+<meta property="og:image" content="http://kflu.github.io/2017/04/29/2017-04-29-arduino-vehicle-environment-monitor/LED_receiving.gif">
+<meta property="og:image" content="http://kflu.github.io/2017/04/29/2017-04-29-arduino-vehicle-environment-monitor/LED_error.gif">
+<meta property="og:image" content="http://kflu.github.io/2017/04/29/2017-04-29-arduino-vehicle-environment-monitor/library.png">
+<meta property="og:image" content="http://kflu.github.io/2017/04/29/2017-04-29-arduino-vehicle-environment-monitor/mall.png">
+<meta property="og:image" content="http://kflu.github.io/2017/04/29/2017-04-29-arduino-vehicle-environment-monitor/IMG_2524.JPG.small.jpg">
+<meta property="og:image" content="http://kflu.github.io/2017/04/29/2017-04-29-arduino-vehicle-environment-monitor/temperature_time.png">
+<meta property="og:image" content="http://kflu.github.io/2017/04/29/2017-04-29-arduino-vehicle-environment-monitor/package.png">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.627Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Making pets safer with Arduino">
+<meta name="twitter:description" content="All source code and related information can be found on the
+project&apos;s github repo.
+This is Max, a 6 year old Golden Retriever that I adopted when he was
+a little puppy. He and I both love outdoors and">
+<meta name="twitter:image" content="http://kflu.github.io/2017/04/29/2017-04-29-arduino-vehicle-environment-monitor/pup.jpg">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> Making pets safer with Arduino · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Making pets safer with Arduino
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Apr 29, 2017
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">High Level Design Decisions</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Measuring the temperature</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Displaying the temperature</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Communication System</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Power Supply &amp; Battery Life</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Device Enclosure</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Conclusion</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Links and Resources</span></a></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <p><em>All source code and related information can be found on the
+<a href="https://github.com/kflu/vem" target="_blank" rel="noopener">project's github repo</a>.</em></p>
+<p>This is Max, a 6 year old Golden Retriever that I adopted when he was
+a little puppy. He and I both love outdoors and we have such a close
+binding that he'd beg me to take him whenever I'm going out. I try to
+take him to wherever I go as much as possible - going on a hike,
+paddle boarding on the water, shopping in the mall, etc. But the
+reality is, in an area as pet friendly as Seattle, there're a lot of
+places that don't welcome dogs, mostly the restaurants and the grocery
+stores.</p>
+<p><img src="pup.jpg" alt="the pup"></p>
+<p>If we go out for a day in urban area, he most likely will be staying
+in the car during lunch time. When it comes to pet safety, I'm a
+little paranoid as most pet owner would be. When leaving him in the
+car, I make sure to park in the shade, have the sunroof open, wind the
+windows down, etc. But no matter how much I do, when I sit in the
+restaurants I always worry about the temperature in the car.</p>
+<p><strong>Until one day I decided to do something about it - making a in-car,
+wireless real-time temperature monitor, which transmits periodic
+readings to the receiver that I carry with me. This gives me a piece
+of mind knowing that my pup is staying safely and comfortably in the
+car!</strong></p>
+<p><strong>Disclaimer</strong> <em>Please be responsible when leaving your pet in the car.
+Refer to <a href="http://blog.gopetfriendly.com/is-it-illegal-to-leave-your-pet-alone-in-the-car/" target="_blank" rel="noopener">the laws</a> in different states that allows or prohibits leaving
+animal in motor vehicle in certain situations.</em></p>
+<p>Before going into the details, here's what I built using several
+weekends and less than $100:</p>
+<p><img src="IMG_2523.JPG.small.jpg" alt="device"></p>
+<p>On the right is the transmitter. It stays in the car that
+sends the temperature readings every 5 seconds. On the left is the
+receiver, I take it when leaving my pup in the car. The receiver has a
+little LED that blinks a certain number of times to indicate the
+temperature in the car. Both devices run on battery and have a
+transmission range of around 250m (820ft) in very complex building
+environment (shopping mall), with primitive (poor man's) wire antenna.</p>
+<h1>High Level Design Decisions</h1>
+<p>The overall system design is based on <a href="https://www.lora-alliance.org/What-Is-LoRa/Technology" target="_blank" rel="noopener">LoRa wireless technology</a>.
+It uses spread spectrum communication and has advanced technology to
+combat channel fading and interference. In ideal situation it's
+claimed to have miles of transmission range. Initially I was
+considering Family Radio Service (FRS) (used by walkie talkie)
+for its long communication range. But I couldn't find good
+hardware and software support for it. <a href="https://www.sparkfun.com/pages/xbee_guide" target="_blank" rel="noopener">XBee</a> seems to be a good
+alternative. With the &quot;Pro&quot; version, XBee claims to have miles of
+transmission range. But the cost of XBee Pro chips seem to be much
+higher than the Lora modules.</p>
+<p>Basically I need a system to perform measuring, transmitting,
+receiving, and displaying the temperature data between 2 peers. I knew
+I should choose Arduino boards over RaspberryPi, because the tasks are
+simple and <em>the power consumption must be low</em> in order to make at
+least the receiver mobile.</p>
+<p>I had no previous experience with Arduino programming and soldering
+circuits. My major was in wireless communication back in college and
+had college level knowledge on circuits. Programming was trivial as
+I'm already a programmer:) And this was a pretty fun experience!</p>
+<p><a href="https://www.adafruit.com/" target="_blank" rel="noopener">Adafruit</a> is an awesome website teaching how to do all sorts of
+Arduino things and also sells the devices. What I like most is on each
+product page it also offers the tutorial on how to assemble, wire, and
+program it! It made my first hardware project much smoother than I'd
+imagined.</p>
+<p>Here's the list of things that I bought for this project.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.amazon.com/gp/product/B00PD92EJ8" target="_blank" rel="noopener">Arduino Mega 2560 R3 (OSOYOO)</a></td>
+<td>$13.99</td>
+<td>Transmitter board (awesome cheap &quot;clone&quot;<sup><a href="#clone">1</a></sup> board)</td>
+</tr>
+<tr>
+<td><a href="https://www.adafruit.com/product/3072" target="_blank" rel="noopener">Adafruit RFM95W LoRa Radio Transceiver Breakout - 868 or 915 MHz</a></td>
+<td>$19.95</td>
+<td>Transmitter communication module</td>
+</tr>
+<tr>
+<td><a href="https://www.adafruit.com/products/165" target="_blank" rel="noopener">TMP36 - Analog Temperature sensor - TMP36</a></td>
+<td>$1.5</td>
+<td>Transmitter temperature sensor</td>
+</tr>
+<tr>
+<td><a href="https://www.amazon.com/gp/product/B005X1Y7I2" target="_blank" rel="noopener">Anker PowerCore+ mini 3350mAh</a></td>
+<td>$13.99</td>
+<td>Transmitter power supply (USB)</td>
+</tr>
+<tr>
+<td><a href="https://www.adafruit.com/products/2771" target="_blank" rel="noopener">Adafruit Feather 32u4 Basic Proto</a></td>
+<td>$19.95</td>
+<td>Receiver board</td>
+</tr>
+<tr>
+<td><a href="https://www.adafruit.com/products/3231" target="_blank" rel="noopener">Adafruit LoRa Radio FeatherWing - RFM95W 900 MHz</a></td>
+<td>$19.95</td>
+<td>Receiver communication module</td>
+</tr>
+<tr>
+<td><a href="https://www.adafruit.com/product/727" target="_blank" rel="noopener">3 x AAA Battery Holder with On/Off Switch and 2-Pin JST</a></td>
+<td>$1.95</td>
+<td>Receiver power supply (3 x AAA)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note that:</strong></p>
+<ul>
+<li>
+<p>When buying LoRa modules, please make sure to buy the frequency
+according to the regulation of your country. In US, LoRa uses 915MHz.</p>
+</li>
+<li>
+<p>The cost can be significantly cut down from this list. My
+choice of the products were not solely for cutting down the price, but
+more for better learning experience, community support, flexibility in
+prototyping. For example, Adafruit has <a href="https://www.adafruit.com/product/3178" target="_blank" rel="noopener">feather board integrated with
+LoRa chip</a> (or <a href="https://www.adafruit.com/product/3078" target="_blank" rel="noopener">this</a>). They are cheaper than buying the board
+and LoRa module separately. And it also eliminates almost all the
+soldering work.</p>
+</li>
+</ul>
+<p>The board and the LoRa module are wired together using SPI interface.
+I'm not going into the detail. Please refer to <a href="https://learn.adafruit.com/adafruit-rfm69hcw-and-rfm96-rfm95-rfm98-lora-packet-padio-breakouts/wiring" target="_blank" rel="noopener">Adafruit tutorial</a>.</p>
+<h1>Measuring the temperature</h1>
+<p>Using the TMP36 temperature sensor is extremely easy. It's done by
+using the MCU to measure the output voltage of the sensor. Most
+importantly, the input voltage to the sensor must be stable for the
+measurement to be accurate. Since I'll be using USB power on the
+transmitter side, and the USB power bank is stable at 5v, I don't have
+difficulty here.</p>
+<p>For more information about using TMP36, refer to Adafruit <a href="https://learn.adafruit.com/tmp36-temperature-sensor" target="_blank" rel="noopener">TMP36 product
+page</a>.</p>
+<h1>Displaying the temperature</h1>
+<p>You may have noticed that the receiver doesn't have a display. Yes -
+this was my first Arduino project and I didn't have time to learn and
+investigate everything at one shot. I decided to go simple and hacky.
+On every Arduino board, there is a tiny cute built-in LED that can be
+programmed (I guess they have it because almost every beginner's first
+project is to program the LED to blink). Using the built-in LED has
+two advantages - it's simple to program, and uses minimum power than
+almost any other fancier display.</p>
+<p>I quantize the temperature into 7 regions, each have a different
+number of quick blinks every 5 seconds. So I can know the temperature region
+in the car by observing the number of quick blinks.</p>
+<pre><code>int temp_to_comfort(float tempC) {
+    if (               tempC &lt; 0)  return 7;
+    if ( 0 &lt;= tempC &amp;&amp; tempC &lt; 20) return 1;
+    if (20 &lt;= tempC &amp;&amp; tempC &lt; 25) return 2;
+    if (25 &lt;= tempC &amp;&amp; tempC &lt; 30) return 3;
+    if (30 &lt;= tempC &amp;&amp; tempC &lt; 35) return 4;
+    if (35 &lt;= tempC &amp;&amp; tempC &lt; 40) return 5;
+    if (40 &lt;= tempC)               return 6;
+}
+</code></pre>
+<p>I did took sometime tweaking the speed of each blink - initially it
+blinks a little too fast and I couldn't tell if it blinked 3 or 4 or
+more times. Once I slow it down a little, it works pleasantly well!</p>
+<p>I took this idea further and made my little LED a generic information
+representation system. It can display all sorts of other information.
+For example, a long, slow blink indicates no data is being received -
+maybe the distance is too long, or the transmitter runs out of
+battery.</p>
+<p>Below animation shows it's receiving temperature in the 20°C ~ 25°C
+range (2 blinks):</p>
+<p><img src="LED_receiving.gif" alt="LED receiving"></p>
+<p>Below animation shows it's not receiving any data (1 long slow blink):</p>
+<p><img src="LED_error.gif" alt="LED error"></p>
+<h1>Communication System</h1>
+<p><a href="http://www.airspayce.com/mikem/arduino/RadioHead/classRH__RF95.html" target="_blank" rel="noopener">RadioHead</a> has awesome support for driving the LoRa modules. LoRa
+technology operates at the physical and MAC layer. Since I only need a
+peer to peer channel, I only used the physical layer functionality.</p>
+<p>LoRa physical layer can be configured to use different frequency,
+bandwidth, spreading factor, channel coding rate. These all affect the
+data rate and communication range. Since I shoot for maximum
+transmission range, and that the amount of data needed to be
+transmitted is minimum, I chose to use the strongest error coding and
+slowest data rate: bandwidth = 125kHz, coding rate = 4/8, spreading
+factor = 4096chips/symbol, CRC on. For more detail on the LoRa
+technical information, refer to <a href="http://www.semtech.com/images/datasheet/LoraDesignGuide_STD.pdf" target="_blank" rel="noopener">the LoRa Modem Designer's Guide</a>.</p>
+<p>With this setting, I've done a couple of real life range testing. And
+overall I'm very satisfied. The testing are mostly done in urban
+locations such as malls or grocery stores, either on flat or hilly
+terrains. The transmitter (<code>Tx</code>) was put in the car. The receiver
+(<code>Rx</code>) was carried with me. I programmed the receiver to send the
+receiving signal-to-noise ratio (SNR) to the serial port, so by
+attaching it to a computer and opening up the serial console, I can
+know the exact level of channel fading and interference when the
+signal is successfully received and decoded.</p>
+<p><strong>Range Test 1: Library Underground Garage</strong></p>
+<p>In library's underground parking, SNR dropped to -4dBm, but the signal
+was decoded reliably.</p>
+<p><img src="library.png" alt="library"></p>
+<p><strong>Range Test 2: Mall</strong></p>
+<p>This is the worst indoor channel I've tested so far in the Factoria
+mall. The transmitter is in the outdoor parking lot. The receiver is
+at almost the opposite side of the mall, 818ft away, across stores,
+walls, and who-knows-what. I didn't record the SNR as I didn't have
+laptop with me. I had to straiten the antenna in order to get the
+signal and the signal dropped occasionally.</p>
+<p><img src="mall.png" alt="mall"></p>
+<p><strong>Range Test Conclusion</strong></p>
+<p>I'm satisfied with the tests so far. What could be improved:</p>
+<ul>
+<li>Use proper antennas on transmitter and receiver</li>
+<li>Use stateful receiver - remember the last successfully received data
+and display it and the timestamp - it's acceptable as long as it
+can receive from time to time. This requires a fancier display for
+the data and the timestamp - I'd like to be aware of stale data.</li>
+</ul>
+<h1>Power Supply &amp; Battery Life</h1>
+<p>Before this project, I didn't know how much there is in properly
+designing a power supply! There're so many choices and limitations.</p>
+<p>On the transmitter side, since it's always in the car, I could choose
+to hook it up with my car's battery, as long as the input voltage is
+in acceptable range. Note that it only makes sense to have a constant
+power even if the ignition is not on. It could be done by tapping into
+an unused fuse in the car, by using something like <a href="https://www.amazon.com/dp/B004AHADOC" target="_blank" rel="noopener">this</a>.</p>
+<p>I chose a much easier option than that - since Arduino can be powered
+by USB power, I used a <a href="https://www.amazon.com/gp/product/B005X1Y7I2" target="_blank" rel="noopener">power bank</a>. Note that typical power
+banks have &quot;auto-cutoff&quot; circuit that will cut off power after a
+certain period of time if the payload device only draws very low
+current. Fortunately, the transmission current is 200mA every 5
+seconds. This is enough for the power bank to &quot;stay awake&quot;. As a
+contrary, the receiver was cut off when powered by it. But I have a
+better option for the receiver, detailed later.</p>
+<p><img src="IMG_2524.JPG.small.jpg" alt="transmitter power"></p>
+<p>On the transmitter, I measured the power consumption using a
+multimeter:</p>
+<ul>
+<li>90mA in non-transmission mode</li>
+<li>215mA in transmission mode</li>
+</ul>
+<p>For the 3350mAh power banks, the battery life is roughly:</p>
+<pre><code>3350 * 0.75 / ( 90 + 215/5 ) = 18.9h
+</code></pre>
+<p>In a real test, I got 14.5hours life time.</p>
+<p>On the receiver side, power consumption measurements are:</p>
+<ul>
+<li>0.03mA when idle</li>
+<li>3.5mA when receiving</li>
+</ul>
+<p>I power it with 3xAAA battery (4.5v voltage which is ideal for the
+feather 32u4 board). Estimated battery life:</p>
+<pre><code>3 * 1000 * 0.75 / ( 0.03 + 3.5/5 ) = 3082h = 128 days
+</code></pre>
+<p>Below is a chart of the temperature reading and receiver's Signal-to-Noise
+Ratio (SNR) over time. It is shown that temerature is well maintained constant
+over most of the battery life, but only raised up (due to low voltage) at the
+end of it. SNR is maintained over entire battery life and cut off when power is
+not sufficient.</p>
+<p><img src="temperature_time.png" alt="temp_time"></p>
+<p><strong>Power optimization</strong></p>
+<p>The board (MCU) could be put to sleep when not
+transmitting to save power. This cuts the 90mA constant power draw.
+This could be done <a href="http://donalmorrissey.blogspot.com/2010/04/sleeping-arduino-part-5-wake-up-via.html" target="_blank" rel="noopener">by using the MCU watchdog timer</a>.</p>
+<h1>Device Enclosure</h1>
+<p><strong>I was really concerned to bring this thing into crowded places</strong>.
+Looking at it from an ordinary person's perspective - a bare circuit
+board with some colorful wires and an antenna, taped to a black
+battery case! In such a person's eyes, it'd look exactly like what a remote
+control for some bomb in Hollywood movies would look like!</p>
+<p>I didn't have time to learn designing and printing 3D printed cases.
+What I did instead, is to wrap it with thin card board and stuff it in
+the meshed bag that I got for the Anker power bank! The meshed fabric
+really helps because I can see the LED through the bag when it's lit.</p>
+<p><img src="package.png" alt="package"></p>
+<h1>Conclusion</h1>
+<p>I made a remote temperature monitor that <strong>really works</strong>. It gives me
+a piece of mind when having to leave my dog in the car, knowing that
+the temperature is comfortable and safe for him. There're many
+improvements that could be done. But it's the very first time I build
+circuits and program at such a low level. Soldering is really fun, but
+what's the most fun part? <strong>The moment when the LED blinked while the
+transmitter was some hundreds of feet away!</strong></p>
+<h1>Links and Resources</h1>
+<ul>
+<li><a href="https://github.com/kflu/vem" target="_blank" rel="noopener">Vehicle Environment Monitor</a>: Project site, source code etc.</li>
+<li><a href="https://www.lora-alliance.org/What-Is-LoRa/Technology" target="_blank" rel="noopener">LoRa Technology</a></li>
+<li><a href="http://www.semtech.com/images/datasheet/LoraDesignGuide_STD.pdf" target="_blank" rel="noopener">LoRa modem technical information</a></li>
+<li><a href="https://learn.adafruit.com/adafruit-rfm69hcw-and-rfm96-rfm95-rfm98-lora-packet-padio-breakouts/wiring" target="_blank" rel="noopener">LoRa module wiring</a></li>
+<li><a href="http://www.airspayce.com/mikem/arduino/RadioHead/classRH__RF95.html" target="_blank" rel="noopener">RadioHead LoRa library</a></li>
+<li><a href="https://learn.adafruit.com/tmp36-temperature-sensor" target="_blank" rel="noopener">Using TMP36 temperature sensor</a></li>
+</ul>
+<p><a name="clone">1</a>: <em>Arduino is open source hardware, &quot;clone&quot; is a
+good word here.</em></p>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/arduino/">arduino</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/05/14/2017-05-14-archlinux-installation/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Archlinux installation, partition, EFI</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/04/11/2017-04-11-more-synchronozation/">
+        <span class="next-text nav-default">More about synchronization</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2017/04/29/2017-04-29-arduino-vehicle-environment-monitor/';
+        this.page.identifier = '2017/04/29/2017-04-29-arduino-vehicle-environment-monitor/';
+        this.page.title = 'Making pets safer with Arduino';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

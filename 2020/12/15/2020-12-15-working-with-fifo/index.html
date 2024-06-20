@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Working with FIFOs (Named Pipes)">
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2020/12/15/2020-12-15-working-with-fifo/">
+
+
+<meta name="description" content="How to properly read from FIFO:
+1cat &amp;lt;&amp;gt;fifo
+Stéphane Chazelas on StackExchange shared some really good explanation
+here, especially on the strange
+behavior of using tail -f fifo to read.
+
+Like c">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Working with FIFOs (Named Pipes)">
+<meta property="og:url" content="http://kflu.github.io/2020/12/15/2020-12-15-working-with-fifo/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="How to properly read from FIFO:
+1cat &amp;lt;&amp;gt;fifo
+Stéphane Chazelas on StackExchange shared some really good explanation
+here, especially on the strange
+behavior of using tail -f fifo to read.
+
+Like c">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.674Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Working with FIFOs (Named Pipes)">
+<meta name="twitter:description" content="How to properly read from FIFO:
+1cat &amp;lt;&amp;gt;fifo
+Stéphane Chazelas on StackExchange shared some really good explanation
+here, especially on the strange
+behavior of using tail -f fifo to read.
+
+Like c">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> Working with FIFOs (Named Pipes) · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Working with FIFOs (Named Pipes)
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Dec 15, 2020
+        </span>
+      </div>
+    </header>
+
+    
+
+    <div class="post-content">
+      
+        <p>How to properly read from FIFO:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&gt;fifo</span><br></pre></td></tr></table></figure>
+<p>Stéphane Chazelas on StackExchange shared some really good explanation
+<a href="https://unix.stackexchange.com/a/392754/38968" target="_blank" rel="noopener">here</a>, especially on the strange
+behavior of using <code>tail -f fifo</code> to read.</p>
+<blockquote>
+<p>Like cat, tail will wait for a process to open a file for writing. But here,
+since you didn't specify a -n +1 to copy from the beginning, tail will need to
+wait until eof to find out what the last 10 lines were, so you won't see
+anything until the writing end is closed.</p>
+<p>After that, tail will not close its fd to the pipe which means the pipe instance
+won't be destroyed, ... That read() will return with eof ... until some other
+process opens the file again for writing.</p>
+</blockquote>
+<p>Another answer also by Stéphane is at
+<a href="https://unix.stackexchange.com/a/522881/38968" target="_blank" rel="noopener">here</a>. This one let me realize
+that <code>dd</code> can also be used for reading fifos (more flexible):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd bs=64k if=&quot;$my_named_pipe&quot; iflag=nonblock status=noxfer</span><br></pre></td></tr></table></figure>
+<p>Another flexible reading approach is socat.</p>
+<p>Side note - someone else mentioned that UDP can be used for &quot;non-blocking&quot;
+data transfer: one end can send/receive data without the other end present. This
+could be quite convenient/easy to work with.</p>
+
+      
+    </div>
+
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2020/12/15/2020-12-15-working-with-fifo/';
+        this.page.identifier = '2020/12/15/2020-12-15-working-with-fifo/';
+        this.page.title = 'Working with FIFOs (Named Pipes)';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

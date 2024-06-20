@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="F# works on FreeBSD (jailed)">
+
+
+
+
+  <meta name="keywords" content="programming,unix,f#,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2017/08/03/2017-08-03-fsharp-freebsd/">
+
+
+<meta name="description" content="Mono-based F# works on FreeBSD in a jail. There isn&apos;t
+a port for .NET core yet. So I don&apos;t want to try it yet.
+pkg install mono-4.8.1.0_1
+pkg install fsharp-4.1.18
+
+Here&apos;s a summary:
+
+run with mono &amp;l">
+<meta name="keywords" content="programming,unix,f#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="F# works on FreeBSD (jailed)">
+<meta property="og:url" content="http://kflu.github.io/2017/08/03/2017-08-03-fsharp-freebsd/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="Mono-based F# works on FreeBSD in a jail. There isn&apos;t
+a port for .NET core yet. So I don&apos;t want to try it yet.
+pkg install mono-4.8.1.0_1
+pkg install fsharp-4.1.18
+
+Here&apos;s a summary:
+
+run with mono &amp;l">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.671Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="F# works on FreeBSD (jailed)">
+<meta name="twitter:description" content="Mono-based F# works on FreeBSD in a jail. There isn&apos;t
+a port for .NET core yet. So I don&apos;t want to try it yet.
+pkg install mono-4.8.1.0_1
+pkg install fsharp-4.1.18
+
+Here&apos;s a summary:
+
+run with mono &amp;l">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> F# works on FreeBSD (jailed) · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          F# works on FreeBSD (jailed)
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Aug 3, 2017
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Building projects and running executables</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Package Management</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Certificate Issue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Nuget</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Paket</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Package Information</span></a></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <p>Mono-based F# works on FreeBSD in a jail. There isn't
+a port for .NET core yet. So I don't want to try it yet.</p>
+<pre><code>pkg install mono-4.8.1.0_1
+pkg install fsharp-4.1.18
+</code></pre>
+<p>Here's a summary:</p>
+<ol>
+<li>run with <code>mono &lt;app.exe&gt;</code></li>
+<li>build with <code>xbuild</code></li>
+<li><code>nuget</code> and <code>paket</code> works after <code>mozroot --import</code></li>
+<li>there isn't an official port for .NET core yet</li>
+<li>there isn't an official port for vscode yet</li>
+</ol>
+<h1>Building projects and running executables</h1>
+<p>Use <code>xbuild</code> to build. Use <code>mono &lt;app.exe&gt;</code> to run.</p>
+<h1>Package Management</h1>
+<p><code>nuget</code> and <code>packet</code> <em>binaries</em> work directly.</p>
+<h2>Certificate Issue</h2>
+<p>However you need to import root certificates to avoid encryption/decryption
+error while downloading from SSL enabled sites. See <a href="https://github.com/fsharp/fsharp/issues/616#issuecomment-320170277" target="_blank" rel="noopener">this issue</a>.</p>
+<pre><code>mozroot --import  # and type &quot;yes&quot; MANY MANY times
+</code></pre>
+<h2>Nuget</h2>
+<p>For <code>nuget</code>:</p>
+<pre><code>wget https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
+mono ./nuget install NewtonSoft.Json
+</code></pre>
+<h2>Paket</h2>
+<p>For <code>paket</code>, follow <a href="https://fsprojects.github.io/Paket/getting-started.html" target="_blank" rel="noopener">paket guide</a>:</p>
+<pre><code>cd &lt;repo&gt;/.paket
+wget https://github.com/fsprojects/Paket/releases/download/3.31.0/paket.bootstrapper.exe
+mv paket.bootstrapper.exe paket.exe  # enable &quot;magic&quot; mode
+cd ..
+mono ./.paket/paket.exe install      # install all dependencies
+</code></pre>
+<h1>Package Information</h1>
+<pre><code>➜  ~ pkg info mono
+mono-4.8.1.0_1
+Name           : mono
+Version        : 4.8.1.0_1
+Installed on   : Fri Aug  4 05:53:48 2017 UTC
+Origin         : lang/mono
+Architecture   : FreeBSD:11:amd64
+Prefix         : /usr/local
+Categories     : lang
+Licenses       : MIT
+Maintainer     : mono@FreeBSD.org
+WWW            : http://www.mono-project.com/
+Comment        : Open source implementation of .NET Development Framework
+Options        :
+        ACCEPTANCE_TESTS: off
+Shared Libs required:
+        libinotify.so.0
+Shared Libs provided:
+        libmonosgen-2.0.so.1
+        libmonoboehm-2.0.so.1
+        libikvm-native.so
+        libmono-profiler-iomap.so.0
+        libmono-profiler-aot.so.0
+        libmono-profiler-log.so.0
+        libMonoSupportW.so
+        libMonoPosixHelper.so
+Annotations    :
+        cpe            : cpe:2.3:a:mono:mono:4.8.1.0:::::freebsd11:x64:1
+        repo_type      : binary
+        repository     : FreeBSD
+Flat size      : 183MiB
+Description    :
+Mono is an open source implementation of .NET Development Framework. Its
+objective is to enable UNIX developers to build and deploy cross-platform
+.NET Applications. The project implements various technologies developed by
+Microsoft that have now been submitted to the ECMA for standardization.
+
+Mono provides the necessary software to develop and run .NET client and
+server applications on BSD, Linux, Solaris, Mac OS X, Windows, and Unix.
+
+WWW: http://www.mono-project.com/
+
+➜  ~ pkg info fsharp
+fsharp-4.1.18
+Name           : fsharp
+Version        : 4.1.18
+Installed on   : Fri Aug  4 05:56:19 2017 UTC
+Origin         : lang/fsharp
+Architecture   : FreeBSD:11:*
+Prefix         : /usr/local
+Categories     : lang
+Licenses       : APACHE20
+Maintainer     : mono@FreeBSD.org
+WWW            : http://fsharp.org/
+Comment        : Functional and object-oriented language for the .NET platform
+Annotations    :
+        repo_type      : binary
+        repository     : FreeBSD
+Flat size      : 92.3MiB
+Description    :
+F# is an open-source, strongly typed, multi-paradigm programming
+language encompassing functional, imperative and object-oriented
+programming techniques.  F# is most often used as a cross-platform CLI
+language, but can also be used to generate JavaScript and GPU code.
+
+F# is developed by The F# Software Foundation and Microsoft.  An open
+source, cross-platform edition of F# is available from the F# Software
+Foundation.  F# is also a fully supported language in Visual Studio.
+Other tools supporting F# development include Mono, MonoDevelop,
+SharpDevelop and the WebSharper tools for JavaScript and HTML5 web
+programming.
+
+F# originated as a variant of ML and has been influenced by OCaml, C#,
+Python, Haskell, Scala and Erlang.
+
+WWW: http://fsharp.org/
+</code></pre>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/programming/">programming</a>
+          
+            <a href="/tags/unix/">unix</a>
+          
+            <a href="/tags/f/">f#</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/08/03/2017-08-03-latex-windows/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Setting up latex on Windows</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/07/30/2017-07-30-windbg/">
+        <span class="next-text nav-default">WinDBG Quick Reference</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2017/08/03/2017-08-03-fsharp-freebsd/';
+        this.page.identifier = '2017/08/03/2017-08-03-fsharp-freebsd/';
+        this.page.title = 'F# works on FreeBSD (jailed)';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

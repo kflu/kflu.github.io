@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="pkgsrc survival guide">
+
+
+
+
+  <meta name="keywords" content="unix,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2021/07/19/2021-07-19-pkgsrc-survival-guide/">
+
+
+<meta name="description" content="pkgsrc is NetBSD&apos;s ports system. But it&apos;s also cross-platform, available on Mac and Linux. It also support unprivileged use. This is a quick reference for it.
+The document is awesome
+First let&apos;s make">
+<meta name="keywords" content="unix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pkgsrc survival guide">
+<meta property="og:url" content="http://kflu.github.io/2021/07/19/2021-07-19-pkgsrc-survival-guide/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="pkgsrc is NetBSD&apos;s ports system. But it&apos;s also cross-platform, available on Mac and Linux. It also support unprivileged use. This is a quick reference for it.
+The document is awesome
+First let&apos;s make">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.680Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="pkgsrc survival guide">
+<meta name="twitter:description" content="pkgsrc is NetBSD&apos;s ports system. But it&apos;s also cross-platform, available on Mac and Linux. It also support unprivileged use. This is a quick reference for it.
+The document is awesome
+First let&apos;s make">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> pkgsrc survival guide · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          pkgsrc survival guide
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Jul 19, 2021
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">BOOTSTRAPPING</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">PARALLEL BUILD</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">USEFUL TARGETS, GETTING HELP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">USEFUL PKG TOOLS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">DISTFILES, FETCHING ETC</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">BUILD OPTIONS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">USEFUL ENVIRONMENT VARS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">TROUBLESHOOTING</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">BUILD PHASES</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Use pkgsrc along side Joyent pkgsrc binary distribution</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Rebuild only changed files</span></a></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <p>pkgsrc is NetBSD's ports system. But it's also cross-platform, available on Mac and Linux. It also support unprivileged use. This is a quick reference for it.</p>
+<p><a href="https://www.netbsd.org/docs/pkgsrc/pkgsrc.html" target="_blank" rel="noopener">The document is awesome</a></p>
+<p>First let's make a few decisions about the installation locations:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Location of the pkgsrc</span><br><span class="line">PKGSRC_DIR=     /data/user/&lt;u&gt;/pkgsrc</span><br><span class="line"></span><br><span class="line"># Location of the built package installation site</span><br><span class="line">PKG_DIR=        /data/user/&lt;u&gt;/pkg</span><br></pre></td></tr></table></figure>
+<h1>BOOTSTRAPPING</h1>
+<p>First download pkgsrc - it's a collection of configurations instructing how to download and build different packages.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://ftp.netbsd.org/pub/pkgsrc/stable/pkgsrc.tar.gz </span><br><span class="line">tar xf pkgsrc.tar.gz -C $PKGSRC_DIR</span><br></pre></td></tr></table></figure>
+<p>pkgsrc needs to be bootstrapped on the target machine where packages are to be built. The bootstrapping process builds the necessary tools pkgsrc will be using later on. We will focus on <em>unprivileged</em> use, since that's more fun and less covered by documents everywhere else:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd $PKGSRC_DIR/bootstrap</span><br><span class="line">./bootstrap --help</span><br><span class="line">./bootstrap --unprivileged --prefix $PKGSRC_DIR --make-jobs &lt;num_cpus&gt;</span><br></pre></td></tr></table></figure>
+<p>Finally we need to export <code>PATH</code> and <code>MANPATH</code> to include <code>$PKG_DIR</code>.</p>
+<h1>PARALLEL BUILD</h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MAKE_JOBS=&lt;num_cpus&gt; bmake</span><br></pre></td></tr></table></figure>
+<h1>USEFUL TARGETS, GETTING HELP</h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">bmake help</span><br><span class="line">bmake help topic=:index  # prints all helps</span><br><span class="line">bmake help topic=&lt;target|option&gt;</span><br><span class="line"></span><br><span class="line">bmake show-all</span><br><span class="line">bmake show-depends       # seems only incl. direct deps</span><br><span class="line">bmake show-depends-dirs  # include transient deps</span><br><span class="line"></span><br><span class="line">bmake show-var VARNAME=SOME_VAR_NAME</span><br></pre></td></tr></table></figure>
+<p>See <a href="https://wiki.netbsd.org/pkgsrc/targets/" target="_blank" rel="noopener">pkgsrc targets</a>
+The following targets may be useful to invoke from keyboard:</p>
+<ul>
+<li><code>depends</code> to build and install dependencies</li>
+<li><code>fetch</code> to fetch distribution file(s)</li>
+<li><code>checksum</code> to fetch and check distribution file(s)</li>
+<li><code>extract</code> to look at unmodified source</li>
+<li><code>patch</code> to look at initial source</li>
+<li><code>configure</code> to stop after configure stage</li>
+<li><code>all</code> or build to stop after build stage</li>
+<li><code>stage</code>-install to install under stage directory</li>
+<li><code>test</code> to run package's self-tests, if any exist and supported</li>
+<li><code>package</code> to create binary package before installing it</li>
+<li><code>replace</code> to change (upgrade, downgrade, or just replace) installed package in-place</li>
+<li><code>deinstall</code> to deinstall previous package</li>
+<li><code>package</code>-install to install package and build binary package</li>
+<li><code>install</code> to install package</li>
+<li><code>bin-install</code> to attempt to skip building from source and use pre-built binary package</li>
+<li><code>show-depends</code> print dependencies for building</li>
+<li><code>show-options</code> print available options from options.mk</li>
+</ul>
+<p>Cleanup targets (in separate section because of importance):</p>
+<ul>
+<li><code>clean</code>-depends to remove work directories for dependencies</li>
+<li><code>clean</code> to remove work directory</li>
+<li><code>distclean</code> to remove distribution file(s)</li>
+<li><code>package-clean</code> to remove binary package</li>
+</ul>
+<p>The following targets are useful in development and thus may be useful for an advanced user:</p>
+<ul>
+<li><code>makesum</code> to fetch and generate checksum for distributed file(s)</li>
+<li><code>makepatchsum</code> to (re)generate checksum for patches</li>
+<li><code>makedistinfo</code> to (re)generate distinfo file (creating checksums for distributed file and patches)</li>
+<li><code>mps</code> short for makepatchsum</li>
+<li><code>mdi</code> short for makedistinfo</li>
+<li><code>print-PLIST</code> to attempt to generate correct packaging list (NB! It helps, but it doesn't eliminate manual work.)</li>
+</ul>
+<h1>USEFUL PKG TOOLS</h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(cd pkgtools &amp;&amp; bmake install)</span><br><span class="line"></span><br><span class="line">man pkg_info</span><br><span class="line">pkg_info -L &lt;pkg_name&gt;  # list package contents</span><br></pre></td></tr></table></figure>
+<h1>DISTFILES, FETCHING ETC</h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># generate sh script which downloads distfiles when run</span><br><span class="line">bmake fetch-list</span><br><span class="line"></span><br><span class="line">bmake checksum          # fetch distfile and do checksum</span><br><span class="line">bmake depends-checksum  # also for deps</span><br></pre></td></tr></table></figure>
+<h1>BUILD OPTIONS</h1>
+<p><code>$PKG_DIR/etc/mk.conf</code> is where to set build options. For specific package, add line:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PKG_OPTIONS.&lt;pkg_name&gt;+=       &lt;option&gt;</span><br></pre></td></tr></table></figure>
+<p><code>bmake show-all</code> is helpful in discovering available build options, and what are enabled/disabled.</p>
+<h1>USEFUL ENVIRONMENT VARS</h1>
+<p>These can be specified in <code>mk.conf</code>, or on each build instance:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DISTDIR=... bmake</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>DISTDIR</code>: directory where to look for distfiles</li>
+<li><code>FETCH_USING</code>: the program for fetching (can set to wget)</li>
+</ul>
+<h1>TROUBLESHOOTING</h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Prints detailed build command</span><br><span class="line">PKG_DEBUG_LEVEL=1 bmake</span><br></pre></td></tr></table></figure>
+<h1>BUILD PHASES</h1>
+<p>https://www.netbsd.org/docs/pkgsrc/build.html</p>
+<ul>
+<li>The fetch phase</li>
+<li>The checksum phase</li>
+<li>The extract phase</li>
+<li>The patch phase</li>
+<li>The tools phase</li>
+<li>The wrapper phase</li>
+<li>The configure phase</li>
+<li>The build phase</li>
+<li>The test phase</li>
+<li>The install phase</li>
+<li>The package phase</li>
+</ul>
+<h1>Use pkgsrc along side Joyent pkgsrc binary distribution</h1>
+<p>Sat May 28 14:58:51 PDT 2022</p>
+<ol>
+<li>Install Joyent's pkgsrc binary distribution (this must be installed at the pre-determined location. E.g., for MacOS, at <code>/opt/pkg</code>)</li>
+<li>At any location, git clone pkgsrc source repo (e.g., clone into <code>~/work/pkgsrc</code>)</li>
+<li>To build from source, just <code>cd ~/work/pkgsrc/net/sshping &amp;&amp; bmake install</code>
+<ul>
+<li><code>bmake</code> is from <code>/opt/pkg/bin</code>. Installed package will also go there.</li>
+</ul>
+</li>
+</ol>
+<p>Since this installs to system location, there maybe frequent prompt for root
+password. Use this patch can fix it. Note that it assumes you have <code>sudo</code>
+already installed at /usr/bin/sudo. Otherwise, follow the pkgsrc
+<a href="https://www.netbsd.org/docs/pkgsrc/faq.html" target="_blank" rel="noopener">FAQ</a> (use pkgsrc to install
+<code>sudo</code> first):</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--- /tmp/mk.conf	2022-05-28 15:03:49.000000000 -0700</span></span><br><span class="line"><span class="comment">+++ /opt/pkg/etc/mk.conf	2022-05-28 11:48:43.000000000 -0700</span></span><br><span class="line"><span class="meta">@@ -61,6 +61,12 @@</span></span><br><span class="line"> </span><br><span class="line"> MAKE_JOBS=		6</span><br><span class="line"> </span><br><span class="line"><span class="addition">+# Prevent bmake keep asking for root password</span></span><br><span class="line"><span class="addition">+# https://www.netbsd.org/docs/pkgsrc/faq.html</span></span><br><span class="line"><span class="addition">+.if exists(/usr/bin/sudo)</span></span><br><span class="line"><span class="addition">+SU_CMD=        /usr/bin/sudo /bin/sh -c</span></span><br><span class="line"><span class="addition">+.endif</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"> #</span><br><span class="line"> # All local changes should go into this file, as mk.conf could</span><br><span class="line"> # be replaced on upgrades.</span><br></pre></td></tr></table></figure>
+<h1>Rebuild only changed files</h1>
+<p>There's the <code>$WRKDIR/.build_done</code> cookie that skips build. So:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bmake rebuild</span><br><span class="line"><span class="comment"># or...</span></span><br><span class="line">bmake build-clean &amp;&amp; bmake</span><br><span class="line"><span class="comment"># or...</span></span><br><span class="line">rm <span class="string">"<span class="variable">$(bmake show-var VARNAME=WRKDIR)</span>"</span>/.build_done</span><br><span class="line">bmake build</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/unix/">unix</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2021/10/26/2021-10-26-tmux-pass-selected-text-to-command/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Useful Tmux Settings</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2021/06/29/2021-06-29-stereo-audio-recording/">
+        <span class="next-text nav-default">Stereo audio recording setup</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2021/07/19/2021-07-19-pkgsrc-survival-guide/';
+        this.page.identifier = '2021/07/19/2021-07-19-pkgsrc-survival-guide/';
+        this.page.title = 'pkgsrc survival guide';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

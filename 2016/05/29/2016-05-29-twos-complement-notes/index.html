@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Two's complement notes">
+
+
+
+
+  <meta name="keywords" content="programming,math,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2016/05/29/2016-05-29-twos-complement-notes/">
+
+
+<meta name="description" content="In the following discussion, I assume the cardinality of the number set is
+2^32, or, 32 bit integer. But it can be generalized to any size.
+A visualization of the integers on the number domain.
+
+There">
+<meta name="keywords" content="programming,math">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Two's complement notes">
+<meta property="og:url" content="http://kflu.github.io/2016/05/29/2016-05-29-twos-complement-notes/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="In the following discussion, I assume the cardinality of the number set is
+2^32, or, 32 bit integer. But it can be generalized to any size.
+A visualization of the integers on the number domain.
+
+There">
+<meta property="og:image" content="http://kflu.github.io/2016/05/29/2016-05-29-twos-complement-notes/twos-complement-visualization.png">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.623Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Two's complement notes">
+<meta name="twitter:description" content="In the following discussion, I assume the cardinality of the number set is
+2^32, or, 32 bit integer. But it can be generalized to any size.
+A visualization of the integers on the number domain.
+
+There">
+<meta name="twitter:image" content="http://kflu.github.io/2016/05/29/2016-05-29-twos-complement-notes/twos-complement-visualization.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> Two's complement notes · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Two's complement notes
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          May 29, 2016
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">References</span></a></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <p>In the following discussion, I assume the cardinality of the number set is
+2^32, or, 32 bit integer. But it can be generalized to any size.</p>
+<p>A visualization of the integers on the number domain.</p>
+<p><img src="twos-complement-visualization.png" alt="visualization"></p>
+<p>There's always one more negative numbers than the positive numbers. That's
+because, total available numbers is even (2^32). 0 take a spot, leaving all
+positive and negative numbers to split the rest 2^32 - 1 spots, which is an odd
+number.</p>
+<p>This further leads to the fact that</p>
+<pre><code>abs(int.MinValue) = abs(int.MaxValue) + 1
+</code></pre>
+<p>So on any integer domain, negation should not cause overflow except for
+<code>int.MinValue</code>. Interestingly,</p>
+<pre><code>-int.MinValue == int.MinValue
+</code></pre>
+<p>For two's complement representation, $b_{31} b_{30} ... b_0$, the most significant
+$b_{31}$ represents the sign of the integer. That's the reason why negative
+numbers are more than positive numbers, as 0 takes a spot in the $0 b_{30} ... b_0$
+space.</p>
+<p>Negating a number $x$ can be done by computing $0 - x$, or more commonly, by
+inverting the bits and add 1.</p>
+<pre><code>-x = ~x + 1
+</code></pre>
+<p>In terms of math operations, note that two's complement representation works
+intuitively with addition and substraction: <code>-1 == 0 - 1 == 0xffffffff</code>.</p>
+<p>Also note that for signed integers, the fill value of right shift bit operation
+depends on the sign of the number. For negative numbers, right shifting will
+shift in 1 instead of 0 for the most significant bit, to maintain the sign.</p>
+<p>Note about integer shifting and two's complement - integer division are
+roundings towards 0. So $\frac{5}{-1} = \frac{-5}{2} = -2$, $\frac{-1}{2} = \frac{1}{-2} = 0$. <strong>This is different
+than right shifting</strong>, rounding of negative numbers resulting from right shifts
+are towards <strong>minus infinity</strong> $-\infty$. <strong>Divide by two and right shifts
+are only equivelent when the result to be rounded is positive</strong>.</p>
+<p>Taking absolute values of negative numbers in two's complement can be achieve by
+negating the number and cast to unsigned counterpart of the integer type:</p>
+<pre><code>abs(x) = (uint)(-x), when x &lt; 0, x is integer
+</code></pre>
+<p>The reason of the casting is because integer range can't represent numbers in
+the domain of the absolute function - <code>abs(int.MinValue)</code>. Casting to unsigned
+integer works even for <code>int.MinValue</code>.</p>
+<h1>References</h1>
+<ul>
+<li><a href="https://www.cs.cornell.edu/~tomf/notes/cps104/twoscomp.html" target="_blank" rel="noopener">Cornell's two's complement course note</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Two%27s_complement" target="_blank" rel="noopener">Two's complement on Wikipedia</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/programming/">programming</a>
+          
+            <a href="/tags/math/">math</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/06/17/2016-06-17-fsharp-update/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Some F# Update</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/05/12/2016-05-12-TypeScript Type Definitions Promisification/">
+        <span class="next-text nav-default">TypeScript, Type Definitions, and Promisification</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2016/05/29/2016-05-29-twos-complement-notes/';
+        this.page.identifier = '2016/05/29/2016-05-29-twos-complement-notes/';
+        this.page.title = 'Two's complement notes';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

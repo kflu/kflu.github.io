@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="A survey of C# synchronization primitives">
+
+
+
+
+  <meta name="keywords" content="c#,multi threading,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2017/04/04/2017-04-04-csharp-synchronization/">
+
+
+<meta name="description" content="This MSDN document gives a good survey on various synchronization
+primitives in .NET. This article will follow how it categorizes the
+synchronization primitives.
+Threading in C# is a very good high l">
+<meta name="keywords" content="c#,multi threading">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A survey of C# synchronization primitives">
+<meta property="og:url" content="http://kflu.github.io/2017/04/04/2017-04-04-csharp-synchronization/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="This MSDN document gives a good survey on various synchronization
+primitives in .NET. This article will follow how it categorizes the
+synchronization primitives.
+Threading in C# is a very good high l">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.627Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A survey of C# synchronization primitives">
+<meta name="twitter:description" content="This MSDN document gives a good survey on various synchronization
+primitives in .NET. This article will follow how it categorizes the
+synchronization primitives.
+Threading in C# is a very good high l">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> A survey of C# synchronization primitives · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          A survey of C# synchronization primitives
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Apr 4, 2017
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Exclusive Locks</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Reader Writer Lock</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Semaphore</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Wait Handles</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Spin based primitives</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Interlocked Operations</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">TaskCompletionSource</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Thread Affinity and Its Issues When Used with Tasks</span></a></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <ul>
+<li><a href="https://msdn.microsoft.com/en-us/library/ms228964(v=vs.110).aspx" target="_blank" rel="noopener">This MSDN document</a> gives a good survey on various synchronization
+primitives in .NET. This article will follow how it categorizes the
+synchronization primitives.</li>
+<li><a href="http://www.albahari.com/threading/part2.aspx" target="_blank" rel="noopener">Threading in C#</a> is a very good high level overview on synchronization.
+It has a slightly different way of categorizing sync primitives. It also
+offers a few ones that're not mentioned in the other doc.</li>
+<li><a href="http://download.microsoft.com/download/B/C/F/BCFD4868-1354-45E3-B71B-B851CD78733D/PerformanceCharacteristicsOfSyncPrimitives.pdf" target="_blank" rel="noopener">This paper</a> describes some .NET 4.0 new primitives and provides insight
+into their implementation and performance consideration.</li>
+</ul>
+<p>Synchronization is mostly about the mechanisms provided by the language to
+perform waiting (aka blocking). Those mechanisms vary depending on how the
+waiting is achieved, and by what criteria the waiting should finish (aka
+released, or unblocked).</p>
+<h1>Exclusive Locks</h1>
+<p><code>lock</code>, <code>Monitor</code>, <code>Mutex</code> are exclusive locks. <code>lock</code> is the most convenient
+to use. <code>Monitor</code> provides richer options when waiting on the lock, e.g.,
+timeout, etc. <code>Mutex</code> provides inter-process locking but is more expensive to
+use.</p>
+<p><a href="http://www.albahari.com/threading/part2.aspx" target="_blank" rel="noopener"><code>lock</code> vs <code>Mutex</code></a>:</p>
+<blockquote>
+<p>[...] Of the two (lock and Mutex), the lock construct is faster and more
+convenient. Mutex, though, has a niche in that its lock can span applications
+in different processes on the computer.</p>
+</blockquote>
+<h1>Reader Writer Lock</h1>
+<p>The ReaderWriterLockSlim class addresses the case where a thread that changes
+data, the writer, must have exclusive access to a resource. When the writer is
+not active, any number of readers can access the resource (for example, by
+calling the EnterReadLock method). When a thread requests exclusive access,
+(for example, by calling the EnterWriteLock method), subsequent reader requests
+block until all existing readers have exited the lock, and the writer has
+entered and exited the lock.</p>
+<p>From <a href="https://msdn.microsoft.com/en-us/library/system.threading.readerwriterlockslim(v=vs.110).aspx" target="_blank" rel="noopener">MSDN</a>:</p>
+<blockquote>
+<p>ReaderWriterLockSlim is similar to ReaderWriterLock, but it has simplified
+rules for recursion and for upgrading and downgrading lock state.
+ReaderWriterLockSlimavoids many cases of potential deadlock. In addition, the
+performance of ReaderWriterLockSlim is significantly better than
+ReaderWriterLock. ReaderWriterLockSlim is recommended for all new
+development.</p>
+</blockquote>
+<h1>Semaphore</h1>
+<p>Semaphore is more general than mutually exclusive locks by allowing a specified
+number of threads to access a resource. Like <code>Mutex</code>, it can be used across
+process. <code>SemaphoreSlim</code> is its local and more efficient version.</p>
+<h1>Wait Handles</h1>
+<p><a href="https://msdn.microsoft.com/en-us/library/ksb7zs2x(v=vs.110).aspx" target="_blank" rel="noopener">Conceptual overview: EventWaitHandle, AutoResetEvent, CountdownEvent,
+ManualResetEvent</a>.</p>
+<pre><code>                          WaitHandle (abstract)
+                             |
+                 +-----------+----------------+
+                 |                 |          |
+                 |                 |          |
+                 v                 v          v
+          EventWaitHandle      Semaphore    Mutex
+          +           +
+          |           |
+          |           |
+          v           v
+ AutoResetEvent   ManualResetEvent
+</code></pre>
+<p>Wait handles can be waited on. But what's more interesting is the events. An
+event is a value with two states - &quot;signaled&quot; and &quot;not-signaled&quot;. When waiting
+on it, a thread is only unblocked once the event is &quot;signaled&quot;. An event can be
+signaled by calling its <code>.Set()</code> method.</p>
+<ul>
+<li><code>AutoResetEvent</code> is auto reset to &quot;not-signaled&quot; state when one waiting
+thread is unblocked, therefore continue to blocking the rest of the waiting
+threads. Effectively, it lets only one thread to &quot;pass through&quot; at a time.</li>
+<li><code>ManualResetEvent</code> does not auto reset so it lets all waiting threads to pass
+through once signaled.</li>
+</ul>
+<p>There are lightweight counterparts of the above mentioned primitives that're
+faster and doesn't work across process:</p>
+<ul>
+<li><code>System.Threading.SemaphoreSlim</code> is a lightweight version of
+System.Threading.Semaphore.</li>
+<li><code>System.Threading.ManualResetEventSlim</code> is a lightweight version of
+System.Threading.ManualResetEvent.</li>
+<li><code>System.Threading.CountdownEvent</code> represents an event that becomes signaled
+when its count is zero.</li>
+<li><code>System.Threading.Barrier</code> enables multiple threads to synchronize with one
+another without requiring control by a master thread. A barrier prevents each
+thread from continuing until all threads have reached a specified point.</li>
+</ul>
+<h1>Spin based primitives</h1>
+<p><code>SpinWait</code> can be used to wait for a condition <code>Func&lt;bool&gt;</code> to meet. It uses a
+good combination of spinning (initially) and blocking (yielding the thread,
+after an excessive time spinning).</p>
+<p><code>SpinLock</code> is a lock based on spinning. It doesn't turn into blocking so care
+must be taken when holding such a lock. Only for advanced and very performance
+critical uses.</p>
+<h1>Interlocked Operations</h1>
+<p>Lastly, <code>Interlocked</code> is not blocking at all. From <a href="https://msdn.microsoft.com/en-us/library/ms228964(v=vs.110).aspx" target="_blank" rel="noopener">MSDN</a>:</p>
+<blockquote>
+<p>Interlocked operations are simple atomic operations performed on a memory
+location by static methods of the Interlocked class. Those atomic operations
+include addition, increment and decrement, exchange, conditional exchange
+depending on a comparison, and read operations for 64-bit values on 32-bit
+platforms.</p>
+</blockquote>
+<h1>TaskCompletionSource<t></t></h1>
+<p>This can be used to synchronize tasks the way events are used for threads.
+Tasks and async/await is asynchronous computing on a higher level than threads.
+And in addition to the built in constructs that one can await on,
+<code>TaskCompletionSource&lt;T&gt;</code> can be used to signal and synchronous anything among
+tasks.</p>
+<h1>Thread Affinity and Its Issues When Used with Tasks</h1>
+<p>Some sync mechanisms described above has thread affinity and it has issues when
+used with Tasks. For example, tasks do not work well with monitors. As monitors
+have thread affinity, a task, resumed onto a different thread than its original
+thread, can release the wrong monitor; vise versa, a task resumed to a thread
+can aquire the monitor while it has already been aquired by a previously
+blocked task.</p>
+<p>So it's important to think about thread affinity when picking a sync mechanism to work
+with tasks. As a summary:</p>
+<p>These are thread affine:</p>
+<ul>
+<li>Monitors (and locks)</li>
+<li>Reader-writer locks</li>
+<li>Mutex</li>
+</ul>
+<p>These does not have thread affinity:</p>
+<ul>
+<li>Semaphore (and SemaphoreSlim)</li>
+<li>Event wait handles</li>
+<li><code>TaskCompletionSource&lt;T&gt;</code></li>
+</ul>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/c/">c#</a>
+          
+            <a href="/tags/multi-threading/">multi threading</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/04/11/2017-04-11-more-synchronozation/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">More about synchronization</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/03/02/2017-03-02-native-library-dependencies/">
+        <span class="next-text nav-default">Native library dependencies - how to debug</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2017/04/04/2017-04-04-csharp-synchronization/';
+        this.page.identifier = '2017/04/04/2017-04-04-csharp-synchronization/';
+        this.page.title = 'A survey of C# synchronization primitives';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

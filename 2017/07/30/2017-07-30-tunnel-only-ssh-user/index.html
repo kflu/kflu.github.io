@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="SSH Reverse Port Forwarding With Untrusted Remote Host">
+
+
+
+
+  <meta name="keywords" content="unix,ssh,safety,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2017/07/30/2017-07-30-tunnel-only-ssh-user/">
+
+
+<meta name="description" content="tl;dr - safety is provided by setting up a non-priviledged tunnel only user
+References
+
+Discussions
+
+My post on FreeBSD forum: Best way to allow ssh connection just for
+reverse port forwarding
+ssh tun">
+<meta name="keywords" content="unix,ssh,safety">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSH Reverse Port Forwarding With Untrusted Remote Host">
+<meta property="og:url" content="http://kflu.github.io/2017/07/30/2017-07-30-tunnel-only-ssh-user/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="tl;dr - safety is provided by setting up a non-priviledged tunnel only user
+References
+
+Discussions
+
+My post on FreeBSD forum: Best way to allow ssh connection just for
+reverse port forwarding
+ssh tun">
+<meta property="og:image" content="http://kflu.github.io/2017/07/30/2017-07-30-tunnel-only-ssh-user/diagram.png">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.670Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SSH Reverse Port Forwarding With Untrusted Remote Host">
+<meta name="twitter:description" content="tl;dr - safety is provided by setting up a non-priviledged tunnel only user
+References
+
+Discussions
+
+My post on FreeBSD forum: Best way to allow ssh connection just for
+reverse port forwarding
+ssh tun">
+<meta name="twitter:image" content="http://kflu.github.io/2017/07/30/2017-07-30-tunnel-only-ssh-user/diagram.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> SSH Reverse Port Forwarding With Untrusted Remote Host · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          SSH Reverse Port Forwarding With Untrusted Remote Host
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Jul 30, 2017
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">References</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Problem</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Setting Up User For Tunnel Only</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Tricks &amp; Tools for Port Forwarding</span></a></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <p>tl;dr - safety is provided by setting up a non-priviledged tunnel only user</p>
+<h1>References</h1>
+<ul>
+<li>Discussions
+<ul>
+<li><a href="https://forums.freebsd.org/threads/61682/#post-355591" target="_blank" rel="noopener">My post on FreeBSD forum: Best way to allow ssh connection just for
+reverse port forwarding</a></li>
+<li><a href="https://serverfault.com/a/56581/309638" target="_blank" rel="noopener">ssh tunneling only access (SO answer)</a></li>
+<li><a href="https://serverfault.com/a/119381/309638" target="_blank" rel="noopener">sshd restriction per user basis (SO answer)</a></li>
+<li><a href="https://therub.org/2011/08/24/minimal-ssh-chroot-in-freebsd/" target="_blank" rel="noopener">Minimal SSH Chroot in FreeBSD</a></li>
+</ul>
+</li>
+<li>man pages
+<ul>
+<li><a href="https://www.freebsd.org/cgi/man.cgi?sshd_config(5)" target="_blank" rel="noopener">sshd_config</a></li>
+<li><a href="https://www.freebsd.org/cgi/man.cgi?query=sshd&amp;sektion=8&amp;apropos=0&amp;manpath=FreeBSD+11.1-RELEASE+and+Ports#AUTHORIZED_KEYS%09FILE_FORMAT" target="_blank" rel="noopener">authorized_keys</a></li>
+</ul>
+</li>
+<li><a href="https://unix.stackexchange.com/q/46235/38968" target="_blank" rel="noopener">SSH reverse port forwarding explained</a></li>
+<li><a href="http://www.harding.motd.ca/autossh/" target="_blank" rel="noopener">autossh - Automatically restart SSH sessions and tunnels</a></li>
+<li><a href="https://therub.org/2011/08/24/minimal-ssh-chroot-in-freebsd/" target="_blank" rel="noopener">the use of <code>nologin</code></a></li>
+</ul>
+<h1>Problem</h1>
+<p>Here's my scenario:</p>
+<p><img src="diagram.png" alt="diagram"></p>
+<ul>
+<li>I have a home server (HostB) which is completely within my control.</li>
+<li>I have an off-site machine that can potentially be physically accessed by
+other people I don't trust (HostA).</li>
+</ul>
+<p>I want to do off-site backups (encrypted of course) via <code>duplicity</code> from
+HostB to HostA. Because HostA is behind firewall, it can't provide direct
+ssh access. So I'll have to do a <a href="https://unix.stackexchange.com/q/46235/38968" target="_blank" rel="noopener">reverse port
+forwarding</a> to expose HostA:22.  In order to
+reliably do the reverse port forwarding without password, I will add HostA's
+public key to HostB's authorized_keys file. Now that can potentially be bad,
+because the pub key could be stolen.</p>
+<p>However, since the ssh login from HostA -&gt; HostB is <strong>only</strong> to establish
+the port forwarding tunnel so HostB can access HostA:22, is there any good
+way I can restrict the HostA -&gt; HostB ssh connection to <strong>only</strong> provide the
+tunnel and nothing else?</p>
+<h1>Setting Up User For Tunnel Only</h1>
+<p>After <a href="https://forums.freebsd.org/threads/61682/#post-355591" target="_blank" rel="noopener">discussing online</a>, I'm aware of the following
+solution:</p>
+<ol>
+<li>
+<p>Create a non-priviledged user without login shell
+(<a href="https://therub.org/2011/08/24/minimal-ssh-chroot-in-freebsd/" target="_blank" rel="noopener">nologin</a>). Set user home to <code>/var/...</code> and make it
+readonly (suggested by obsigna &amp; Jov):</p>
+<pre><code>pw useradd -n tunnel -c &quot;SSH Tunnel User&quot; -u 9999 -d /var/tunnel -s /usr/sbin/nologin
+mkdir -m 0500 -p /var/tunnel/.ssh
+chown -R tunnel:nogroup /var/tunnel
+chflags -R schg /var/tunnel
+</code></pre>
+</li>
+<li>
+<p>Do a <code>ChrootDirectory</code> using <code>MATCH USER</code> in
+<a href="https://www.freebsd.org/cgi/man.cgi?sshd_config(5)" target="_blank" rel="noopener"><code>sshd_config</code></a> for extra safety. See <a href="https://therub.org/2011/08/24/minimal-ssh-chroot-in-freebsd/" target="_blank" rel="noopener">this
+post</a>.</p>
+</li>
+<li>
+<p>Use <a href="https://www.freebsd.org/cgi/man.cgi?query=sshd&amp;sektion=8&amp;apropos=0&amp;manpath=FreeBSD+11.1-RELEASE+and+Ports#AUTHORIZED_KEYS%09FILE_FORMAT" target="_blank" rel="noopener">authorized_keys</a> to further restrict the public key:</p>
+<ul>
+<li><code>command=&quot;command&quot;</code></li>
+<li><code>no-X11-forwarding</code></li>
+<li><code>permitopen=&quot;host:port&quot;</code></li>
+</ul>
+</li>
+</ol>
+<h1>Tricks &amp; Tools for Port Forwarding</h1>
+<ul>
+<li><a href="http://www.harding.motd.ca/autossh/" target="_blank" rel="noopener">autossh</a> can be used to create reliable tunnel</li>
+</ul>
+<!-- vim: set tw=75 spell: -->
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/unix/">unix</a>
+          
+            <a href="/tags/ssh/">ssh</a>
+          
+            <a href="/tags/safety/">safety</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/07/30/2017-07-30-windbg/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">WinDBG Quick Reference</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/07/18/2017-07-18-msys2/">
+        <span class="next-text nav-default">Msys2 - Cleanest Unix Subsystem on Windows</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2017/07/30/2017-07-30-tunnel-only-ssh-user/';
+        this.page.identifier = '2017/07/30/2017-07-30-tunnel-only-ssh-user/';
+        this.page.title = 'SSH Reverse Port Forwarding With Untrusted Remote Host';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

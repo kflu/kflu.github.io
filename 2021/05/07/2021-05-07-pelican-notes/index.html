@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Pelican Site Generator Setup Notes">
+
+
+
+
+  <meta name="keywords" content="markdown,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2021/05/07/2021-05-07-pelican-notes/">
+
+
+<meta name="description" content="Pelican is a popular static site generator written in Python. I find it has a better design and provide saner tooling than Hexo. So maybe I&apos;ll switch at some point.
+HTML directory setup
+the ultimate p">
+<meta name="keywords" content="markdown">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pelican Site Generator Setup Notes">
+<meta property="og:url" content="http://kflu.github.io/2021/05/07/2021-05-07-pelican-notes/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="Pelican is a popular static site generator written in Python. I find it has a better design and provide saner tooling than Hexo. So maybe I&apos;ll switch at some point.
+HTML directory setup
+the ultimate p">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.674Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pelican Site Generator Setup Notes">
+<meta name="twitter:description" content="Pelican is a popular static site generator written in Python. I find it has a better design and provide saner tooling than Hexo. So maybe I&apos;ll switch at some point.
+HTML directory setup
+the ultimate p">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> Pelican Site Generator Setup Notes · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Pelican Site Generator Setup Notes
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          May 7, 2021
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">HTML directory setup</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Pelican setup</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Pelican config</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Pelican themes setup</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Deep customization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Customizing theme template which is inherited</span></a></li></ol></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <p>Pelican is a popular static site generator written in Python. I find it has a better design and provide saner tooling than Hexo. So maybe I'll switch at some point.</p>
+<h2>HTML directory setup</h2>
+<p>the ultimate publish dir will be ~/public_html. But for containing the source, create ~/public_html.src, and will use ~/public_html.src/output/ to hold the generated site. So, eventually,</p>
+<pre><code>ln -s ~/public_html.src/output ~/public_html
+</code></pre>
+<p>will do.</p>
+<p>NOTE: make sure all dirs on ~/public_html.src/output have <code>go+x</code> set.</p>
+<h2>Pelican setup</h2>
+<p>Pelican can be installed in isolated way using venv. From inside ~/public_html.src/:</p>
+<pre><code>python3 -m venv .ve
+
+# no need to activate the venv:
+.ve/bin/python3 -m pip install 'pelican[markdown]'
+
+# initialize the site
+.ve/bin/pelican-quickstart
+</code></pre>
+<p>Now a Makefile is created to use <code>pelican</code> for various tasks. However, <code>make</code> for this Makefile requires venv activation. So we create a make wrapper to avoid the ve activation:</p>
+<pre><code>$ cat &gt;./make
+#!/bin/sh
+
+cd &quot;$( dirname &quot;$0&quot; )&quot;
+PATH=./.ve/bin:&quot;$PATH&quot; make &quot;$@&quot;
+</code></pre>
+<p>From now on, all site related tasks can be done via:</p>
+<pre><code>./make clean publish
+</code></pre>
+<h2>Pelican config</h2>
+<p>Configs are in <code>pelicanconf.py</code> and <code>publishconf.py</code>. Note that variables can be defined in both, so make sure you only set a varaible at one of them. I recommend setting everything in <code>pelicanconf.py</code>.</p>
+<p>Notable config variables:</p>
+<ul>
+<li><code>MENUITEMS</code>: defines the &quot;links&quot; displayed in the site's menu bar.</li>
+</ul>
+<h2>Pelican themes setup</h2>
+<p>All themes are in https://github.com/getpelican/pelican-themes.</p>
+<p>The most basic way to use one is (in ~/public_html.src):</p>
+<pre><code>git clone https://github.com/getpelican/pelican-themes.git
+</code></pre>
+<p>Then set the <code>THEME</code> variable (which takes relative path):</p>
+<pre><code>THEME = 'pelican-themes/&lt;some_theme&gt;'
+</code></pre>
+<h3>Deep customization</h3>
+<p>Sometimes you need to edit the theme template directly, for example, I want to remove the footer of the &quot;simple&quot; theme, and there's no way to do so with configuration.</p>
+<p>For deep customization, we also want to version control the theme files, so it's not desirable to clone <code>getpelican/pelican-themes</code>.  Instead, create a <code>themes</code> folder with only the ones you need and customize inside:</p>
+<pre><code>mkdir themes
+
+# assume you cloned pelican-themes *outside* of the site repo:
+cp -r ~/Downloads/pelican-themes/basic themes/basic
+</code></pre>
+<p>Then make edits to <code>themes/basic</code> and set <code>THEME = 'themes/basic'</code>.</p>
+<h3>Customizing theme template which is inherited</h3>
+<p>If the template you want to edit is <code>extended</code>, e.g., <code>basic/templates/base.html</code> has:</p>
+<pre><code>{% extends "!simple/base.html" %}
+</code></pre>
+<p>What if it is the <code>simple</code> theme you want to edit? We can make a copy (see note 1) of the simple theme into <code>themes/simple2</code>, and have <code>basic</code> points to it. To do so, we need to set variable:</p>
+<pre><code>THEME_TEMPLATES_OVERRIDES = [ 'themes' ]
+</code></pre>
+<p>Then change <code>basic</code> theme's <code>extends</code> directive to:</p>
+<pre><code>{% extends "simple2/templates/base.html" %}
+</code></pre>
+<p>Note 1: where do we copy the <code>simple</code> theme, since it comes with <code>pelican</code> itself? You can list all installed themes' locations with:</p>
+<pre><code>.ve/bin/pelican-themes -lv
+</code></pre>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/markdown/">markdown</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2021/05/18/2021-05-18-gnus--imap--gmail--etc/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">emailing with gnus - imap, smtp, gmail, etc</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2021/05/02/2021-05-02-markdown-editors/">
+        <span class="next-text nav-default">Markdown Editors Survey</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2021/05/07/2021-05-07-pelican-notes/';
+        this.page.identifier = '2021/05/07/2021-05-07-pelican-notes/';
+        this.page.title = 'Pelican Site Generator Setup Notes';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Deploy Node.js web app with Enterprise Network Authentication">
+
+
+
+
+  <meta name="keywords" content="programming,nodejs,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2016/03/24/2016-03-24-setup-iis-nodejs-enterprise/">
+
+
+<meta name="description" content="This article describes how to deploy node.js web app to be accessible in a Windows domain controlled (ActiveDirectory) network. For the ease of
+discussion, lets assume:
+
+the machine hosting the app is">
+<meta name="keywords" content="programming,nodejs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deploy Node.js web app with Enterprise Network Authentication">
+<meta property="og:url" content="http://kflu.github.io/2016/03/24/2016-03-24-setup-iis-nodejs-enterprise/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="This article describes how to deploy node.js web app to be accessible in a Windows domain controlled (ActiveDirectory) network. For the ease of
+discussion, lets assume:
+
+the machine hosting the app is">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.622Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Deploy Node.js web app with Enterprise Network Authentication">
+<meta name="twitter:description" content="This article describes how to deploy node.js web app to be accessible in a Windows domain controlled (ActiveDirectory) network. For the ease of
+discussion, lets assume:
+
+the machine hosting the app is">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> Deploy Node.js web app with Enterprise Network Authentication · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Deploy Node.js web app with Enterprise Network Authentication
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Mar 24, 2016
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Approach 1 - Plain Vanilla Node.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Approach 2 - IIS + Node.js</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Setup IIS for Security Group Authorization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">Setup iisnode</span></a></li></ol></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">Check if a domain user is a member of a security group</span></a>
+        </li></div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <p>This article describes how to deploy node.js web app to be accessible in a Windows domain controlled (ActiveDirectory) network. For the ease of
+discussion, lets assume:</p>
+<ul>
+<li>the machine hosting the app is named <code>DOMAIN\MACHINE</code></li>
+<li>the users access the website at <code>http://machine</code></li>
+<li>the website should only be accessible by users within the ActiveDirectory security group <code>DOMAIN\SecurityGroup</code></li>
+</ul>
+<h2>Approach 1 - Plain Vanilla Node.js</h2>
+<p>Now, to achieve the above three goals, we can do it the plain vanilla way:</p>
+<ol>
+<li>Host the app directly with Node.js http module, or anything built on top of that.</li>
+<li>In the app, authenticate with NTLM/Kerboros (maybe with <a href="https://github.com/einfallstoll/express-ntlm" target="_blank" rel="noopener">express-ntml</a> module)</li>
+<li>Roll your own AD code to check if the authenticated user is a member of <code>DOMAIN\SecurityGRoup</code>. This step is extremely easy. Even doable in PowerShell. Proof in the last section. To use .NET in node, <a href="http://tjanczuk.github.io/edge/" target="_blank" rel="noopener">edge.js</a> can be used.</li>
+</ol>
+<p>Totally doable. But is it necessary? I think not.</p>
+<h2>Approach 2 - IIS + Node.js</h2>
+<p>This approach delegates the entire authentication and authorization to the IIS. And uses <a href="https://github.com/tjanczuk/iisnode" target="_blank" rel="noopener"><code>iisnode</code></a> to integrate the node.js app into IIS. I'm going to talk about the steps in detail.</p>
+<h3>Setup IIS for Security Group Authorization</h3>
+<p>For this step I'm mostly based on <a href="http://serverfault.com/a/721855/309638" target="_blank" rel="noopener">this</a> article.</p>
+<ol>
+<li>Install IIS, ensure URL authorization and Windows Authentication are enabled (under IIS/WWW Server/Security)</li>
+<li>Go to the desired web site in IIS manager</li>
+<li>Enable Windows Authentication</li>
+<li>Configure Authorization Rules to ONLY allow the security group. Specify it in the form of &quot;DOMAIN\SecurityGroup&quot;</li>
+</ol>
+<h3>Setup <code>iisnode</code></h3>
+<p>For this step I'm mainly following the guidance <a href="https://github.com/tjanczuk/iisnode" target="_blank" rel="noopener">here</a>.</p>
+<ol>
+<li>Enable ASP 4.6 in IIS</li>
+<li><a href="http://www.iis.net/download/URLRewrite" target="_blank" rel="noopener">Install URL rewrite module for IIS</a></li>
+<li>Install node of course (matching OS bitness)</li>
+<li>Install iisnode matching OS bitness</li>
+<li>Install iisnode samples by running <code>%programfiles%\iisnode\setupsamples.bat</code> in admin cmd</li>
+<li>Go to http://localhost/node for verification (make sure your authentication works in previous section!)</li>
+</ol>
+<h1>Check if a domain user is a member of a security group</h1>
+<p>This <a href="http://stackoverflow.com/a/12029478/695964" target="_blank" rel="noopener">SO answer</a> helped.</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Add-Type</span> <span class="literal">-AssemblyName</span> System.DirectoryServices.AccountManagement</span><br><span class="line"><span class="variable">$ctx</span> = <span class="built_in">New-Object</span> <span class="literal">-TypeName</span> System.DirectoryServices.AccountManagement.PrincipalContext <span class="literal">-ArgumentList</span> ([<span class="type">System.DirectoryServices.AccountManagement.ContextType</span>]::Domain,<span class="string">"DOMAIN"</span>)</span><br><span class="line"><span class="variable">$user</span> = [<span class="type">System.DirectoryServices.AccountManagement.UserPrincipal</span>]::FindByIdentity(<span class="variable">$ctx</span>, <span class="string">"user"</span>)</span><br><span class="line"><span class="variable">$group</span> = [<span class="type">System.DirectoryServices.AccountManagement.GroupPrincipal</span>]::FindByIdentity(<span class="variable">$ctx</span>, <span class="string">"SecurityGroup"</span>)</span><br><span class="line"><span class="variable">$user</span>.IsMemberOf(<span class="variable">$group</span>)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/programming/">programming</a>
+          
+            <a href="/tags/nodejs/">nodejs</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/03/25/2016-03-25-setting-up-jupyter-windows/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Setting up Jupyter on Windows</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/03/23/2016-03-23-new-js-pattern/">
+        <span class="next-text nav-default">New Javascript direction</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2016/03/24/2016-03-24-setup-iis-nodejs-enterprise/';
+        this.page.identifier = '2016/03/24/2016-03-24-setup-iis-nodejs-enterprise/';
+        this.page.title = 'Deploy Node.js web app with Enterprise Network Authentication';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

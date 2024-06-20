@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Native library dependencies - how to debug">
+
+
+
+
+  <meta name="keywords" content="c#,">
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2017/03/02/2017-03-02-native-library-dependencies/">
+
+
+<meta name="description" content="Suppose you have a managed library Foo.dll, which P/Invokes DllImport(A.dll). A.dll in turn references B.dll, C.dll, and so on. There could be two types of errors.
+check for:
+
+bitness mistach?
+missing">
+<meta name="keywords" content="c#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Native library dependencies - how to debug">
+<meta property="og:url" content="http://kflu.github.io/2017/03/02/2017-03-02-native-library-dependencies/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="Suppose you have a managed library Foo.dll, which P/Invokes DllImport(A.dll). A.dll in turn references B.dll, C.dll, and so on. There could be two types of errors.
+check for:
+
+bitness mistach?
+missing">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.627Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Native library dependencies - how to debug">
+<meta name="twitter:description" content="Suppose you have a managed library Foo.dll, which P/Invokes DllImport(A.dll). A.dll in turn references B.dll, C.dll, and so on. There could be two types of errors.
+check for:
+
+bitness mistach?
+missing">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> Native library dependencies - how to debug · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Native library dependencies - how to debug
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Mar 2, 2017
+        </span>
+      </div>
+    </header>
+
+    
+      <div class="post-toc" id="post-toc">
+        <h2 class="post-toc-title">Contents</h2>
+        <div class="post-toc-content">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Bitness mismatch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">Missing Dependencies (somewhere deep down the tree)</span></a></li></ol>
+        </div>
+      </div>
+    
+
+    <div class="post-content">
+      
+        <p>Suppose you have a managed library <code>Foo.dll</code>, which P/Invokes <code>DllImport(A.dll)</code>. <code>A.dll</code> in turn references <code>B.dll</code>, <code>C.dll</code>, and so on. There could be two types of errors.</p>
+<p>check for:</p>
+<ul>
+<li>bitness mistach?</li>
+<li>missing dependent libraries (e.p. msvc redistribution)</li>
+</ul>
+<p>Tools that might help:</p>
+<ul>
+<li>dumpbin</li>
+<li>dependency walker</li>
+<li>corflags</li>
+<li>gflags</li>
+<li>procmon (sysinternals)</li>
+</ul>
+<p>The below are the details.</p>
+<h2>Bitness mismatch</h2>
+<p>First, there could be a bitness mismatch between the native libraries and <code>Foo.dll</code>. When this happens, you'll see</p>
+<blockquote>
+<p>Unhandled Exception: System.BadImageFormatException: An attempt was made to load a program with an incorrect format. (Exception from HRESULT: 0x8007000B)</p>
+</blockquote>
+<p>Usually it happens when the native libraries are built for amd64/x64, but <code>foo.dll</code> is for <code>AnyCPU</code> or <code>x86</code>. The <code>csproj</code> file must add following lines:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;PropertyGroup Condition=&quot;&apos;$(Platform)&apos; == &apos;amd64&apos;&quot;&gt;</span><br><span class="line">  &lt;PlatformTarget&gt;x64&lt;/PlatformTarget&gt;</span><br><span class="line">&lt;/PropertyGroup&gt;</span><br></pre></td></tr></table></figure>
+<p>Several tools can be used to inspect a library's bitness.</p>
+<p>For managed library, use <code>corflags</code>. Look for <code>PE</code>, <code>ILONLY</code>, and <code>32BIT</code> fields:</p>
+<p>A <code>amd64</code> assembly:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; CorFlags.exe /nologo .\CNTKLibraryManaged-2.0.dll</span><br><span class="line">Version   : v4.0.30319</span><br><span class="line">CLR Header: 2.5</span><br><span class="line">PE        : PE32+</span><br><span class="line">CorFlags  : 9</span><br><span class="line">ILONLY    : 1</span><br><span class="line">32BIT     : 0</span><br><span class="line">Signed    : 1</span><br></pre></td></tr></table></figure>
+<p>An <code>AnyCPU</code> assembly:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; CorFlags.exe /nologo .\Newtonsoft.Json.dll</span><br><span class="line">Version   : v2.0.50727</span><br><span class="line">CLR Header: 2.5</span><br><span class="line">PE        : PE32</span><br><span class="line">CorFlags  : 9</span><br><span class="line">ILONLY    : 1</span><br><span class="line">32BIT     : 0</span><br><span class="line">Signed    : 1</span><br></pre></td></tr></table></figure>
+<p>For managed <strong>and</strong> native library, use <code>dumpbin /headers</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt; dumpbin.exe /headers .\CNTKLibraryManaged-2.0.dll</span><br><span class="line">PE signature found</span><br><span class="line">File Type: DLL</span><br><span class="line">FILE HEADER VALUES</span><br><span class="line">            8664 machine (x64)</span><br><span class="line">			     ...</span><br><span class="line">            2022 characteristics</span><br><span class="line">                   Executable</span><br><span class="line">                   Application can handle large (&gt;2GB) addresses</span><br><span class="line">                   DLL</span><br><span class="line"></span><br><span class="line">OPTIONAL HEADER VALUES</span><br><span class="line">             20B magic # (PE32+)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt; dumpbin.exe /headers .\Newtonsoft.Json.dll</span><br><span class="line">...</span><br><span class="line">PE signature found</span><br><span class="line">File Type: DLL</span><br><span class="line">FILE HEADER VALUES</span><br><span class="line">             14C machine (x86)</span><br><span class="line">                 ...</span><br><span class="line">            2102 characteristics</span><br><span class="line">                   Executable</span><br><span class="line">                   32 bit word machine</span><br><span class="line">                   DLL</span><br><span class="line"></span><br><span class="line">OPTIONAL HEADER VALUES</span><br><span class="line">             10B magic # (PE32)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h2>Missing Dependencies (somewhere deep down the tree)</h2>
+<p>tldr; check if you're missing the <a href="http://stackoverflow.com/a/32998963/695964" target="_blank" rel="noopener">Visual C++ Redistributable for Visual Studio XXXX</a>.</p>
+<p>This is much harder. You would get an exception:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot;Message&quot;:&quot;An error has occurred.&quot;,</span><br><span class="line">&quot;ExceptionMessage&quot;:&quot;Unable to load DLL &apos;CNTKLibraryCSBinding&apos;: The specified module could not be found. (Exception from HRESULT: 0x8007007E)&quot;,</span><br><span class="line">&quot;ExceptionType&quot;:&quot;System.DllNotFoundException&quot;,</span><br><span class="line">&quot;StackTrace&quot;:&quot; : </span><br><span class="line">     CNTK.CNTKLibPINVOKE.SWIGExceptionHelper.SWIGRegisterExceptionCallbacks_CNTKLib(...)</span><br><span class="line">     CNTK.CNTKLibPINVOKE.SWIGExceptionHelper..cctor()&quot;</span><br></pre></td></tr></table></figure>
+<p>It is as if <code>CNTKLibraryCSBinding.dll</code> couldn't be found, but in fact it is some library that this native library depends.</p>
+<p>How do you find out what is missing? For managed assembly loading issue, one could use <a href="https://msdn.microsoft.com/en-us/library/e74a18c4(v=vs.110).aspx" target="_blank" rel="noopener">Fuslogvw.exe</a>, however it doesn't work for <code>DllImport()</code> issues. There are several solutions suggested on the web. You could try sysinternals <code>procmon</code>. Or <code>gflags</code>. But I have luck with <a href="http://www.dependencywalker.com/" target="_blank" rel="noopener">DependencyWalker</a>. It can be used to <strong>statically</strong> analyze the dependency tree. But in case of <code>DllImport()</code>, which is runtime load, use the profiling feature. Give it the application, start profiling, run to the place it would throw the exception. Look for libraries that are missing.</p>
+<p>In my case, it happens to be the <a href="http://stackoverflow.com/a/32998963/695964" target="_blank" rel="noopener">Visual C++ Redistributable for Visual Studio 2015 (<code>msvcp140.dll</code>)</a> that's missing from my test server. That explains why I could run the same program on dev box without problem.</p>
+<p>Here're all the online articles that helped:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/3818482/dllimport-generates-system-dllnotfoundexception" target="_blank" rel="noopener">DllImport generates System.DllNotFoundException</a></li>
+<li><a href="http://stackoverflow.com/questions/10774250/dllnotfoundexception-with-hresult-0x8007007e-when-loading-64-bit-dll" target="_blank" rel="noopener">DllNotFoundException with HRESULT 0x8007007E when loading 64-bit dll</a></li>
+<li><a href="http://stackoverflow.com/questions/269181/when-a-dll-is-not-found-while-p-invoking-how-can-i-get-a-message-about-the-spec" target="_blank" rel="noopener">When a DLL is not found while P/Invoking, how can I get a message about the specific unmanaged DLL that is missing?</a></li>
+<li><a href="http://stackoverflow.com/questions/2093485/system-dllnotfoundexception-unable-to-load-dll-on-window-2003" target="_blank" rel="noopener">System.DllNotFoundException: Unable to load DLL on window 2003</a></li>
+<li><a href="http://stackoverflow.com/questions/39223976/dllnotfoundexception-pinvoke-issue" target="_blank" rel="noopener">DllNotFoundException PInvoke issue</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/c/">c#</a>
+          
+        </div>
+
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/04/04/2017-04-04-csharp-synchronization/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">A survey of C# synchronization primitives</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/02/22/2017-02-22-chicken-scheme-notes/">
+        <span class="next-text nav-default">Chicken Scheme Notes</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2017/03/02/2017-03-02-native-library-dependencies/';
+        this.page.identifier = '2017/03/02/2017-03-02-native-library-dependencies/';
+        this.page.title = 'Native library dependencies - how to debug';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Debugging Yeoman generators">
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hello world">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.1.0">
+
+
+
+<link rel="canonical" href="http://kflu.github.io/2016/05/11/2016-05-11-Debugging Yeoman generators/">
+
+
+<meta name="description" content="I found myself sending much more time than I want to make one of my Yeoman
+generators to work. It&apos;s hard because by default, Yeoman is so user friendly
+that it decides to swallow all error information">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Debugging Yeoman generators">
+<meta property="og:url" content="http://kflu.github.io/2016/05/11/2016-05-11-Debugging Yeoman generators/index.html">
+<meta property="og:site_name" content="hello world">
+<meta property="og:description" content="I found myself sending much more time than I want to make one of my Yeoman
+generators to work. It&apos;s hard because by default, Yeoman is so user friendly
+that it decides to swallow all error information">
+<meta property="og:updated_time" content="2024-06-20T04:41:55.623Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Debugging Yeoman generators">
+<meta name="twitter:description" content="I found myself sending much more time than I want to make one of my Yeoman
+generators to work. It&apos;s hard because by default, Yeoman is so user friendly
+that it decides to swallow all error information">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <title> Debugging Yeoman generators · hello world </title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hello world</a>
+</div>
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            about
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/atom.xml">
+            rss
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+<div class="mobile-navbar">
+  <div class="mobile-header">
+    <div class="mobile-header-logo">
+      <a href="/." class="logo">hello world</a>
+    </div>
+
+    <div class="mobile-header-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav class="mobile-menu">
+    
+      
+      <a class="mobile-menu-item" href="/">
+        home
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/about">
+        about
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/archives/">
+        archives
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/tags">
+        tags
+      </a>
+    
+      
+      <a class="mobile-menu-item" href="/atom.xml">
+        rss
+      </a>
+    
+  </nav>
+</div>
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Debugging Yeoman generators
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          May 11, 2016
+        </span>
+      </div>
+    </header>
+
+    
+
+    <div class="post-content">
+      
+        <p>I found myself sending much more time than I want to make one of my Yeoman
+generators to work. It's hard because by default, Yeoman is so user friendly
+that it decides to swallow all error information. So if something failed, it
+silently completes, leaving an empty directory to you.</p>
+<p>I found the most useful thing is to tell it to display error information. It can
+be achieved by setting environment variable <code>DEBUG=yeoman:generator</code> in the
+shell, and then run the generator. This time, it's more developer friendly:</p>
+<pre><code>PS&gt; yo kfl-node
+  yeoman:generator Queueing prompting in prompting +0ms
+  yeoman:generator Queueing writing in writing +4ms
+  yeoman:generator Queueing install in install +3ms
+  yeoman:generator Running prompting +20ms
+? Your project name (serman)
+? Your project name serman
+  yeoman:generator Running writing +8s
+  yeoman:generator An error occured while running writing +16ms { AssertionError: Trying to copy from a source that does not exist: C:\Users\kfl\AppData\Roaming\npm\node_modules\generator-kfl-node\generators\app\templates\.gitignore
+    at EditionInterface.exports._copySingle (C:\Users\kfl\AppData\Roaming\npm\node_modules\generator-kfl-node\node_modules\mem-fs-editor\lib\actions\copy.js:45:3)
+    at EditionInterface.exports.copy (C:\Users\kfl\AppData\Roaming\npm\node_modules\generator-kfl-node\node_modules\mem-fs-editor\lib\actions\copy.js:23:17)
+    at module.exports.yeoman.Base.extend.writing (C:\Users\kfl\AppData\Roaming\npm\node_modules\generator-kfl-node\generators\app\index.js:26:15)
+    at Object.&lt;anonymous&gt; (C:\Users\kfl\AppData\Roaming\npm\node_modules\generator-kfl-node\node_modules\yeoman-generator\lib\base.js:436:25)
+    at C:\Users\kfl\AppData\Roaming\npm\node_modules\generator-kfl-node\node_modules\run-async\index.js:26:25
+    at C:\Users\kfl\AppData\Roaming\npm\node_modules\generator-kfl-node\node_modules\run-async\index.js:25:19
+    at C:\Users\kfl\AppData\Roaming\npm\node_modules\generator-kfl-node\node_modules\yeoman-generator\lib\base.js:452:8
+    at tryOnImmediate (timers.js:543:15)
+    at processImmediate [as _immediateCallback] (timers.js:523:5)
+  name: 'AssertionError',
+  actual: false,
+  expected: true,
+  operator: '==',
+  message: 'Trying to copy from a source that does not exist: C:\\Users\\kfl\\AppData\\Roaming\\npm\\node_modules\\generator-kfl-node\\generators\\app\\templates\\.gitignore',
+  generatedMessage: false }
+</code></pre>
+<p>Some other tips (may also apply to general node.js developing):</p>
+<ul>
+<li>Always test it out locally (<code>npm link</code>) before publishing</li>
+<li>Always <code>npm pack</code> and examine the package before publishing</li>
+<li>Always <code>git clean -xd -n</code> before <code>npm pack</code> to eliminate unwanted files</li>
+</ul>
+<p>Another caveat that cost me an hour - in my generator template I have a
+<code>.gitignore</code>. But <code>npm publish</code> insists to leave it out of the package, which in
+turn caused a silent failure when I <code>yo</code> the generator. <em>Note</em> that this error
+cannot be caught with local testing <code>npm link</code>. But you might spot it manually
+inspect the package tarball if you are more carefully than I was.</p>
+<p><a href="http://yeoman.io/authoring/debugging.html" target="_blank" rel="noopener">Here</a> is the document for Yeoman debugging.</p>
+
+      
+    </div>
+
+    
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2005 - 
+    
+    2024
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">KL</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://kflu.github.io/2016/05/11/2016-05-11-Debugging Yeoman generators/';
+        this.page.identifier = '2016/05/11/2016-05-11-Debugging Yeoman generators/';
+        this.page.title = 'Debugging Yeoman generators';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//codefun.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.1.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.1.0"></script>
+
+  </body>
+</html>
